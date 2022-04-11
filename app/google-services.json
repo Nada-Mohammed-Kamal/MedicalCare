@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "567023724766",
+    "project_id": "medicalappreminder",
+    "storage_bucket": "medicalappreminder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567023724766:android:3c45b5e5dbe1fae7843a4f",
+        "android_client_info": {
+          "package_name": "com.example.medicalappreminder_java"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567023724766-rofjfu3s34aur03nkptt5bsmaidkq4h8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCArzvFSXnUepUipnwnhY3owCdXXPIBwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567023724766-rofjfu3s34aur03nkptt5bsmaidkq4h8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
