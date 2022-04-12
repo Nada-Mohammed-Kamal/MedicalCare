@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MedicalAppReminder-Java</string>
+    <string name="addMedication" />
+    <string name="add_med">Add medication</string>
 </resources>
