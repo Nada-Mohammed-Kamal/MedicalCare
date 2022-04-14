@@ -6,6 +6,10 @@
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_login.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_req_one_tap.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_sign_up.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.18741017003388455" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.23743589743589744" />
       </map>
     </option>
   </component>

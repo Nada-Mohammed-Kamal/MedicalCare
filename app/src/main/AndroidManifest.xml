@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava">
         <activity
-            android:name=".SignUp"
+            android:name=".SignUp.View.SignUpActivity"
             android:exported="true" />
         <activity
             android:name=".Login"
