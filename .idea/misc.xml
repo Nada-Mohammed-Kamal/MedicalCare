@@ -4,16 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/drawable-v24/layout_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/drawable/ic_add.xml" value="0.24444444444444444" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/drawable/round_shape_btn.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/drawable/rounded_btn.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/drawable/rounded_img.xml" value="0.2703125" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_login.xml" value="0.176" />
-        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_main.xml" value="0.17135416666666667" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_main.xml" value="0.12" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_sign_up.xml" value="0.22871376811594202" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/custom_row.xml" value="0.264" />
-        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_my_first_frgment.xml" value="0.1" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_dependent_info.xml" value="0.14497041420118342" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_medication_screen.xml" value="0.15489130434782608" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_my_first_frgment.xml" value="0.176" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/layout_bg.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/section_row.xml" value="0.264" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/toolbar.xml" value="0.536" />
+        <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_login.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_req_one_tap.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_sign_up.xml" value="0.21354166666666666" />

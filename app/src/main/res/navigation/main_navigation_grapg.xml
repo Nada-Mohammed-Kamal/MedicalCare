@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_grapg"
+    app:startDestination="@id/myFirstFragment">
+
+    <fragment
+        android:id="@+id/dependentInfoFragment"
+        android:name="com.example.medicalappreminder_java.DependentInfoFragment"
+        android:label="fragment_dependent_info"
+        tools:layout="@layout/fragment_dependent_info" >
+        <action
+            android:id="@+id/navigateFromDependentToHomeFragmentActionId"
+            app:destination="@id/myFirstFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFirstFragment"
+        android:name="com.example.medicalappreminder_java.MyFirstFragment"
+        android:label="fragment_my_first_frgment"
+        tools:layout="@layout/fragment_my_first_frgment" >
+        <action
+            android:id="@+id/navigateFromHomeFragmentToDependentActionId"
+            app:destination="@id/dependentInfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+</navigation>
