@@ -59,7 +59,7 @@ public class DependentInfoFragment extends Fragment {
         view.findViewById(R.id.add_dependentId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigateFromDependentToHomeFragmentActionId);
+                //Navigation.findNavController(view).navigate(R.id.navigateFromDependentToHomeFragmentActionId);
             }
         });
 

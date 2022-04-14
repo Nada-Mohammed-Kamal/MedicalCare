@@ -48,7 +48,7 @@ public class MyFirstFragment extends Fragment {
         view.findViewById(R.id.add_pills).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigateFromHomeFragmentToDependentActionId);
+                //Navigation.findNavController(view).navigate(R.id.navigateFromHomeFragmentToDependentActionId);
             }
         });
     }
