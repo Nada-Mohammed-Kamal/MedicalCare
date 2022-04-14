@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.medicalappreminder_java.FireBaseModels.AuthenticationHandlerInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
 import com.google.android.gms.auth.api.Auth;
@@ -26,10 +27,12 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -40,6 +43,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
     String email , password;
     SignUpViewInterface signUpView ;
     Context context ;
+    AuthenticationHandlerInterface authenticationHandler ;
 
     private FirebaseAuth mAuth;
     private  FirebaseUser user ;
@@ -54,6 +58,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         this.signUpView = signUpView ;
         this.context = context ;
         mAuth = FirebaseAuth.getInstance();
+
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build() ;
         googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions) ;
     }
@@ -89,7 +94,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         }
 
         signUpView.setProgressbarVisible();
-
+        //authenticationHandler.createUserWithEmailAndPassword(email,password);
         mAuth.createUserWithEmailAndPassword(email , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -102,7 +107,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(context, "Verification is sent to your Email ", Toast.LENGTH_SHORT).show();
                         }
-                    }); 
+                    });
                     signUpView.gotoInfoRegistrationScreen();
                 }else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException){
@@ -184,6 +189,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.e(TAG, "onActivityResult: Google Sign In was successful");
+                Toast.makeText(context, "Google Sign In was successful", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 signUpView.gotoHomeScreen();
                 //firebaseAuthWithGoogle(account.getIdToken());
@@ -198,5 +204,38 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
     public GoogleSignInClient getClient() {
         return googleSignInClient;
     }
+
+    /*
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            //Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            updateUI(null);
+                        }
+                    }
+                });
+
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null){
+            Toast.makeText(context, "google login successfully", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "google login erorrrr", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+    */
 
 }

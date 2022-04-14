@@ -7,143 +7,143 @@
     android:background="#ffffff"
     tools:context=".SignUp.View.SignUpActivity">
 
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:weightSum="4">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4">
 
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="0dp"-->
-    <!--            android:layout_weight="0.8"-->
-    <!--            android:background="#0386C1">-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:background="#0386C1">
 
-    <!--            <TextView-->
-    <!--                android:id="@+id/textView6"-->
-    <!--                android:layout_width="357dp"-->
-    <!--                android:layout_height="48dp"-->
-    <!--                android:layout_marginStart="16dp"-->
-    <!--                android:layout_marginTop="6dp"-->
-    <!--                android:text="Register to securely back up your data on your servers "-->
-    <!--                android:textColor="#FFFFFF"-->
-    <!--                android:textSize="18sp"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/exitButton" />-->
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="357dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:text="Register to securely back up your data on your servers "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/exitButton" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/exitButton"-->
-    <!--                android:layout_width="38dp"-->
-    <!--                android:layout_height="44dp"-->
-    <!--                android:layout_marginStart="16dp"-->
-    <!--                android:layout_marginTop="8dp"-->
-    <!--                android:background="?android:attr/selectableItemBackground"-->
-    <!--                android:text="X"-->
-    <!--                android:textColor="#FFFFFF"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                tools:ignore="TouchTargetSizeCheck" />-->
+                <Button
+                    android:id="@+id/exitButton"
+                    android:layout_width="38dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="X"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/logOutButton"-->
-    <!--                android:layout_width="70dp"-->
-    <!--                android:layout_height="43dp"-->
-    <!--                android:layout_marginTop="8dp"-->
-    <!--                android:layout_marginEnd="8dp"-->
-    <!--                android:background="?android:attr/selectableItemBackground"-->
-    <!--                android:text="log out"-->
-    <!--                android:textColor="#FFFFFF"-->
-    <!--                android:textSize="10sp"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                tools:ignore="TouchTargetSizeCheck" />-->
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+                <Button
+                    android:id="@+id/logOutButton"
+                    android:layout_width="70dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="log out"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="0dp"-->
-    <!--            android:layout_weight="3.2"-->
-    <!--            android:background="#F8F5F5">-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3.2"
+                android:background="#F8F5F5">
 
-    <!--            <EditText-->
-    <!--                android:id="@+id/emailEditText"-->
-    <!--                android:layout_width="350dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="28dp"-->
-    <!--                android:ems="10"-->
-    <!--                android:hint="@string/email"-->
-    <!--                android:inputType="textEmailAddress"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                tools:ignore="TouchTargetSizeCheck" />-->
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:ems="10"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-    <!--            <EditText-->
-    <!--                android:id="@+id/passwordEditText"-->
-    <!--                android:layout_width="350dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="38dp"-->
-    <!--                android:ems="10"-->
-    <!--                android:hint="@string/password"-->
-    <!--                android:inputType="textPassword"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/emailEditText"-->
-    <!--                tools:ignore="TouchTargetSizeCheck" />-->
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="38dp"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/signUpButton"-->
-    <!--                android:layout_width="350dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="160dp"-->
-    <!--                android:background="#0386C1"-->
-    <!--                android:text="@string/sign_up"-->
-    <!--                android:textColor="#FFFFFF"-->
-    <!--                android:textSize="18sp"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.508"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/passwordEditText"-->
-    <!--                tools:ignore="TextContrastCheck" />-->
+                <Button
+                    android:id="@+id/signUpButton"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="160dp"
+                    android:background="#0386C1"
+                    android:text="@string/sign_up"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.508"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+                    tools:ignore="TextContrastCheck" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/googleButton"-->
-    <!--                android:layout_width="350dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="43dp"-->
-    <!--                android:background="#ECE8E8"-->
-    <!--                android:text="Google"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.508"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/signUpButton" />-->
+                <Button
+                    android:id="@+id/googleButton"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="43dp"
+                    android:background="#ECE8E8"
+                    android:text="Google"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.508"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/logInButton"-->
-    <!--                android:layout_width="350dp"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="84dp"-->
-    <!--                android:background="#0386C1"-->
-    <!--                android:text="@string/login"-->
-    <!--                android:textColor="#FFFFFF"-->
-    <!--                android:textSize="18sp"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/passwordEditText"-->
-    <!--                tools:ignore="TextContrastCheck" />-->
+                <Button
+                    android:id="@+id/logInButton"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="84dp"
+                    android:background="#0386C1"
+                    android:text="@string/login"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+                    tools:ignore="TextContrastCheck" />
 
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/progressbar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:visibility="gone"></ProgressBar>-->
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"></ProgressBar>
 
 
-    <!--    </LinearLayout>-->
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

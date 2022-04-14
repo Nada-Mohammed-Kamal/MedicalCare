@@ -86,10 +86,10 @@
         android:text="sign out"
 
         android:layout_marginTop="56dp"
-        android:text="Login"
+
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

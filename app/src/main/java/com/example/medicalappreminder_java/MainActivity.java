@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        //startActivity(new Intent(MainActivity.this , SignUpActivity.class));
+        startActivity(new Intent(MainActivity.this , SignUpActivity.class));
 
 //        getSupportActionBar().hide();
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
