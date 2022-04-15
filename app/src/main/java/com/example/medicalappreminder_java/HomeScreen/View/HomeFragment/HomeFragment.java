@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
-import com.example.medicalappreminder_java.Model.HomeScreenRecyclerViewDTO;
+import com.example.medicalappreminder_java.Model.Medicine;
 import com.example.medicalappreminder_java.R;
 
 import java.text.SimpleDateFormat;
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
 
-        allPresenter = new AllMedPresenter(this);
+        allPresenter = new AllMedPresenter(this,getContext());
         allPresenter.getMeds();
     }
     private  String getSelectedDate(Calendar selectedDate)
@@ -108,13 +108,13 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     }
 
     @Override
-    public void showData(List<HomeScreenRecyclerViewDTO> medsList) {
+    public void showData(List<Medicine> medsList) {
         myAdapter.setList(medsList);
         myAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onClick(HomeScreenRecyclerViewDTO medDTO) {
+    public void onClick(Medicine medDTO) {
         Toast.makeText(getContext(), "Med pressed",Toast.LENGTH_SHORT).show();
     }
 }

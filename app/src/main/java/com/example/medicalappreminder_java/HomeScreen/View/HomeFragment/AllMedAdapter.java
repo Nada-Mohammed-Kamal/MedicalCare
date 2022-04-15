@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.medicalappreminder_java.Model.HomeScreenRecyclerViewDTO;
+
+import com.example.medicalappreminder_java.Model.Medicine;
 import com.example.medicalappreminder_java.R;
 
 import java.util.ArrayList;
@@ -22,15 +22,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder> {
 
     private final Context context;
-    private ArrayList<HomeScreenRecyclerViewDTO> medList;
+    private ArrayList<Medicine> medList;
     OnMoviesClickListener onMoviesClickListener;
 
-    public AllMedAdapter(Context context, ArrayList<HomeScreenRecyclerViewDTO> values, OnMoviesClickListener onMoviesClickListener) {
+    public AllMedAdapter(Context context, ArrayList<Medicine> values, OnMoviesClickListener onMoviesClickListener) {
         this.context = context;
         this.medList = values;
         this.onMoviesClickListener = onMoviesClickListener;
     }
-    public  void setList(List<HomeScreenRecyclerViewDTO> updateMeds){
+    public  void setList(List<Medicine> updateMeds){
         this.medList = (ArrayList)updateMeds;
     }
 
@@ -45,11 +45,12 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HomeScreenRecyclerViewDTO medDTO = medList.get(position);
-        holder.medTime.setText(medDTO.getDoseTime());
-        holder.medDesc.setText(medDTO.getMedDescription());
-        holder.medName.setText(medDTO.getMedName());
-        holder.medIcon.setImageResource(medDTO.getMedIcon());
+        Medicine medDTO = medList.get(position);
+      //  String decMed = medDTO.getStrengthAmount() + medDTO.getStrength() + ",take" +medDTO.getForm();
+       // holder.medTime.setText();
+      //  holder.medDesc.setText(medDTO.getMedDescription());
+        holder.medName.setText(medDTO.getName());
+        holder.medIcon.setImageResource(medDTO.getImage());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

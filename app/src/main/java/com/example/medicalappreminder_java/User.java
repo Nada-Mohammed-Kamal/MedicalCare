@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.medicalappreminder_java.Model.Medicine;
+
 import java.util.Date;
 import java.util.List;
 

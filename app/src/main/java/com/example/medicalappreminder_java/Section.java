@@ -1,5 +1,7 @@
 package com.example.medicalappreminder_java;
 
+import com.example.medicalappreminder_java.Model.Medicine;
+
 import java.util.List;
 
 public class Section {
