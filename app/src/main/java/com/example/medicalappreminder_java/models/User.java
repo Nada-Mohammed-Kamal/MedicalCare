@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
