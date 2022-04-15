@@ -5,23 +5,33 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
+import com.example.medicalappreminder_java.Model.HomeScreenRecyclerViewDTO;
 import com.example.medicalappreminder_java.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 
+    RecyclerView recyclerView;
+    AllMedAdapter myAdapter;
+    LinearLayoutManager layoutManager;
+    AllMedPresenterInterface allPresenter;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -47,7 +57,6 @@ public class HomeFragment extends Fragment {
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-        Calendar defaultDate = Calendar.getInstance();
         View calView = view.findViewById(R.id.calendarView);
         // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
@@ -78,6 +87,17 @@ public class HomeFragment extends Fragment {
                 return super.onDateLongClicked(date, position);
             }
         });
+
+
+        recyclerView = view.findViewById(R.id.recyclerViewAllMed);
+        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),this);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL );
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(myAdapter);
+
+        allPresenter = new AllMedPresenter(this);
+        allPresenter.getMeds();
     }
     private  String getSelectedDate(Calendar selectedDate)
     {
@@ -85,5 +105,16 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String date1 = format1.format(dateToString );
         return date1;
+    }
+
+    @Override
+    public void showData(List<HomeScreenRecyclerViewDTO> medsList) {
+        myAdapter.setList(medsList);
+        myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(HomeScreenRecyclerViewDTO medDTO) {
+        Toast.makeText(getContext(), "Med pressed",Toast.LENGTH_SHORT).show();
     }
 }
