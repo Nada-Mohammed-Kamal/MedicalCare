@@ -1,47 +1,63 @@
 package com.example.medicalappreminder_java;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
+@Entity
 public class User {
-    //uuid = UUID.randomUUID();
-    UUID uuid;
-    String name;
+    @ColumnInfo(name = "first_name")
+    String firstName;
+    @ColumnInfo(name = "last_name")
+    String lastName;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "email")
     String email;
+    @ColumnInfo(name = "gender")
     String gender;
+    @ColumnInfo(name = "birthdate")
     Date birthdate;
-    List<User> listOfDependantIds;
+    @ColumnInfo(name = "StringWIthListOfDependantEmails")
+    //String stringWIthListOfDependantEmails;
+    List<User> listOfDependantEmails;
+    @ColumnInfo(name = "ListOfMedications")
+    //String stringWithListOfMedicationIds;
     List<Medicine> ListOfMedications;
 
 
-    public User(UUID id, String name, String email, String gender, Date birthdate, List<User> listOfDependantIds, List<Medicine> listOfMedications) {
-        this.uuid = id;
-        this.name = name;
+    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependantEmails,List<Medicine> listOfMedications) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.gender = gender;
         this.birthdate = birthdate;
-        this.listOfDependantIds = listOfDependantIds;
+        this.listOfDependantEmails= listOfDependantEmails;
         ListOfMedications = listOfMedications;
     }
 
     public User() {
     }
 
-    public UUID getUuid() {
-        return uuid;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setId(UUID id) {
-        this.uuid = id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -68,12 +84,12 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public List<User> getListOfDependantIds() {
-        return listOfDependantIds;
+    public List<User> getListOfDependantEmails() {
+        return listOfDependantEmails;
     }
 
-    public void setListOfDependantIds(List<User> listOfDependantIds) {
-        this.listOfDependantIds = listOfDependantIds;
+    public void setListOfDependantEmails(List<User> listOfDependantIds) {
+        this.listOfDependantEmails = listOfDependantIds;
     }
 
     public List<Medicine> getListOfMedications() {

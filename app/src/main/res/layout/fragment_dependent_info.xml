@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.24" />
-        <com.example.medicalappreminder_java.RoundedCornerLayout
+        <com.example.medicalappreminder_java.uihelper.RoundedCornerLayout
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline2">
 
-        </com.example.medicalappreminder_java.RoundedCornerLayout>
+        </com.example.medicalappreminder_java.uihelper.RoundedCornerLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -137,6 +137,8 @@
             app:layout_constraintTop_toTopOf="@id/guideline2"
             android:src="@mipmap/ic_launcher"
             />
+
+
 
         <TextView
             android:id="@+id/textView9"
