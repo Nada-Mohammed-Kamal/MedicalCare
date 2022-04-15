@@ -3,7 +3,6 @@ package com.example.medicalappreminder_java;
 import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.Status;
-import com.example.medicalappreminder_java.Model.Medicine;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 

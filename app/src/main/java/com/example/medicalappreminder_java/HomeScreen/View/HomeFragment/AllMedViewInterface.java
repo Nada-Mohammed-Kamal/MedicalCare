@@ -1,6 +1,6 @@
 package com.example.medicalappreminder_java.HomeScreen.View.HomeFragment;
 
-import com.example.medicalappreminder_java.Model.Medicine;
+import com.example.medicalappreminder_java.Medicine;
 
 import java.util.List;
 
