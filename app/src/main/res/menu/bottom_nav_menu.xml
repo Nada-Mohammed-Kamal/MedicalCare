@@ -13,8 +13,8 @@
         />
 
     <item
-        android:id="@+id/more"
-        android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="@string/more"
+        android:id="@+id/Refills"
+        android:icon="@drawable/refill_icon"
+        android:title="@string/Refills"
         />
 </menu>

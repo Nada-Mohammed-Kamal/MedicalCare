@@ -43,7 +43,7 @@ public class HomeScreen extends AppCompatActivity {
         setMenu();
         setListeners();
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.home,R.id.medication,R.id.more,R.id.add_dependent)
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.home,R.id.medication,R.id.Refills,R.id.add_dependent)
                 .build();
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);

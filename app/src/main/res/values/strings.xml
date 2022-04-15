@@ -21,5 +21,7 @@
     <string name="medications">Medications</string>
     <string name="more">More</string>
     <string name="med">Med</string>
+    <string name="Refills">Refills</string>
+    <string name="Logout">Log out</string>
 
 </resources>
