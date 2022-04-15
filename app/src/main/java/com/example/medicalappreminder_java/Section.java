@@ -1,6 +1,4 @@
-package com.example.medicalappreminder_java.activandinactivemedscreen.model;
-
-import com.example.medicalappreminder_java.models.Medicine;
+package com.example.medicalappreminder_java;
 
 import com.example.medicalappreminder_java.Model.Medicine;
 

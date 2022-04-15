@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java.DependantInfo;
+package com.example.medicalappreminder_java;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import com.example.medicalappreminder_java.R;
 
 import java.io.DataInput;
 import java.text.SimpleDateFormat;

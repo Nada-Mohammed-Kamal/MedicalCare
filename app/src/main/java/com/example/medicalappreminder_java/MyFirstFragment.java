@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java.activandinactivemedscreen.view;
+package com.example.medicalappreminder_java;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
-import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.activandinactivemedscreen.model.Section;
-import com.example.medicalappreminder_java.activandinactivemedscreen.view.MainRecyclerAdapter;
-import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.Model.Medicine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +37,7 @@ public class MyFirstFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //Your RecyclerView
 
+
     }
 
     @Override
@@ -51,12 +49,7 @@ public class MyFirstFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mainRecyclerAdapter);
         //for the fragment navigation
-        view.findViewById(R.id.add_pills).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigation.findNavController(view).navigate(R.id.navigateFromHomeFragmentToDependentActionId);
-            }
-        });
+
     }
 
     @Override
@@ -67,6 +60,7 @@ public class MyFirstFragment extends Fragment {
         return view;
     }
 
+    //hena b add bs shwayat data static
     private void initData(){
         String sectionOneName = "Active";
         List<Medicine> sectionOneItems = new ArrayList<>();
