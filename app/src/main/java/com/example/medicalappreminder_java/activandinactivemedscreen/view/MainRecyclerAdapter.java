@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.activandinactivemedscreen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.medicalappreminder_java.Model.Medicine;
+import com.example.medicalappreminder_java.activandinactivemedscreen.model.Section;
+import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.R;
 
 import java.util.List;
 

@@ -6,9 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.medicalappreminder_java.User;
+import com.example.medicalappreminder_java.models.User;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao

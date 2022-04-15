@@ -1,9 +1,12 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.roomdb;
+
+import android.text.format.Time;
 
 import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.Status;
-import com.example.medicalappreminder_java.Model.Medicine;
+import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.User;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -25,6 +28,20 @@ public class Converters {
 
     @androidx.room.TypeConverter
     public static String convertUsersFromListToString(List<User> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    //list<date>
+    @androidx.room.TypeConverter
+    public static List<Date> convertMedFromStringToList(String value) {
+        Type listType = new TypeToken<List<Date>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @androidx.room.TypeConverter
+    public static String convertMedFromListToString(List<Date> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;
@@ -59,14 +76,14 @@ public class Converters {
     //hashmap
     @TypeConverter
     @JvmStatic
-    public static HashMap<List<Date>, Status> stringToMap(String value){
-        Type listType = new TypeToken<HashMap<List<Date>, Status>>() {}.getType();
+    public static HashMap<List<Time>, Status> stringToMap(String value){
+        Type listType = new TypeToken<HashMap<List<Time>, Status>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
     @JvmStatic
-    public static String mapToString(HashMap<List<Date>, Status> value) {
+    public static String mapToString(HashMap<List<Time>, Status> value) {
         return value == null ? "" : new Gson().toJson(value);
     }
 }
