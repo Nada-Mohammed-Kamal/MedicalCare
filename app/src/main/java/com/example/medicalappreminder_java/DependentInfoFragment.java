@@ -56,13 +56,6 @@ public class DependentInfoFragment extends Fragment {
          male = view.findViewById(R.id.maleRadioBtniD);
          radioGroup = view.findViewById(R.id.radioGroup);
         //ll fragment navigation
-        view.findViewById(R.id.add_dependentId).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigation.findNavController(view).navigate(R.id.navigateFromDependentToHomeFragmentActionId);
-            }
-        });
-
          /*
                 anady 3ala get selected gender lama agy a save al object 3ashan a retrive al selected
           */

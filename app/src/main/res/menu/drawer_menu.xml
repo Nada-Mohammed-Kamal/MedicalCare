@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Profiles"
+            android:title="@string/Profiles">
+            <menu>
+                <item
+                    android:id="@+id/username"
+
+                    android:title="User name" />
+                <item
+                    android:id="@+id/add_dependent"
+                    android:icon="@drawable/ic_baseline_add_circle_24"
+                    android:title="@string/add_dependent" />
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/MedFriends"
+            android:title="@string/MedFriends">
+            <menu>
+                <item
+                    android:id="@+id/InviteMedfriend"
+                    android:icon="@drawable/ic_baseline_add_circle_24"
+                    android:title="Invite Medfriend" />
+                <item
+                    android:id="@+id/verification_code"
+                    android:icon="@drawable/ic_baseline_confirmation_number_24"
+                    android:title="@string/verification_code" />
+            </menu>
+        </item>
+    </group>
+</menu>

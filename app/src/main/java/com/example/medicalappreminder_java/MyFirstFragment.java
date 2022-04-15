@@ -45,12 +45,7 @@ public class MyFirstFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mainRecyclerAdapter);
         //for the fragment navigation
-        view.findViewById(R.id.add_pills).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigation.findNavController(view).navigate(R.id.navigateFromHomeFragmentToDependentActionId);
-            }
-        });
+
     }
 
     @Override

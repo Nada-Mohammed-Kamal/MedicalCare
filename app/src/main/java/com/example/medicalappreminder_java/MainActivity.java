@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
@@ -21,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        startActivity(new Intent(MainActivity.this , SignUpActivity.class));
+        startActivity(new Intent(MainActivity.this , HomeScreen.class));
 
 //        getSupportActionBar().hide();
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(myToolbar);
 
 
-         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+       /*  BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
          BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 };
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);*/
 
 
     }
+
+
 }
