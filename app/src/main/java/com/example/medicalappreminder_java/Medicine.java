@@ -1,38 +1,73 @@
 package com.example.medicalappreminder_java;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.Constants.Strength;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+@Entity
 public class Medicine {
-    //when setting the uuid we use
-    //uuid = UUID.randomUUID();
+    @ColumnInfo(name = "id")
+    @PrimaryKey
+    @NonNull
     private UUID uuid;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "form")
     private Form form;
+    @ColumnInfo(name = "strength")
     private Strength strength;
+    @ColumnInfo(name = "StrengthAmount")
     private int StrengthAmount;
+    @ColumnInfo(name = "numberOfPillsLeft")
     private double numberOfPillsLeft;//(auto dec ma3 kol mara na5od al 7abaya w initially hatab2a bt equal al total),
+    @ColumnInfo(name = "image")
     private int image;
+    @ColumnInfo(name = "isEveryday")
     private boolean isEveryday;
+    @ColumnInfo(name = "condition")
     private String condition;
+    @ColumnInfo(name = "Dose_howOften")
     private String Dose_howOften;
+    @ColumnInfo(name = "startDate")
     private Date startDate;
+    @ColumnInfo(name = "endDate")
     private Date endDate;
+    @ColumnInfo(name = "totalNumOfPills")
     private int totalNumOfPills;
+    @ColumnInfo(name = "howManyTimesWillItBeTakenInADay")
     private int howManyTimesWillItBeTakenInADay;
+    @ColumnInfo(name = "instructions")
     private String instructions;
-    private String state;
-    private List<Date> doseTimes;
+    @ColumnInfo(name = "state")
+    private String state;//active , inactive
+    @ColumnInfo(name = "doseTimes")
+    private HashMap<List<Date>, Status> doseTimes;
+    @ColumnInfo(name = "hasRefillReminder")
     private boolean hasRefillReminder;
+    @ColumnInfo(name = "timeToShowTheReminderIn")
     private Date timeToShowTheReminderIn;
+    @ColumnInfo(name = "rxNumber")
     private String rxNumber;
 
     public Medicine() {
     }
 
-    public Medicine(UUID id, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, String dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<Date> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber) {
-        this.uuid = id;
+
+
+
+    public Medicine(UUID uuid ,String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, String dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<Date>, Status> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber) {
+        this.uuid = uuid;
         this.name = name;
         this.form = form;
         this.strength = strength;
@@ -54,7 +89,8 @@ public class Medicine {
         this.rxNumber = rxNumber;
     }
 
-    public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft , int image) {
+    public Medicine(UUID uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft , int image) {
+        this.uuid = uuid;
         this.name = name;
         this.form = form;
         this.strength = strength;
@@ -63,12 +99,15 @@ public class Medicine {
         this.image = image;
     }
 
+
+
+
     public UUID getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID id) {
-        this.uuid = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public boolean isEveryday() {
@@ -143,11 +182,11 @@ public class Medicine {
         this.state = state;
     }
 
-    public List<Date> getDoseTimes() {
+    public HashMap<List<Date>, Status> getDoseTimes() {
         return doseTimes;
     }
 
-    public void setDoseTimes(List<Date> doseTimes) {
+    public void setDoseTimes(HashMap<List<Date>, Status> doseTimes) {
         this.doseTimes = doseTimes;
     }
 
