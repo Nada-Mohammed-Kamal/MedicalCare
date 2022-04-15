@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.ArrayList;
 import java.util.List;

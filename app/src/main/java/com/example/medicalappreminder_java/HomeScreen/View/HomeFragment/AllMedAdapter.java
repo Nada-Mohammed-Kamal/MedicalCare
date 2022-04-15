@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.ArrayList;
 import java.util.List;
