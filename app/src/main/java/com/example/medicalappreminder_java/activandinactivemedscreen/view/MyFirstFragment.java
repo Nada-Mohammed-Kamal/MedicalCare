@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.activandinactivemedscreen.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.activandinactivemedscreen.model.Section;
+import com.example.medicalappreminder_java.activandinactivemedscreen.view.MainRecyclerAdapter;
+import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +39,6 @@ public class MyFirstFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Your RecyclerView
-
 
     }
 
@@ -64,7 +67,6 @@ public class MyFirstFragment extends Fragment {
         return view;
     }
 
-    //hena b add bs shwayat data static
     private void initData(){
         String sectionOneName = "Active";
         List<Medicine> sectionOneItems = new ArrayList<>();

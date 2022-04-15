@@ -2,14 +2,17 @@ package com.example.medicalappreminder_java;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.room.RoomDatabase;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.medicalappreminder_java.DependantInfo.DependentInfoFragment;
+import com.example.medicalappreminder_java.activandinactivemedscreen.view.MyFirstFragment;
+import com.example.medicalappreminder_java.roomdb.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         startActivity(new Intent(MainActivity.this , SignUpActivity.class));
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+
 
 
     }

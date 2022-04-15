@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.medicalappreminder_java.Medicine;
+import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.Date;
 import java.util.List;

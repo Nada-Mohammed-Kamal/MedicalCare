@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dependentInfoFragment"
-        android:name="com.example.medicalappreminder_java.DependentInfoFragment"
+        android:name="com.example.medicalappreminder_java.DependantInfo.DependentInfoFragment"
         android:label="fragment_dependent_info"
         tools:layout="@layout/fragment_dependent_info" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/myFirstFragment"
-        android:name="com.example.medicalappreminder_java.MyFirstFragment"
+        android:name="com.example.medicalappreminder_java.activandinactivemedscreen.view.MyFirstFragment"
         android:label="fragment_my_first_frgment"
         tools:layout="@layout/fragment_my_first_frgment" >
         <action
