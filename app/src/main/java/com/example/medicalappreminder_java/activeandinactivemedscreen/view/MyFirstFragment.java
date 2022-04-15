@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.activeandinactivemedscreen.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.activeandinactivemedscreen.model.Section;
 import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.ArrayList;
