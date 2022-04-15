@@ -66,7 +66,7 @@ public class HomeScreen extends AppCompatActivity {
                 toolbar.setTitle(item.getTitle());
                 switch (item.getItemId())
                 {
-                    case R.id.username:
+                    case R.id.home:
                         Toast.makeText(HomeScreen.this,"Home",Toast.LENGTH_SHORT).show();
 
                         break;

@@ -8,7 +8,7 @@
             android:title="@string/Profiles">
             <menu>
                 <item
-                    android:id="@+id/username"
+                    android:id="@+id/home"
 
                     android:title="User name" />
                 <item
