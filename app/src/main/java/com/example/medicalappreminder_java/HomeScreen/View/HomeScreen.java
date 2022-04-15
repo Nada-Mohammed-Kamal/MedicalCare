@@ -11,12 +11,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.animation.Animator;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.dependantInfo.DependentInfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -50,6 +52,7 @@ public class HomeScreen extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController2);
 
        // extendedFloatingActionButton = findViewById(R.id.ExtendedFloatingActionButtonAddMed);
+            // do something with f
 
         findViewById(R.id.ExtendedFloatingActionButtonAddMed).setOnClickListener(new View.OnClickListener() {
             @Override

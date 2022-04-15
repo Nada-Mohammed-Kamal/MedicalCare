@@ -17,6 +17,7 @@ import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +45,9 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ExtendedFloatingActionButton e = getActivity().findViewById(R.id.ExtendedFloatingActionButtonAddMed);
+        if(e != null)
+            e.setVisibility(View.VISIBLE);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

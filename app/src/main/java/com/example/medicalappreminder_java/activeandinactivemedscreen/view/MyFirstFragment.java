@@ -18,6 +18,7 @@ import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.activeandinactivemedscreen.model.Section;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,9 @@ public class MyFirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ExtendedFloatingActionButton e = getActivity().findViewById(R.id.ExtendedFloatingActionButtonAddMed);
+        if(e != null)
+            e.setVisibility(View.VISIBLE);
         view = inflater.inflate(R.layout.fragment_my_first_frgment, container, false);
         return view;
     }
