@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
-import com.example.medicalappreminder_java.Medicine;
 import com.example.medicalappreminder_java.R;
 
 import java.text.SimpleDateFormat;

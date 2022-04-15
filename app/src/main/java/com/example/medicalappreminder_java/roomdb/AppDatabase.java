@@ -7,8 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.medicalappreminder_java.Converters;
-import com.example.medicalappreminder_java.Medicine;
 import com.example.medicalappreminder_java.User;
 
 @Database(entities = {User.class , Medicine.class}, version = 1)
