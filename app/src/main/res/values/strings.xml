@@ -23,5 +23,10 @@
     <string name="med">Med</string>
     <string name="Refills">Refills</string>
     <string name="Logout">Log out</string>
+    <string name="medName">Medication Name</string>
+    <string name="reminders">Reminders</string>
+    <string name="timesPerDay">X times per day</string>
+    <string name="medIcon">Medication Icon</string>
+    <string name="medCondition">Condition</string>
 
 </resources>
