@@ -4,17 +4,17 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home"
+        android:title="@string/home"
         />
     <item
         android:id="@+id/medication"
         android:icon="@drawable/ic_baseline_medical_services_24"
-        android:title="Medications"
+        android:title="@string/medications"
         />
 
     <item
-        android:id="@+id/more"
-        android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="More"
+        android:id="@+id/Refills"
+        android:icon="@drawable/refill_icon"
+        android:title="@string/Refills"
         />
 </menu>

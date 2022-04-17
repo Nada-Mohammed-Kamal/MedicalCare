@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.dependantInfo;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.example.medicalappreminder_java.R;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.io.DataInput;
 import java.text.SimpleDateFormat;
@@ -56,13 +59,6 @@ public class DependentInfoFragment extends Fragment {
          male = view.findViewById(R.id.maleRadioBtniD);
          radioGroup = view.findViewById(R.id.radioGroup);
         //ll fragment navigation
-        view.findViewById(R.id.add_dependentId).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigation.findNavController(view).navigate(R.id.navigateFromDependentToHomeFragmentActionId);
-            }
-        });
-
          /*
                 anady 3ala get selected gender lama agy a save al object 3ashan a retrive al selected
           */
@@ -119,6 +115,9 @@ public class DependentInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_dependent_info, container, false);
+        ExtendedFloatingActionButton e = getActivity().findViewById(R.id.ExtendedFloatingActionButtonAddMed);
+        if(e != null)
+            e.setVisibility(View.GONE);
         return view;
     }
 }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#0a5087"
-        tools:context=".DependentInfoFragment">
+        tools:context=".DependantInfo.DependentInfoFragment">
 
 
 
@@ -20,10 +20,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.24" />
-        <com.example.medicalappreminder_java.RoundedCornerLayout
+
+        <com.example.medicalappreminder_java.uihelper.RoundedCornerLayout
             android:id="@+id/view"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="594dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="-30dp"
             android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,15 +34,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline2">
 
-        </com.example.medicalappreminder_java.RoundedCornerLayout>
+        </com.example.medicalappreminder_java.uihelper.RoundedCornerLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view">
+
+            <Button
+                android:layout_width="180dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="40dp"
+                android:background="#2196F3"
+                android:text="@string/add_dependent"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateId" />
 
             <EditText
                 android:id="@+id/firstNameDepId"
@@ -126,21 +143,6 @@
                 app:layout_constraintStart_toStartOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/add_dependentId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="28dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#0a5087"
-                android:clickable="true"
-                android:src="@drawable/ic_add"
-                android:textColor="@color/white"
-                app:icon="@drawable/ic_add"
-                app:iconTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/dateId"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="SpeakableTextPresentCheck"></com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -153,6 +155,7 @@
             app:layout_constraintTop_toTopOf="@id/guideline2"
             android:src="@mipmap/ic_launcher"
             />
+
 
         <TextView
             android:id="@+id/textView9"

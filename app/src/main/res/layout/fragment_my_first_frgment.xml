@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    class = "com.example.medicalappreminder_java.MyFirstFragment"
+    class = "com.example.medicalappreminder_java.activeandinactivemedscreen.view.MyFirstFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyFirstFragment">
+    tools:context=".activeandinactivemedscreen.view.MyFirstFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -23,24 +23,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:text="Add Med"
-            app:icon="@drawable/ic_add"
-            android:backgroundTint="#0a5087"
-            android:id="@+id/add_pills"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:layout_marginEnd="28dp"
-            android:src="@drawable/ic_add"
-            android:textColor="@color/white"
-            app:iconTint="@color/white"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            ></com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

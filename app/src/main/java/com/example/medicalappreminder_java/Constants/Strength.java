@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.Constants;
 
 public enum Strength {
     g,

@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java;
+package com.example.medicalappreminder_java.activeandinactivemedscreen.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,13 +9,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.activeandinactivemedscreen.model.Section;
+import com.example.medicalappreminder_java.models.Medicine;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MyFirstFragment extends Fragment {
     RecyclerView mRecyclerView;
@@ -45,18 +52,16 @@ public class MyFirstFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mainRecyclerAdapter);
         //for the fragment navigation
-        view.findViewById(R.id.add_pills).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Navigation.findNavController(view).navigate(R.id.navigateFromHomeFragmentToDependentActionId);
-            }
-        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ExtendedFloatingActionButton e = getActivity().findViewById(R.id.ExtendedFloatingActionButtonAddMed);
+        if(e != null)
+            e.setVisibility(View.VISIBLE);
         view = inflater.inflate(R.layout.fragment_my_first_frgment, container, false);
         return view;
     }
@@ -65,14 +70,14 @@ public class MyFirstFragment extends Fragment {
     private void initData(){
         String sectionOneName = "Active";
         List<Medicine> sectionOneItems = new ArrayList<>();
-        sectionOneItems.add(new Medicine("panadol" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
-        sectionOneItems.add(new Medicine("panadrex" , Form.Pill , Strength.g , 3 , 10,R.drawable.pill));
-        sectionOneItems.add(new Medicine("drips" , Form.Drops , Strength.mcg_ml , 2 , 10,R.drawable.drops));
+        sectionOneItems.add(new Medicine(UUID.randomUUID() ,"panadol" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
+        sectionOneItems.add(new Medicine(UUID.randomUUID() ,"panadrex" , Form.Pill , Strength.g , 3 , 10,R.drawable.pill));
+        sectionOneItems.add(new Medicine(UUID.randomUUID(), "drips" , Form.Drops , Strength.mcg_ml , 2 , 10,R.drawable.drops));
 
         String sectionTwoName = "Inactive";
         List<Medicine> sectionTwoItems = new ArrayList<>();
-        sectionTwoItems.add(new Medicine("catafast" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
-        sectionTwoItems.add(new Medicine("cataflam" , Form.Pill , Strength.g , 6 , 9,R.drawable.pill));
+        sectionTwoItems.add(new Medicine(UUID.randomUUID() ,"catafast" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
+        sectionTwoItems.add(new Medicine(UUID.randomUUID() ,"cataflam" , Form.Pill , Strength.g , 6 , 9,R.drawable.pill));
 
 
         sections = new ArrayList<>();

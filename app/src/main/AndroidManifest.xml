@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicalappreminder_java">
 
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava">
         <activity
+
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
             android:exported="true" />
         <activity
@@ -18,6 +23,10 @@
         <activity
             android:name=".Login.LoginView.LoginActivity"
             android:exported="true" />
+
+            android:name=".HomeScreen.View.HomeScreen"
+            android:exported="false" />
+
         <activity
             android:name=".SignUp.View.SignUpActivity"
             android:exported="true" />
