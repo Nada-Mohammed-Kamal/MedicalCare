@@ -6,9 +6,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.medicalappreminder_java.Medicine;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
-import com.example.medicalappreminder_java.User;
+
+import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;

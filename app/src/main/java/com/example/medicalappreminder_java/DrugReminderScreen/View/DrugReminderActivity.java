@@ -9,12 +9,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenter;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenterInterface;
-import com.example.medicalappreminder_java.Form;
-import com.example.medicalappreminder_java.Medicine;
+
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.Strength;
+import com.example.medicalappreminder_java.models.Medicine;
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +90,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         medicine.setHasRefillReminder(true);
         medicine.setTotalNumOfPills(20);
         medicine.setImage(R.drawable.inhaler);
-        medicine.setDoseTimes(dates);
+      //  medicine.setDoseTimes(dates);
         medicine.setDose_howOften("twice daily");
         medicine.setEveryday(true);
         if (medicine.isEveryday() == true) {
@@ -107,7 +109,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         LinearLayoutManager layoutManager = new LinearLayoutManager(DrugReminderActivity.this) ;
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         drugReminderRecyclerView.setLayoutManager(layoutManager);
-        drugReminderAdapter = new DrugReminderAdapter(DrugReminderActivity.this , medicine) ;
+       // drugReminderAdapter = new DrugReminderAdapter(DrugReminderActivity.this , medicine) ;
         drugReminderRecyclerView.setAdapter(drugReminderAdapter);
     }
 
