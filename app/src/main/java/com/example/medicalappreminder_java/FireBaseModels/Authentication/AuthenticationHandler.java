@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
+import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,6 +26,7 @@ public class AuthenticationHandler {
     SignUpViewInterface signUpViewRef ;
     LogInViewInterface logInView ;
     private Context context ;
+    SharedPrefrencesModel sharedPrefrencesModel ;
 
     private FirebaseAuth mAuth;
     private FirebaseUser user ;
@@ -71,6 +73,7 @@ public class AuthenticationHandler {
         mAuth = FirebaseAuth.getInstance();
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build() ;
         googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions) ;
+        sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
     }
 
 
@@ -124,6 +127,7 @@ public class AuthenticationHandler {
                         // go to specific screen
                         // shared preferences
                         logInView.makeToast("Login successfully");
+                        sharedPrefrencesModel.writeInSharedPreferences(email,password);
                         logInView.gotoHomeScreen();
                     } else {
                         logInView.makeToast(task.getException().getMessage());

@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 public class SharedPrefrencesModel {
 
     String emailFromPref , passwordFromPref ;
-    String preferenceFile = "preferencesFile";
+    public static String preferenceFile = "preferencesFile";
     Context context ;
     public static SharedPrefrencesModel sharedPrefrencesModel = null ;
 
