@@ -12,11 +12,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.animation.Animator;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
+import com.example.medicalappreminder_java.MainActivity;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.dependantInfo.DependentInfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,7 +60,7 @@ public class HomeScreen extends AppCompatActivity {
         findViewById(R.id.ExtendedFloatingActionButtonAddMed).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeScreen.this,"Add med",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomeScreen.this , AddMedicine.class));
 
             }
         });

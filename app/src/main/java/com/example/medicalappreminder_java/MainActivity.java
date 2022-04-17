@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

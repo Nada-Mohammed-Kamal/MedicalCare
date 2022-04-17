@@ -23,5 +23,28 @@
     <string name="med">Med</string>
     <string name="Refills">Refills</string>
     <string name="Logout">Log out</string>
+    <string name="MedName">Name:</string>
+    <string name="Form">Form:</string>
+    <string name="pill">Pill</string>
+    <string name="Solution">Solution</string>
+    <string name="Injection">Injection</string>
+    <string name="Powder" >Powder</string>
+    <string name="Drops" >Drops</string>
+    <string name="Inhaler">Inhaler</string>
+    <string name="Other">Other</string>
+    <string name="Strength">Strength</string>
+    <string name="g">g</string>
+    <string name="mg">mg</string>
+    <string name="iu">IU</string>
+    <string name="mg_g">mg_g</string>
+    <string name="ml">mL</string>
+    <string name="meq">mEq</string>
+    <string name="mcg_ml">mcg_ml</string>
+    <string name="mcg">mcg</string>
+    <string name="mcg_hr">mcg_hr</string>
+    <string name="mg_ml">mg_ml</string>
+    <string name="mg_cm2">mg_cm2</string>
+    <string name="add">add</string>
+    <string name="Next">Next</string>
 
 </resources>

@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../layout/custom_preview.xml" value="0.1537037037037037" />
-
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/ic_account_circle.xml" value="0.2703125" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/ic_baseline_confirmation_number_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/menu.xml" value="0.2703125" />
+        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/radio_flat_regular.xml" value="0.2" />
+        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/radio_flat_selected.xml" value="0.2" />
+        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/radio_flat_selector.xml" value="0.2703125" />
+        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/radio_flat_text_selector.xml" value="0.2" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/drawable/white_oval.xml" value="0.2703125" />
+        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_add_medicine.xml" value="0.2" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_home_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_main.xml" value="0.1140625" />
@@ -26,12 +30,10 @@
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/toolbar.xml" value="0.19427083333333334" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/menu/drawer_menu.xml" value="0.25416666666666665" />
-
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_sign_up.xml" value="0.11246200607902736" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_add_medication_third_part.xml" value="0.11246200607902736" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_dependent_info.xml" value="0.1" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_sign_up.xml" value="0.11246200607902736" />
-
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_login.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_req_one_tap.xml" value="0.18697916666666667" />
         <entry key="..\:/iti content/Android-java/AndroidProjects/MedicalAppReminderJava/app/src/main/res/layout/activity_sign_up.xml" value="0.21354166666666666" />
