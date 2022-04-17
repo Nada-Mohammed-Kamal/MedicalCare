@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java.FireBaseModels;
+package com.example.medicalappreminder_java.FireBaseModels.Authentication;
 
 import android.content.Context;
 import android.content.Intent;

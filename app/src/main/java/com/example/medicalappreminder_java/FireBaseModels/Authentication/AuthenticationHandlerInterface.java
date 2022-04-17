@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java.FireBaseModels;
+package com.example.medicalappreminder_java.FireBaseModels.Authentication;
 
 public interface AuthenticationHandlerInterface {
 

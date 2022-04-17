@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.util.Patterns;
 
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
-import com.example.medicalappreminder_java.FireBaseModels.AuthenticationHandler;
+import com.example.medicalappreminder_java.FireBaseModels.Authentication.AuthenticationHandler;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
-import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 public class LogInPresenter implements LogInPresenterInterface{

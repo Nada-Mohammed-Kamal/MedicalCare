@@ -20,7 +20,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
+import com.example.medicalappreminder_java.Form;
+import com.example.medicalappreminder_java.Medicine;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.Strength;
+import com.example.medicalappreminder_java.User;
 
 
 public class NotificationDialogActivity extends AppCompatActivity {
@@ -29,6 +34,7 @@ public class NotificationDialogActivity extends AppCompatActivity {
     Dialog dialog ;
     private final String CHANNEL_ID = "ID";
     NotificationManager notificationManager;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,14 @@ public class NotificationDialogActivity extends AppCompatActivity {
         openDialogeButton.setOnClickListener(view -> {
             Log.e("xxx", "onClick: ");
             openDialoge() ;
+
         });
 
         notifyButton.setOnClickListener(view -> {notifyMe();});
 
     }
+
+
 
     private void openDialoge() {
 

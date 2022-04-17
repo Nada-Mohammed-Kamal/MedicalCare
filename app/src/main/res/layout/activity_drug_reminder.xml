@@ -19,56 +19,62 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="57dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
         android:backgroundTint="@color/teal_700"
-        app:icon="@drawable/ic_baseline_arrow_back__white_24"
-        app:iconTint="@color/white"
         android:textColor="#F8F4F4"
         android:textSize="12sp"
         app:cornerRadius="8dp"
+        app:icon="@drawable/ic_baseline_arrow_back__white_24"
+        app:iconTint="@color/white"
         app:layout_constraintStart_toStartOf="@+id/upperView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/editDrugButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/ic_baseline_edit_24"
         android:backgroundTint="@color/teal_700"
-        android:text="edit"
         android:textColor="#F8F4F4"
         android:textSize="12sp"
         app:cornerRadius="8dp"
+        app:icon="@drawable/ic_baseline_edit_24"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/upperView"
-        app:layout_constraintTop_toTopOf="@id/upperView" />
+        app:layout_constraintTop_toTopOf="@id/upperView"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/deleteDrugButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_baseline_delete_24"
+        android:background="?attr/selectableItemBackground"
         android:backgroundTint="@color/teal_700"
-        android:text="delete"
         android:textColor="#F8F4F4"
         android:textSize="12sp"
         app:cornerRadius="8dp"
+        app:icon="@drawable/ic_baseline_delete_24"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/editDrugButton"
-        app:layout_constraintTop_toTopOf="@id/upperView" />
+        app:layout_constraintTop_toTopOf="@id/upperView"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/reminderDrugIconImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/pill"
         app:layout_constraintStart_toStartOf="@+id/upperView"
         app:layout_constraintTop_toTopOf="@+id/upperView" />
@@ -102,6 +108,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Reminders"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upperView" />
 
@@ -149,6 +156,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Condition"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drugReminderRecycylerView" />
 
@@ -169,6 +177,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="Prescription Refill"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conditionTextView" />
 
@@ -192,11 +201,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/PrescriptionRefillJustTitle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addDoseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Dose"
+        android:backgroundTint="@color/teal_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

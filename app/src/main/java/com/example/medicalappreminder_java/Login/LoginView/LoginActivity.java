@@ -1,6 +1,6 @@
 package com.example.medicalappreminder_java.Login.LoginView;
 
-import static com.example.medicalappreminder_java.FireBaseModels.AuthenticationHandler.RC_SIGN_IN;
+import static com.example.medicalappreminder_java.FireBaseModels.Authentication.AuthenticationHandler.RC_SIGN_IN;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +16,6 @@ import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
-import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
 
 public class LoginActivity extends AppCompatActivity implements LogInViewInterface {
 
