@@ -13,6 +13,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="addMedicaton">Add Medication</string>
+
+    <string name="do_not_have_acc">Don\'t Have Account, Sign Up.</string>
+
     <string name="Profiles">Profiles</string>
     <string name="add_dependent">Add dependent</string>
     <string name="MedFriends">MedFriends</string>
@@ -28,5 +31,6 @@
     <string name="timesPerDay">X times per day</string>
     <string name="medIcon">Medication Icon</string>
     <string name="medCondition">Condition</string>
+
 
 </resources>

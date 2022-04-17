@@ -87,7 +87,7 @@ public class DependentInfoFragment extends Fragment {
     }
 
     private String getSelectedGender(){
-        // get selected radio button from radioGroup
+        // get selected radio doNotHaveAccButton from radioGroup
          selectedId = radioGroup.getCheckedRadioButtonId();
          return checkSelectedGender();
     }

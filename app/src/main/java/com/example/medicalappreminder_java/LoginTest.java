@@ -15,7 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class Login extends AppCompatActivity {
+public class LoginTest extends AppCompatActivity {
 
     GoogleSignInOptions googleSignInOptions ;
     GoogleSignInClient googleSignInClient ;
@@ -25,7 +25,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_test);
 
         email = findViewById(R.id.emailTxtv) ;
         pass = findViewById(R.id.passwordTxtv) ;
