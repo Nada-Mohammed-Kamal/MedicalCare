@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicalappreminder_java">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,10 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava">
         <activity
+            android:name=".DrugReminderScreen.View.DrugReminderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".NotificationDialog.NotificationDialogActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Login.LoginView.LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignUp.View.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".Login"
+            android:name=".LoginTest"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
