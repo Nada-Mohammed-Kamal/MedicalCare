@@ -26,6 +26,7 @@
     <string name="med">Med</string>
     <string name="Refills">Refills</string>
     <string name="Logout">Log out</string>
+
     <string name="MedName">Name:</string>
     <string name="Form">Form:</string>
     <string name="pill">Pill</string>
@@ -56,6 +57,13 @@
     <string name="howa_many_times_in_a_day">Howa many times in a day</string>
     <string name="set_dosing_schedule">Set dosing schedule</string>
     <string name="finish">Finish</string>
+
+    <string name="medName">Medication Name</string>
+    <string name="reminders">Reminders</string>
+    <string name="timesPerDay">X times per day</string>
+    <string name="medIcon">Medication Icon</string>
+    <string name="medCondition">Condition</string>
+
 
 
 </resources>
