@@ -28,8 +28,8 @@
     <string name="pill">Pill</string>
     <string name="Solution">Solution</string>
     <string name="Injection">Injection</string>
-    <string name="Powder" >Powder</string>
-    <string name="Drops" >Drops</string>
+    <string name="Powder">Powder</string>
+    <string name="Drops">Drops</string>
     <string name="Inhaler">Inhaler</string>
     <string name="Other">Other</string>
     <string name="Strength">Strength</string>
@@ -46,5 +46,12 @@
     <string name="mg_cm2">mg_cm2</string>
     <string name="add">add</string>
     <string name="Next">Next</string>
+    <string name="what_are_you_taking_it_for">What are you taking it for?</string>
+    <string name="time_reminder">Time Reminder</string>
+    <string name="start_date">Start date:</string>
+    <string name="end_date">End date</string>
+    <string name="howa_many_times_in_a_day">Howa many times in a day</string>
+    <string name="set_dosing_schedule">Set dosing schedule</string>
+    <string name="finish">Finish</string>
 
 </resources>
