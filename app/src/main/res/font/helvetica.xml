@@ -3,10 +3,10 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/Helvetica" />
+        android:font="@font/helvetica2" />
 
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/HelveticaBold" />
+        android:font="@font/helvetica_bold" />
 </font-family>
