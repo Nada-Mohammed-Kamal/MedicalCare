@@ -13,6 +13,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="addMedicaton">Add Medication</string>
+
+    <string name="do_not_have_acc">Don\'t Have Account, Sign Up.</string>
+
     <string name="Profiles">Profiles</string>
     <string name="add_dependent">Add dependent</string>
     <string name="MedFriends">MedFriends</string>
@@ -53,5 +56,6 @@
     <string name="howa_many_times_in_a_day">Howa many times in a day</string>
     <string name="set_dosing_schedule">Set dosing schedule</string>
     <string name="finish">Finish</string>
+
 
 </resources>

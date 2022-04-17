@@ -1,9 +1,6 @@
-package com.example.medicalappreminder_java.SignUp.View;
+package com.example.medicalappreminder_java.Login.LoginView;
 
-import android.widget.EditText;
-import android.widget.ProgressBar;
-
-public interface SignUpViewInterface {
+public interface LogInViewInterface {
 
     public String getEmail() ;
     public String getPassword() ;
@@ -12,7 +9,6 @@ public interface SignUpViewInterface {
     public void makeToast(String message) ;
     public void setProgressbarVisible() ;
     public void setProgressbarGone();
-    public void gotoLoginScreen() ;
-
+    public void gotoHomeScreen();
 
 }

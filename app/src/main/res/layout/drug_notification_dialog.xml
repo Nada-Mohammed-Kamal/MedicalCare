@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="20dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center">
+
+                <TextView
+                    android:id="@+id/dialogTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="01:50 AM"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:autoSizeTextType="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/dialogDrugIconimageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dialogTimeTextView"
+                    app:srcCompat="@drawable/pill" />
+
+                <TextView
+                    android:id="@+id/dialogDrugNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Drug Name"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dialogDrugIconimageView"
+                    tools:text="Drug Name" />
+
+                <TextView
+                    android:id="@+id/dialogDrugDescrTextView"
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Description"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dialogDrugNameTextView"
+                    tools:text="Description" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dialogSnoozeButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/teal_700"
+                    app:icon="@drawable/ic_baseline_schedule_24"
+                    app:iconTint="@color/white"
+                    android:textColor="#F8F4F4"
+                    android:textSize="12sp"
+                    app:cornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/dialogTakeButton"
+                    app:layout_constraintTop_toBottomOf="@id/dialogDrugDescrTextView"
+                    app:strokeColor="@color/black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dialogTakeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:backgroundTint="@color/teal_700"
+                    app:icon="@drawable/ic_baseline_check_24"
+                    android:textSize="12sp"
+                    app:cornerRadius="8dp"
+                    app:layout_constraintEnd_toStartOf="@id/dialogSnoozeButton"
+                    app:layout_constraintStart_toEndOf="@+id/dialogSkipButton"
+                    app:layout_constraintTop_toBottomOf="@id/dialogDrugDescrTextView"
+                    app:strokeColor="@color/black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dialogSkipButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:backgroundTint="@color/teal_700"
+                    android:textColor="#F8F5F5"
+                    android:textSize="12sp"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_baseline_close_24"
+                    app:iconTint="@color/white"
+                    app:layout_constraintEnd_toStartOf="@id/dialogTakeButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dialogDrugDescrTextView"
+                    app:strokeColor="@color/black" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

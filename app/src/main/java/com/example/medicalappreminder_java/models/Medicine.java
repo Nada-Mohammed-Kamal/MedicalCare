@@ -44,6 +44,8 @@ public class Medicine {
     private Date startDate;
     @ColumnInfo(name = "endDate")
     private Date endDate;
+    @ColumnInfo(name = "fowHowManyDaysIsTheMedicineGoingToBeTaken")
+    private int fowHowManyDaysIsTheMedicineGoingToBeTaken;
     @ColumnInfo(name = "totalNumOfPills")
     private int totalNumOfPills;
     @ColumnInfo(name = "howManyTimesWillItBeTakenInADay")
@@ -60,6 +62,8 @@ public class Medicine {
     private Date timeToShowTheReminderIn;
     @ColumnInfo(name = "rxNumber")
     private String rxNumber;
+    @ColumnInfo(name = "remindMeWhenIHaveHowManyPillsLeft")
+    private double remindMeWhenIHaveHowManyPillsLeft;
 
     //modified
     @ColumnInfo(name = "daysThatTheMedWillBeTakenIn")
@@ -69,6 +73,49 @@ public class Medicine {
     private int numberOfPillsInOneTime;
 
     public Medicine() {
+    }
+
+    public int getFowHowManyDaysIsTheMedicineGoingToBeTaken() {
+        return fowHowManyDaysIsTheMedicineGoingToBeTaken;
+    }
+
+    public void setFowHowManyDaysIsTheMedicineGoingToBeTaken(int fowHowManyDaysIsTheMedicineGoingToBeTaken) {
+        this.fowHowManyDaysIsTheMedicineGoingToBeTaken = fowHowManyDaysIsTheMedicineGoingToBeTaken;
+    }
+
+    public double getRemindMeWhenIHaveHowManyPillsLeft() {
+        return remindMeWhenIHaveHowManyPillsLeft;
+    }
+
+    public void setRemindMeWhenIHaveHowManyPillsLeft(double remindMeWhenIHaveHowManyPillsLeft) {
+        this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
+    }
+
+    public Medicine(@NonNull UUID uuid, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, String dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<Time>, Status> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn, int numberOfPillsInOneTime) {
+        this.uuid = uuid;
+        this.name = name;
+        this.form = form;
+        this.strength = strength;
+        StrengthAmount = strengthAmount;
+        this.numberOfPillsLeft = numberOfPillsLeft;
+        this.image = image;
+        this.isEveryday = isEveryday;
+        this.condition = condition;
+        Dose_howOften = dose_howOften;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.fowHowManyDaysIsTheMedicineGoingToBeTaken = fowHowManyDaysIsTheMedicineGoingToBeTaken;
+        this.totalNumOfPills = totalNumOfPills;
+        this.howManyTimesWillItBeTakenInADay = howManyTimesWillItBeTakenInADay;
+        this.instructions = instructions;
+        this.state = state;
+        this.doseTimes = doseTimes;
+        this.hasRefillReminder = hasRefillReminder;
+        this.timeToShowTheReminderIn = timeToShowTheReminderIn;
+        this.rxNumber = rxNumber;
+        this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
+        this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
+        this.numberOfPillsInOneTime = numberOfPillsInOneTime;
     }
 
     public int getNumberOfPillsInOneTime() {

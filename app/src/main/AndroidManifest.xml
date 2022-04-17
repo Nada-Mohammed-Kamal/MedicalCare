@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicalappreminder_java">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -21,6 +23,18 @@
         <activity
             android:name=".HomeScreen.View.HomeScreen"
             android:exported="false" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
+
+		 <activity
+            android:name=".DrugReminderScreen.View.DrugReminderActivity"
+            android:exported="true" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".NotificationDialog.NotificationDialogActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Login.LoginView.LoginActivity"
+            android:exported="true" />
+
+  
         <activity
             android:name=".SignUp.View.SignUpActivity"
             android:exported="true" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
