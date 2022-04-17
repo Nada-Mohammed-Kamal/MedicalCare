@@ -21,11 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
-import com.example.medicalappreminder_java.Form;
-import com.example.medicalappreminder_java.Medicine;
+
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.Strength;
-import com.example.medicalappreminder_java.User;
+
 
 
 public class NotificationDialogActivity extends AppCompatActivity {
