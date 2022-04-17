@@ -1,5 +1,6 @@
 package com.example.medicalappreminder_java.NotificationDialog;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -19,11 +20,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
 
 import com.example.medicalappreminder_java.R;
-
+import com.example.medicalappreminder_java.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class NotificationDialogActivity extends AppCompatActivity {
@@ -32,12 +39,24 @@ public class NotificationDialogActivity extends AppCompatActivity {
     Dialog dialog ;
     private final String CHANNEL_ID = "ID";
     NotificationManager notificationManager;
+    FireStoreHandler fireStoreHandler ;
+
+    User user ;
+    private FirebaseFirestore firestoreDb;
+    CollectionReference usersFirestoreDb  ;
     
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_dialog);
+
+        //fireStoreHandler = new FireStoreHandler() ;
+        user = new User();
+        user.setFirstName("amr");
+        user.setLastName("mostafa");
+        user.setGender("male");
+        firestoreDb = FirebaseFirestore.getInstance();
 
         notifyButton = findViewById(R.id.notifyButton) ;
         openDialogeButton = findViewById(R.id.openDialogeButton) ;
@@ -46,13 +65,13 @@ public class NotificationDialogActivity extends AppCompatActivity {
         openDialogeButton.setOnClickListener(view -> {
             Log.e("xxx", "onClick: ");
             openDialoge() ;
+            fireStoreHandler.addUserToFireStore(user);
 
         });
 
         notifyButton.setOnClickListener(view -> {notifyMe();});
 
     }
-
 
 
     private void openDialoge() {
