@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.example.medicalappreminder_java.AddMedicine.View.AdapterForTakeDoseTi
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
 import com.example.medicalappreminder_java.models.DateTime;
 
 import java.text.SimpleDateFormat;
@@ -55,6 +57,7 @@ public class SecondAddMedScreen extends Fragment {
     Date endDate;
     int howManyTimes;
     String selected_val;
+    ArrayList<DateTime> dateTimes;
 
     String medName;
     Form formMed;
@@ -146,16 +149,17 @@ public class SecondAddMedScreen extends Fragment {
                     WhatReasonToTake = whatYouTakingForEditText.getText().toString();
                     selected_val = spinnerHowOftenYouTakeIt.getSelectedItem().toString();
                     howManyTimes = Integer.parseInt(doseTakenTime.getText().toString());
-                    ArrayList<DateTime> dateTimes = myAdapter.getTimes();
+                    dateTimes = myAdapter.getTimes();
                     if(dateTimes.size() == 0)
                         Toast.makeText(getContext(),"Please set all doses time",Toast.LENGTH_SHORT).show();
 
-                    Log.i("info", medName + " \n"+formMed.toString()+"\n"+strength.toString()+"\n"
-                                        + strengthAmount +"\n"+ WhatReasonToTake +"\n"+startDateid.getText().toString()
-                                        +"\n"+endDateid.getText().toString()+"\n"+ selected_val+"\n"+ howManyTimes );
-                    for (int i=0;i<dateTimes.size();i++) {
-                        Log.i("info",dateTimes.get(i).getHour()+"  "+dateTimes.get(i).getMinute());
-                    }
+                    DataFromSecondAddMedScreen dataFromSecondAddMedScreen = new DataFromSecondAddMedScreen(WhatReasonToTake,startDate,endDate,
+                                                                                    howManyTimes,selected_val,dateTimes,medName,formMed,
+                                                                                       strength,strengthAmount);
+
+                    SecondAddMedScreenDirections.GoToThirdAddMedScreen action = SecondAddMedScreenDirections.goToThirdAddMedScreen(dataFromSecondAddMedScreen);
+                    Navigation.findNavController(view).navigate(action);
+
                 }
             }
         });
