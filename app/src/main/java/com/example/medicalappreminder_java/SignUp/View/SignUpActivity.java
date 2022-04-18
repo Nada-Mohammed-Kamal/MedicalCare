@@ -19,10 +19,11 @@ import com.example.medicalappreminder_java.SignUp.Presenter.SignUpPresenterInter
 public class SignUpActivity extends AppCompatActivity implements SignUpViewInterface {
 
 
-    EditText emailEditText , passwordEditText;
+    EditText emailEditText , passwordEditText , userNameEditText;
     Button signUpButton ;
     ProgressBar progressBar ;
-    String email , password ;
+    String email , password , userName ;
+    static String userNameKey = "userNameKey" ;
     SignUpPresenterInterafce signUpPresenter ;
 
     @Override
@@ -39,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     public void gettingIds(){
         emailEditText = findViewById(R.id.emailEditText) ;
         passwordEditText = findViewById(R.id.passwordEditText) ;
+        userNameEditText = findViewById(R.id.registerUserNameEditText) ;
         signUpButton = findViewById(R.id.signUpButton) ;
         progressBar = findViewById(R.id.signUpProgressbar) ;
     }
@@ -53,6 +55,12 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     public String getPassword() {
         password = passwordEditText.getText().toString() ;
         return password ;
+    }
+
+    @Override
+    public String getUserName() {
+        userName = userNameEditText.getText().toString() ;
+        return userName;
     }
 
     @Override
@@ -86,6 +94,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     public void gotoLoginScreen() {
 
         Intent intent = new Intent(this, LoginActivity.class) ;
+        // ******* el user name aho ya Esraaaaaa *******
+        intent.putExtra(userNameKey ,userName ) ;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) ;
         startActivity(intent);
 
