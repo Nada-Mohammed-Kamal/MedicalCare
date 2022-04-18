@@ -1,7 +1,6 @@
 package com.example.medicalappreminder_java.AddMedicine.View.AddViewFragments;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,31 +11,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AdapterForTakeDoseTimes.DoseTimesAdapter;
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.activeandinactivemedscreen.view.MyAdapter;
-
-import org.w3c.dom.Text;
+import com.example.medicalappreminder_java.models.DateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class SecondAddMedScreen extends Fragment {
     EditText startDateid;
     EditText endDateid;
-    EditText addMedName;
+    EditText whatYouTakingForEditText;
     EditText doseTakenTime;
+    Spinner spinnerHowOftenYouTakeIt;
     SecondAddMedScreenArgs secondAddMedScreenArgs;
     RecyclerView takeTimesforEveryDose;
     Button addMedConfirmButton;
@@ -45,6 +49,18 @@ public class SecondAddMedScreen extends Fragment {
     DatePickerDialog.OnDateSetListener selectStartDate;
     DatePickerDialog.OnDateSetListener selectEndDate;
     DoseTimesAdapter myAdapter;
+
+    String WhatReasonToTake;
+    Date startDate;
+    Date endDate;
+    int howManyTimes;
+    String selected_val;
+
+    String medName;
+    Form formMed;
+    Strength strength;
+    int strengthAmount;
+
     public SecondAddMedScreen() {
         // Required empty public constructor
 
@@ -56,6 +72,12 @@ public class SecondAddMedScreen extends Fragment {
         super.onCreate(savedInstanceState);
         //data from first screen
         secondAddMedScreenArgs = SecondAddMedScreenArgs.fromBundle(getArguments());
+        medName = secondAddMedScreenArgs.getMedNamed();
+        formMed = secondAddMedScreenArgs.getFromType();
+        strength = secondAddMedScreenArgs.getStrengthSelected();
+        strengthAmount = secondAddMedScreenArgs.getStrengthAmount();
+
+
         selectStartDate =new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -109,11 +131,38 @@ public class SecondAddMedScreen extends Fragment {
             @Override
             public void onClick(View view) {
 
+
+                if(startDateid.getText().toString().isEmpty()) {
+                    startDateid.setError("Field is required");
+                }
+                if(endDateid.getText().toString().isEmpty()) {
+                    endDateid.setError("Field is required");
+                }
+                if(doseTakenTime.getText().toString().isEmpty()) {
+                    doseTakenTime.setError("Field is required");
+                }
+                else
+                {
+                    WhatReasonToTake = whatYouTakingForEditText.getText().toString();
+                    selected_val = spinnerHowOftenYouTakeIt.getSelectedItem().toString();
+                    howManyTimes = Integer.parseInt(doseTakenTime.getText().toString());
+                    ArrayList<DateTime> dateTimes = myAdapter.getTimes();
+                    if(dateTimes.size() == 0)
+                        Toast.makeText(getContext(),"Please set all doses time",Toast.LENGTH_SHORT).show();
+
+                    Log.i("info", medName + " \n"+formMed.toString()+"\n"+strength.toString()+"\n"
+                                        + strengthAmount +"\n"+ WhatReasonToTake +"\n"+startDateid.getText().toString()
+                                        +"\n"+endDateid.getText().toString()+"\n"+ selected_val+"\n"+ howManyTimes );
+                    for (int i=0;i<dateTimes.size();i++) {
+                        Log.i("info",dateTimes.get(i).getHour()+"  "+dateTimes.get(i).getMinute());
+                    }
+                }
             }
         });
-        doseTakenTimeLisener();
-    }
 
+        doseTakenTimeLisener();
+
+    }
     private void doseTakenTimeLisener() {
         doseTakenTime.addTextChangedListener(new TextWatcher() {
             @Override
@@ -155,11 +204,13 @@ public class SecondAddMedScreen extends Fragment {
     private void updateStartDateLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        startDate = myCalendar.getTime();
         startDateid.setText(dateFormat.format(myCalendar.getTime()));
     }
     private void updateEndDateLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        endDate = myCalendar.getTime();
         endDateid.setText(dateFormat.format(myCalendar.getTime()));
     }
 
@@ -167,11 +218,12 @@ public class SecondAddMedScreen extends Fragment {
 
         startDateid = view.findViewById(R.id.startDateid);
         endDateid = view.findViewById(R.id.endDateid);
-        addMedName = view.findViewById(R.id.addMedName);
+        whatYouTakingForEditText = view.findViewById(R.id.WhatYouTakingFor);
         takeTimesforEveryDose = view.findViewById(R.id.takeTimesforEveryDoseRecyclerview);
         doseTakenTime = view.findViewById(R.id.doseTakenTime);
         addMedConfirmButton = view.findViewById(R.id.addMedConfirmButton);
         set_dosing_schedule = view.findViewById(R.id.set_dosing_schedule);
+        spinnerHowOftenYouTakeIt = view.findViewById(R.id.spinnerHowOftenYouTakeIt);
 
         set_dosing_schedule.setVisibility(View.GONE);
         takeTimesforEveryDose.setVisibility(View.GONE);
@@ -181,6 +233,8 @@ public class SecondAddMedScreen extends Fragment {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         takeTimesforEveryDose.setLayoutManager(layoutManager);
 
-
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(), R.array.ChooseDayesOfDose, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerHowOftenYouTakeIt.setAdapter(adapter);
     }
 }

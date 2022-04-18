@@ -14,17 +14,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.DateTime;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.ViewHolder> {
 
     private final Context context;
     int numberOnDose;
     int count = 1;
+    int timeSetsCorrectly = 1;
+    ArrayList<DateTime> dateTimes;
     public DoseTimesAdapter(Context context,int numberOnDose) {
         this.context = context;
         this.numberOnDose = numberOnDose;
+        dateTimes = new ArrayList<>();
     }
 
     @Override
@@ -49,7 +55,9 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        timeSetsCorrectly++;
                         holder.openChooseTime.setText(selectedHour + ":" + selectedMinute);
+                        dateTimes.add(new DateTime(selectedHour,selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -57,7 +65,12 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
             }
         });
     }
-
+    public ArrayList<DateTime> getTimes()
+    {
+        if(count != timeSetsCorrectly)
+            return  new ArrayList<DateTime>();
+        return  dateTimes;
+    }
     @Override
     public int getItemCount() {
         return numberOnDose;
