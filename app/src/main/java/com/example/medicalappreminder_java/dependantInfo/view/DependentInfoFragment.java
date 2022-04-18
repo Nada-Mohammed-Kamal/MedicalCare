@@ -17,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -28,7 +27,6 @@ import com.example.medicalappreminder_java.dependantInfo.ViewInterface;
 import com.example.medicalappreminder_java.dependantInfo.presenter.DepInfoPresenter;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

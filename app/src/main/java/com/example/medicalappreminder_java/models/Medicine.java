@@ -65,6 +65,16 @@ public class Medicine {
     private String rxNumber;
     @ColumnInfo(name = "remindMeWhenIHaveHowManyPillsLeft")
     private double remindMeWhenIHaveHowManyPillsLeft;
+    @ColumnInfo(name = "fireStoreId")
+    private String fireStoreId;
+
+    public String getFireStoreId() {
+        return fireStoreId;
+    }
+
+    public void setFireStoreId(String fireStoreId) {
+        this.fireStoreId = fireStoreId;
+    }
 
     //modified
     @ColumnInfo(name = "daysThatTheMedWillBeTakenIn")

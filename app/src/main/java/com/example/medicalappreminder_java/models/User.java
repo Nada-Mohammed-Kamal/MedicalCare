@@ -31,7 +31,17 @@ public class User {
     @ColumnInfo(name = "ListOfMedications")
     //String stringWithListOfMedicationIds;
     List<Medicine> ListOfMedications;
+    @ColumnInfo(name = "fireStoreId")
+    private String fireStoreId;
 
+
+    public String getFireStoreId() {
+        return fireStoreId;
+    }
+
+    public void setFireStoreId(String fireStoreId) {
+        this.fireStoreId = fireStoreId;
+    }
 
     public UUID getUuid() {
         return uuid;
