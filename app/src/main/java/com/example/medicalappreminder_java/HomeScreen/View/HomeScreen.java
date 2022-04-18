@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
+import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.MainActivity;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.dependantInfo.DependentInfoFragment;
@@ -32,7 +35,11 @@ public class HomeScreen extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem menuItem;
+    private FragmentManager fragmentManager;
+    FragmentTransaction transaction;
+    DependentInfoFragment dependentInfoFragment;
     ExtendedFloatingActionButton extendedFloatingActionButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +55,11 @@ public class HomeScreen extends AppCompatActivity {
         setMenu();
         setListeners();
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.home,R.id.medication,R.id.Refills,R.id.add_dependent)
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.home,R.id.medication,R.id.Refills)
                 .build();
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);
-        NavigationUI.setupWithNavController(navigationView, navController2);
+       // NavigationUI.setupWithNavController(navigationView, navController2);
 
        // extendedFloatingActionButton = findViewById(R.id.ExtendedFloatingActionButtonAddMed);
             // do something with f
@@ -72,9 +79,19 @@ public class HomeScreen extends AppCompatActivity {
                 toolbar.setTitle(item.getTitle());
                 switch (item.getItemId())
                 {
-                    case R.id.home:
-                        Toast.makeText(HomeScreen.this,"Home",Toast.LENGTH_SHORT).show();
+                    case R.id.add_dependent:
+                        Toast.makeText(HomeScreen.this,"logOutButton",Toast.LENGTH_SHORT).show();
+                       // Navigation.findNavController(navigationView).navigate(R.id.);
+                        fragmentManager = getSupportFragmentManager();
+                        dependentInfoFragment = new DependentInfoFragment();
+                        transaction = fragmentManager.beginTransaction();
+                        transaction.setReorderingAllowed(true);
+                        transaction.add(R.id.nav_host_fragment_activity_main,dependentInfoFragment,"dependent");
+                        transaction.commit();
+                        break;
+                    case R.id.logOutButton:
 
+                        startActivity(new Intent(HomeScreen.this  , LoginActivity.class));
                         break;
                 }
                 item.setChecked(true);

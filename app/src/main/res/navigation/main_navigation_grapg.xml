@@ -17,4 +17,5 @@
         android:id="@+id/add_dependent"
         android:name="com.example.medicalappreminder_java.dependantInfo.DependentInfoFragment"
         tools:layout="@layout/fragment_dependent_info" />
+
 </navigation>

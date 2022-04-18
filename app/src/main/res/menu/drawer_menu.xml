@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/G1">
         <item
             android:id="@+id/Profiles"
             android:title="@string/Profiles">
@@ -18,7 +18,7 @@
             </menu>
         </item>
     </group>
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/G2">
         <item
             android:id="@+id/MedFriends"
             android:title="@string/MedFriends">
