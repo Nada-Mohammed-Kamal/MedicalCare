@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -62,11 +63,9 @@ public class HomeScreen extends AppCompatActivity {
         setMenu();
         setListeners();
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.home,R.id.medication,R.id.Refills)
-                .build();
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);
-       // NavigationUI.setupWithNavController(navigationView, navController2);
+      //  NavigationUI.setupWithNavController(navigationView, navController2);
 
        // extendedFloatingActionButton = findViewById(R.id.ExtendedFloatingActionButtonAddMed);
             // do something with f
@@ -87,14 +86,9 @@ public class HomeScreen extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.add_dependent:
-                        //Toast.makeText(HomeScreen.this,"logOutButton",Toast.LENGTH_SHORT).show();
-                       // Navigation.findNavController(navigationView).navigate(R.id.);
-                        fragmentManager = getSupportFragmentManager();
-                        dependentInfoFragment = new DependentInfoFragment();
-                        transaction = fragmentManager.beginTransaction();
-                        transaction.setReorderingAllowed(true);
-                        transaction.add(R.id.nav_host_fragment_activity_main,dependentInfoFragment,"dependent");
-                        transaction.commit();
+                        NavController navController = Navigation.findNavController(HomeScreen.this, R.id.nav_host_fragment_activity_main);
+                        navController.navigateUp();
+                        navController.navigate(R.id.dependentInfoFragment2);
                         break;
                     case R.id.logOutButton:
                         SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(HomeScreen.this);

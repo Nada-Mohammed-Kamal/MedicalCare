@@ -12,10 +12,15 @@
     <fragment
         android:id="@+id/home"
         android:name="com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeFragment"
+        android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/add_dependent"
+        android:id="@+id/dependentInfoFragment2"
         android:name="com.example.medicalappreminder_java.dependantInfo.view.DependentInfoFragment"
-        tools:layout="@layout/fragment_dependent_info" />
+        android:label="DependentInfoFragment" >
+        <action
+            android:id="@+id/actionGoToHome"
+            app:destination="@id/home" />
+    </fragment>
 
 </navigation>

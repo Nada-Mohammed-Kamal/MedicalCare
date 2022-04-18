@@ -31,6 +31,19 @@
         <argument
             android:name="strengthSelected"
             app:argType="com.example.medicalappreminder_java.Constants.Strength" />
+        <action
+            android:id="@+id/goToThirdAddMedScreen"
+            app:destination="@id/thirdAddMedScreen" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/thirdAddMedScreen"
+        android:name="com.example.medicalappreminder_java.AddMedicine.View.AddViewFragments.ThirdAddMedScreen"
+        android:label="fragment_third_add_med_screen"
+        tools:layout="@layout/fragment_third_add_med_screen" >
+
+        <argument
+            android:name="allData"
+            app:argType="com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen" />
     </fragment>
 </navigation>

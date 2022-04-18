@@ -205,7 +205,7 @@
             android:layout_height="46dp"
             android:layout_marginTop="40dp"
             android:layout_gravity="center"
-            android:text="@string/finish"
+            android:text="@string/Next"
             android:background="@drawable/radio_flat_selector"
             android:textColor="@color/white"
             android:layout_marginBottom="@dimen/_30sdp"
