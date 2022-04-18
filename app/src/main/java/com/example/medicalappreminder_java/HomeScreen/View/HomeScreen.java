@@ -12,8 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.animation.Animator;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,15 +21,21 @@ import android.widget.Toast;
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
-import com.example.medicalappreminder_java.MainActivity;
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.dependantInfo.DependentInfoFragment;
+import com.example.medicalappreminder_java.dependantInfo.view.DependentInfoFragment;
+import com.example.medicalappreminder_java.models.User;
+import com.example.medicalappreminder_java.roomdb.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
+    //AppDatabase db = AppDatabase.getDBInstance(getApplicationContext());
+    //List<User> allUsers = db.userDao().getAllUsers();
+
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -48,6 +52,8 @@ public class HomeScreen extends AppCompatActivity {
         initComponents();
     }
     private void initComponents(){
+
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);

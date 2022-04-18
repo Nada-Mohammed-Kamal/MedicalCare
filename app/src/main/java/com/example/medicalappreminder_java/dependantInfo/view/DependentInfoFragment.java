@@ -1,32 +1,37 @@
-package com.example.medicalappreminder_java.dependantInfo;
+package com.example.medicalappreminder_java.dependantInfo.view;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.dependantInfo.ViewInterface;
+import com.example.medicalappreminder_java.dependantInfo.presenter.DepInfoPresenter;
+import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import java.io.DataInput;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 
-public class DependentInfoFragment extends Fragment {
+public class DependentInfoFragment extends Fragment implements ViewInterface {
     TextView firstName;
     TextView lastName;
     TextView birthdate;
@@ -36,9 +41,11 @@ public class DependentInfoFragment extends Fragment {
     RadioGroup radioGroup;
     final Calendar myCalendar= Calendar.getInstance();
     int selectedId;
-
-
-
+    Button addDepBtn;
+    User user = new User();
+    ViewInterface depViewInterfaceReference;
+    Date date_selected;
+    Context context;
 
     public DependentInfoFragment() {
         // Required empty public constructor
@@ -53,27 +60,44 @@ public class DependentInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         birthdate= view.findViewById(R.id.dateId);
-        firstName = view.findViewById(R.id.firstNameDepId);
+        firstName = view.findViewById(R.id.firstNameDepid);
         lastName = view.findViewById(R.id.lastNameDepId);
          female = view.findViewById(R.id.FEmaleRadioBtniD);
          male = view.findViewById(R.id.maleRadioBtniD);
          radioGroup = view.findViewById(R.id.radioGroup);
+         addDepBtn = view.findViewById(R.id.addDepBtn);
+         context = getActivity();
         //ll fragment navigation
          /*
                 anady 3ala get selected gender lama agy a save al object 3ashan a retrive al selected
           */
 
 
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                date_selected = new Date(year , month , day);
                 updateLabel();
             }
         };
 
+
+        addDepBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DepInfoPresenter depInfoPresenter = new DepInfoPresenter(getContext() , DependentInfoFragment.this);
+                user.setFirstName(firstName.getText().toString());
+                user.setLastName(lastName.getText().toString());
+                user.setBirthdate( date_selected);
+                String selectedGender = getSelectedGender();
+                user.setGender(selectedGender);
+                user.setUuid(UUID.randomUUID());
+                depInfoPresenter.addDependant(user);
+            }
+        });
 
 
         birthdate.setOnClickListener(new View.OnClickListener() {
@@ -119,5 +143,10 @@ public class DependentInfoFragment extends Fragment {
         if(e != null)
             e.setVisibility(View.GONE);
         return view;
+    }
+
+    @Override
+    public void viewToastAddedDependantSuccessfully() {
+        Toast.makeText(this.getContext(), "Dependant added successfully" , Toast.LENGTH_SHORT).show();
     }
 }

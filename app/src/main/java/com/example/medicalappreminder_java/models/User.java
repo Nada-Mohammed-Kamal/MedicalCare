@@ -15,10 +15,10 @@ public class User {
     String firstName;
     @ColumnInfo(name = "last_name")
     String lastName;
-    @ColumnInfo(name = "id")
-    UUID uuid;
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "id")
+    UUID uuid;
     @ColumnInfo(name = "email")
     String email;
     @ColumnInfo(name = "gender")
