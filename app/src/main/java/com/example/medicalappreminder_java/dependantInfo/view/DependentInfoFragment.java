@@ -2,15 +2,12 @@ package com.example.medicalappreminder_java.dependantInfo.view;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.dependantInfo.ViewInterface;
 import com.example.medicalappreminder_java.dependantInfo.presenter.DepInfoPresenter;
 import com.example.medicalappreminder_java.models.User;
@@ -52,6 +54,10 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
     Date date_selected;
     Context context;
 
+    //repo vars
+    RemoteSourceInterface remoteSourceInterface;
+    LocalSourceInterface localSourceInterface;
+
     public DependentInfoFragment() {
         // Required empty public constructor
     }
@@ -73,6 +79,9 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
          addDepBtn = view.findViewById(R.id.addDepBtn);
          context = getActivity();
 
+         remoteSourceInterface = new FirestoreManger();
+         localSourceInterface = new ConcreteLocalSource(context);
+
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -88,7 +97,8 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
         addDepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DepInfoPresenter depInfoPresenter = new DepInfoPresenter(getContext() , DependentInfoFragment.this);
+                DepInfoPresenter depInfoPresenter = new DepInfoPresenter(RepoClass.getInstance(remoteSourceInterface , localSourceInterface , getContext()) , DependentInfoFragment.this);
+
                 user.setFirstName(firstName.getText().toString());
                 user.setLastName(lastName.getText().toString());
                 user.setBirthdate( date_selected);
