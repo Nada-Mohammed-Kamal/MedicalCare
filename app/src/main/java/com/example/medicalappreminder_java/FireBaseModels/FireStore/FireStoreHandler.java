@@ -22,7 +22,7 @@ public class FireStoreHandler {
 
     Context context ;
     private FirebaseFirestore firestoreDb;
-    CollectionReference usersFirestoreDb  ;
+    CollectionReference usersFirestoreDb , medicineFirestoreDb ;
 
     
     // ******* change this var (signUpView) with full info view  *******
@@ -84,14 +84,14 @@ public class FireStoreHandler {
             public void onSuccess(DocumentReference documentReference) {
 
                 // ***** replace toast with func make toast from view *****
-                Toast.makeText(context, "user added", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "user added", Toast.LENGTH_SHORT).show();
                 Log.e("fireDB", "onSuccess: added user");
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "fail in adding the user", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "fail in adding the user", Toast.LENGTH_SHORT).show();
             }
         }) ;
 
@@ -102,20 +102,20 @@ public class FireStoreHandler {
         // ***** add validation to presenter *****
 
 
-       //medicineFirestoreDb = firestoreDb.collection("medicineFirestoreDb") ;
-        usersFirestoreDb.add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+       medicineFirestoreDb = firestoreDb.collection("medicineFirestoreDb") ;
+        medicineFirestoreDb.add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
 
                 // ***** replace toast with func make toast from view *****
-                Toast.makeText(context, "medicine added", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "medicine added", Toast.LENGTH_SHORT).show();
                 Log.e("fireDB", "onSuccess: medicne added" );
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "fail in adding the medicine", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "fail in adding the medicine", Toast.LENGTH_SHORT).show();
             }
         }) ;
 

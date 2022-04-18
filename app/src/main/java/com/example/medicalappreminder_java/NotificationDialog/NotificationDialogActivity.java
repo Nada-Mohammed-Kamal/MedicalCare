@@ -22,9 +22,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,15 +38,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NotificationDialogActivity extends AppCompatActivity {
 
-    Button openDialogeButton  , notifyButton;
+    Button openDialogeButton  , notifyButton , storeButton ;
     Dialog dialog ;
     private final String CHANNEL_ID = "ID";
     NotificationManager notificationManager;
     FireStoreHandler fireStoreHandler ;
 
     User user ;
-    private FirebaseFirestore firestoreDb;
-    CollectionReference usersFirestoreDb  ;
+
     
 
     @Override
@@ -51,21 +53,50 @@ public class NotificationDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_dialog);
 
-        //fireStoreHandler = new FireStoreHandler() ;
-        user = new User();
-        user.setFirstName("amr");
-        user.setLastName("mostafa");
-        user.setGender("male");
-        firestoreDb = FirebaseFirestore.getInstance();
-
         notifyButton = findViewById(R.id.notifyButton) ;
         openDialogeButton = findViewById(R.id.openDialogeButton) ;
+        storeButton = findViewById(R.id.storeButton) ;
         dialog = new Dialog(this) ;
+        fireStoreHandler = new FireStoreHandler() ;
+
+        user = new User();
+        user.setFirstName("moe");
+        user.setLastName("mostafa");
+        user.setGender("male");
+
+        Medicine medicine = new Medicine() ;
+        medicine.setDose_howOften("every 2 days ");
+        medicine.setName("panadol");
+        medicine.setHowManyTimesWillItBeTakenInADay(2);
+        medicine.setCondition("headache");
+        medicine.setInstructions("instructions");
+        medicine.setState("state");
+        medicine.setRxNumber("20");
+        medicine.setNumberOfPillsLeft(4.0);
+        medicine.setStrength(Strength.g);
+        medicine.setForm(Form.Pill);
+        medicine.setHasRefillReminder(true);
+        medicine.setTotalNumOfPills(20);
+        medicine.setImage(R.drawable.inhaler);
+        //  medicine.setDoseTimes(dates);
+        medicine.setDose_howOften("twice daily");
+        medicine.setEveryday(true);
+
+        storeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(NotificationDialogActivity.this, "stooooore", Toast.LENGTH_SHORT).show();
+                fireStoreHandler.addUserToFireStore(user);
+                fireStoreHandler.addMedicineToFireStore(medicine);
+            }
+        });
+
 
         openDialogeButton.setOnClickListener(view -> {
             Log.e("xxx", "onClick: ");
             openDialoge() ;
-            fireStoreHandler.addUserToFireStore(user);
+            //fireStoreHandler.addUserToFireStore(user);
+
 
         });
 
@@ -76,6 +107,7 @@ public class NotificationDialogActivity extends AppCompatActivity {
 
     private void openDialoge() {
 
+        //dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
