@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
-public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 
+public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
+//import devs.mulham.horizontalcalendar.HorizontalCalendar;
+//import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
     RecyclerView recyclerView;
     AllMedAdapter myAdapter;
     LinearLayoutManager layoutManager;
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-        View calView = view.findViewById(R.id.calendarView);
+       /* View calView = view.findViewById(R.id.calendarView);
         // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
                 // on below line we are adding a range
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
                 horizontalCalendar.selectDate(date,false);
                 return super.onDateLongClicked(date, position);
             }
-        });
+        });*/
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
