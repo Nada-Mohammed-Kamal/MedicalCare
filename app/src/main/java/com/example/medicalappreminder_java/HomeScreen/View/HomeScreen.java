@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
+import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.MainActivity;
 import com.example.medicalappreminder_java.R;
@@ -90,7 +91,8 @@ public class HomeScreen extends AppCompatActivity {
                         transaction.commit();
                         break;
                     case R.id.logOutButton:
-
+                        SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(HomeScreen.this);
+                        sharedPrefrencesModel.writeInSharedPreferences(null,null);
                         startActivity(new Intent(HomeScreen.this  , LoginActivity.class));
                         break;
                 }
