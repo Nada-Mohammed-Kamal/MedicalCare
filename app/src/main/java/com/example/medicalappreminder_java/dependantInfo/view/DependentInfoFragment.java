@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +38,6 @@ import java.util.UUID;
 
 
 public class DependentInfoFragment extends Fragment implements ViewInterface {
-    private FragmentManager fragmentManager;
-    FragmentTransaction transaction;
     TextView firstName;
     TextView lastName;
     TextView birthdate;
@@ -97,14 +98,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 user.setUuid(UUID.randomUUID());
                 depInfoPresenter.addDependant(user);
 
-                //go to home screen
-
-//                fragmentManager = getSupportFragmentManager();
-//                dependentInfoFragment = new DependentInfoFragment();
-//                transaction = fragmentManager.beginTransaction();
-//                transaction.setReorderingAllowed(true);
-//                transaction.add(R.id.nav_host_fragment_activity_main,dependentInfoFragment,"dependent");
-//                transaction.commit();
+               Navigation.findNavController(view).navigate(R.id.actionGoToHome);
 
             }
         });
