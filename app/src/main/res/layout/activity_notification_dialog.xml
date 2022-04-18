@@ -10,28 +10,49 @@
         android:id="@+id/openDialogeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="138dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="74dp"
         android:text="open dialoge"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextViewww" />
 
     <Button
         android:id="@+id/notifyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="153dp"
+        android:layout_marginEnd="16dp"
         android:text="notify"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/openDialogeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/medicineNameTextViewww" />
 
     <Button
         android:id="@+id/storeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="198dp"
         android:text="store"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="46dp" />
+        app:layout_constraintStart_toEndOf="@+id/openDialogeButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userNameTextViewww"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="98dp"
+        android:text="user name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/medicineNameTextViewww"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="16dp"
+        android:text="medicine name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

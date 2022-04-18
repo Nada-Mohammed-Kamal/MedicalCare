@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.google.firebase.firestore.Exclude;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class Medicine {
     @ColumnInfo(name = "id")
     @PrimaryKey
     @NonNull
+    @Exclude
     private UUID uuid;
     @ColumnInfo(name = "name")
     private String name;

@@ -35,40 +35,51 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NotificationDialogActivity extends AppCompatActivity {
+
+public class NotificationDialogActivity extends AppCompatActivity implements Serializable {
 
     Button openDialogeButton  , notifyButton , storeButton ;
+    TextView userName , medName ;
     Dialog dialog ;
-    private final String CHANNEL_ID = "ID";
+
     NotificationManager notificationManager;
     FireStoreHandler fireStoreHandler ;
 
     User user ;
-
-    
+    List<User> usersList ;
+    List<Medicine> medicinesList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_dialog);
 
+
         notifyButton = findViewById(R.id.notifyButton) ;
         openDialogeButton = findViewById(R.id.openDialogeButton) ;
         storeButton = findViewById(R.id.storeButton) ;
+        userName = findViewById(R.id.userNameTextViewww) ;
+        medName = findViewById(R.id.medicineNameTextViewww) ;
         dialog = new Dialog(this) ;
-        fireStoreHandler = new FireStoreHandler() ;
+        usersList = new ArrayList<>() ;
+        medicinesList = new ArrayList<>() ;
+        fireStoreHandler = new FireStoreHandler(this ) ;
+
 
         user = new User();
-        user.setFirstName("moe");
+        user.setFirstName("ahmeddddd");
         user.setLastName("mostafa");
         user.setGender("male");
 
         Medicine medicine = new Medicine() ;
         medicine.setDose_howOften("every 2 days ");
-        medicine.setName("panadol");
+        medicine.setName("zzzzzzz");
         medicine.setHowManyTimesWillItBeTakenInADay(2);
-        medicine.setCondition("headache");
+        medicine.setCondition("headacheeeeeee");
         medicine.setInstructions("instructions");
         medicine.setState("state");
         medicine.setRxNumber("20");
@@ -78,7 +89,6 @@ public class NotificationDialogActivity extends AppCompatActivity {
         medicine.setHasRefillReminder(true);
         medicine.setTotalNumOfPills(20);
         medicine.setImage(R.drawable.inhaler);
-        //  medicine.setDoseTimes(dates);
         medicine.setDose_howOften("twice daily");
         medicine.setEveryday(true);
 
@@ -86,8 +96,28 @@ public class NotificationDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(NotificationDialogActivity.this, "stooooore", Toast.LENGTH_SHORT).show();
-                fireStoreHandler.addUserToFireStore(user);
-                fireStoreHandler.addMedicineToFireStore(medicine);
+
+                //fireStoreHandler.addUserToFireStore(user);
+                //fireStoreHandler.addMedicineToFireStore(medicine);
+
+                fireStoreHandler.getUsersFromFireStore();
+                fireStoreHandler.getMedicinesFromFireStore() ;
+
+                usersList = fireStoreHandler.getUsersList() ;
+
+                if (usersList.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "users list is empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "user list is not empty", Toast.LENGTH_SHORT).show();
+                }
+
+                //usersList = fireStoreHandler.getUsersList() ;
+                //Toast.makeText(getApplicationContext(),userList.get(0).getFirstName(), Toast.LENGTH_SHORT).show();
+                //userName.setText(usersList.get(0).getFirstName());
+                //medName.setText(medicinesList.get(0).getName());
+
+                
+                
             }
         });
 
@@ -95,9 +125,6 @@ public class NotificationDialogActivity extends AppCompatActivity {
         openDialogeButton.setOnClickListener(view -> {
             Log.e("xxx", "onClick: ");
             openDialoge() ;
-            //fireStoreHandler.addUserToFireStore(user);
-
-
         });
 
         notifyButton.setOnClickListener(view -> {notifyMe();});
@@ -107,7 +134,6 @@ public class NotificationDialogActivity extends AppCompatActivity {
 
     private void openDialoge() {
 
-        //dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -115,7 +141,6 @@ public class NotificationDialogActivity extends AppCompatActivity {
         TextView timeTextView , drugNameTextView  ,drugDescrTextView ;
         ImageView drugIconImageView ;
 
-        // get ids of dialog
         skipButton = dialog.findViewById(R.id.dialogSkipButton) ;
         takeButton = dialog.findViewById(R.id.dialogTakeButton);
         snoozeButton = dialog.findViewById(R.id.dialogSnoozeButton) ;
