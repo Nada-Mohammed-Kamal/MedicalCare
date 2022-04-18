@@ -24,32 +24,18 @@
                 android:layout_width="357dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginBottom="16dp"
                 android:text="Log in to securely back up your data on your servers "
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
-
-            <Button
-                android:id="@+id/logOutButton"
-                android:layout_width="70dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="log out"
-                android:textColor="#FFFFFF"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/ExitButtonFromLogin"
                 android:layout_width="49dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="?attr/selectableItemBackground"
                 android:text="X"
@@ -63,25 +49,28 @@
             android:layout_weight="3.1"
             android:background="#F8F5F5">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/googleButton"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
-                android:background="#0386C1"
+                android:backgroundTint="@color/white"
+                app:icon="@drawable/google_icon"
                 android:text="Google"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logInButton" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/logInButton"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="84dp"
-                android:background="#0386C1"
+                android:background="@drawable/radio_flat_selector"
+                app:cornerRadius="20dp"
                 android:text="@string/login"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
@@ -117,12 +106,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logInEmailEditText" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/gotoSignUpButton"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="49dp"
                 android:background="?attr/selectableItemBackground"
+
                 android:text="@string/do_not_have_acc"
                 android:textColor="#0C0C0C"
                 app:layout_constraintEnd_toEndOf="parent"

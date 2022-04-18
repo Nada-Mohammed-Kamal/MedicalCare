@@ -15,7 +15,7 @@ public class LogInPresenter implements LogInPresenterInterface{
     LogInViewInterface logInView ;
     Context context ;
     AuthenticationHandler authenticationHandler ;
-    SharedPrefrencesModel sharedPrefrencesModel ;
+    //SharedPrefrencesModel sharedPrefrencesModel ;
 
 
 
@@ -24,7 +24,7 @@ public class LogInPresenter implements LogInPresenterInterface{
         this.logInView = logInView ;
         this.context = context ;
         authenticationHandler = new AuthenticationHandler(context , logInView) ;
-        sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
+        //sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
     }
 
     public void getEmailAndPassword(){
@@ -61,7 +61,7 @@ public class LogInPresenter implements LogInPresenterInterface{
 
         logInView.setProgressbarVisible();
         authenticationHandler.signInWithEmailAndPassword(email,password);
-        sharedPrefrencesModel.writeInSharedPreferences(email,password);
+        //sharedPrefrencesModel.writeInSharedPreferences(email,password);
     }
 
     @Override

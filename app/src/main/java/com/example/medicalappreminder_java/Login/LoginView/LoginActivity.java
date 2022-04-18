@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
 import com.example.medicalappreminder_java.R;
@@ -20,7 +21,7 @@ import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
 public class LoginActivity extends AppCompatActivity implements LogInViewInterface {
 
     EditText emailEditText , passwordEditText;
-    Button logInButton , googleButton , logOutButton , gotoSignUpButton;
+    Button logInButton , googleButton  , gotoSignUpButton;
     LogInPresenterInterface logInPresenter ;
     ProgressBar progressBar ;
     String email , password ;
@@ -33,14 +34,16 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         gettingIds();
         logInPresenter = new LogInPresenter (this , this  ) ;
         logInButton.setOnClickListener(vieww -> logInPresenter.logIn());
+        /*
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logInPresenter.logOut();
                 finish();
-                //gotoHomeScreen();
             }
         });
+
+         */
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         emailEditText = findViewById(R.id.logInEmailEditText) ;
         passwordEditText = findViewById(R.id.logInPasswordEditText) ;
         logInButton = findViewById(R.id.logInButton) ;
-        logOutButton = findViewById(R.id.logOutButton) ;
         googleButton = findViewById(R.id.googleButton) ;
         gotoSignUpButton = findViewById(R.id.gotoSignUpButton) ;
         progressBar = findViewById(R.id.logInProgressbar) ;
@@ -126,11 +128,11 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
 
     @Override
     public void gotoHomeScreen() {
-        /*
-        Intent intent = new Intent(this, LoginTest.class)  ;
+
+        Intent intent = new Intent(this, HomeScreen.class)  ;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) ;
         startActivity(intent);
-         */
+
     }
 
 
