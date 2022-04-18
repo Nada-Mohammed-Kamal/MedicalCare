@@ -5,6 +5,7 @@ import android.text.format.Time;
 import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.common.reflect.TypeToken;
@@ -76,14 +77,14 @@ public class Converters {
     //hashmap
     @TypeConverter
     @JvmStatic
-    public static HashMap<List<Time>, Status> stringToMap(String value){
+    public static HashMap<List<CustomTime>, Status> stringToMap(String value){
         Type listType = new TypeToken<HashMap<List<Time>, Status>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
     @JvmStatic
-    public static String mapToString(HashMap<List<Time>, Status> value) {
+    public static String mapToString(HashMap<List<CustomTime>, Status> value) {
         return value == null ? "" : new Gson().toJson(value);
     }
 }

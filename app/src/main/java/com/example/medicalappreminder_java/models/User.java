@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class User {
@@ -14,6 +15,8 @@ public class User {
     String firstName;
     @ColumnInfo(name = "last_name")
     String lastName;
+    @ColumnInfo(name = "id")
+    UUID uuid;
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "email")
@@ -30,7 +33,26 @@ public class User {
     List<Medicine> ListOfMedications;
 
 
-    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependantEmails,List<Medicine> listOfMedications) {
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public User(String firstName, String lastName, UUID uuid, @NonNull String email, String gender, Date birthdate, List<User> listOfDependantEmails, List<Medicine> listOfMedications) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.uuid = uuid;
+        this.email = email;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.listOfDependantEmails = listOfDependantEmails;
+        ListOfMedications = listOfMedications;
+    }
+
+    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependantEmails, List<Medicine> listOfMedications) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

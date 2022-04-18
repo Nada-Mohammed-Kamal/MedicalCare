@@ -7,24 +7,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
