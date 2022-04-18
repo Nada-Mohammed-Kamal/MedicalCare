@@ -22,9 +22,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,41 +35,96 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NotificationDialogActivity extends AppCompatActivity {
 
-    Button openDialogeButton  , notifyButton;
+public class NotificationDialogActivity extends AppCompatActivity implements Serializable {
+
+    Button openDialogeButton  , notifyButton , storeButton ;
+    TextView userName , medName ;
     Dialog dialog ;
-    private final String CHANNEL_ID = "ID";
+
     NotificationManager notificationManager;
     FireStoreHandler fireStoreHandler ;
 
     User user ;
-    private FirebaseFirestore firestoreDb;
-    CollectionReference usersFirestoreDb  ;
-    
+    List<User> usersList ;
+    List<Medicine> medicinesList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_dialog);
 
-        //fireStoreHandler = new FireStoreHandler() ;
-        user = new User();
-        user.setFirstName("amr");
-        user.setLastName("mostafa");
-        user.setGender("male");
-        firestoreDb = FirebaseFirestore.getInstance();
 
         notifyButton = findViewById(R.id.notifyButton) ;
         openDialogeButton = findViewById(R.id.openDialogeButton) ;
+        storeButton = findViewById(R.id.storeButton) ;
+        userName = findViewById(R.id.userNameTextViewww) ;
+        medName = findViewById(R.id.medicineNameTextViewww) ;
         dialog = new Dialog(this) ;
+        usersList = new ArrayList<>() ;
+        medicinesList = new ArrayList<>() ;
+        fireStoreHandler = new FireStoreHandler(this ) ;
+
+
+        user = new User();
+        user.setFirstName("ahmeddddd");
+        user.setLastName("mostafa");
+        user.setGender("male");
+
+        Medicine medicine = new Medicine() ;
+        medicine.setDose_howOften("every 2 days ");
+        medicine.setName("zzzzzzz");
+        medicine.setHowManyTimesWillItBeTakenInADay(2);
+        medicine.setCondition("headacheeeeeee");
+        medicine.setInstructions("instructions");
+        medicine.setState("state");
+        medicine.setRxNumber("20");
+        medicine.setNumberOfPillsLeft(4.0);
+        medicine.setStrength(Strength.g);
+        medicine.setForm(Form.Pill);
+        medicine.setHasRefillReminder(true);
+        medicine.setTotalNumOfPills(20);
+        medicine.setImage(R.drawable.inhaler);
+        medicine.setDose_howOften("twice daily");
+        medicine.setEveryday(true);
+
+        storeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(NotificationDialogActivity.this, "stooooore", Toast.LENGTH_SHORT).show();
+
+                //fireStoreHandler.addUserToFireStore(user);
+                //fireStoreHandler.addMedicineToFireStore(medicine);
+
+                fireStoreHandler.getUsersFromFireStore();
+                fireStoreHandler.getMedicinesFromFireStore() ;
+
+                usersList = fireStoreHandler.getUsersList() ;
+
+                if (usersList.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "users list is empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "user list is not empty", Toast.LENGTH_SHORT).show();
+                }
+
+                //usersList = fireStoreHandler.getUsersList() ;
+                //Toast.makeText(getApplicationContext(),userList.get(0).getFirstName(), Toast.LENGTH_SHORT).show();
+                //userName.setText(usersList.get(0).getFirstName());
+                //medName.setText(medicinesList.get(0).getName());
+
+                
+                
+            }
+        });
+
 
         openDialogeButton.setOnClickListener(view -> {
             Log.e("xxx", "onClick: ");
             openDialoge() ;
-            fireStoreHandler.addUserToFireStore(user);
-
         });
 
         notifyButton.setOnClickListener(view -> {notifyMe();});
@@ -83,7 +141,6 @@ public class NotificationDialogActivity extends AppCompatActivity {
         TextView timeTextView , drugNameTextView  ,drugDescrTextView ;
         ImageView drugIconImageView ;
 
-        // get ids of dialog
         skipButton = dialog.findViewById(R.id.dialogSkipButton) ;
         takeButton = dialog.findViewById(R.id.dialogTakeButton);
         snoozeButton = dialog.findViewById(R.id.dialogSnoozeButton) ;
