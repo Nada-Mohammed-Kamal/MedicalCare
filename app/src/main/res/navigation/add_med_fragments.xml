@@ -23,13 +23,14 @@
             android:name="medNamed"
             app:argType="string" />
         <argument
-            android:name="FormMed"
-            app:argType="string" />
+            android:name="fromType"
+            app:argType="com.example.medicalappreminder_java.Constants.Form" />
         <argument
             android:name="StrengthAmount"
             app:argType="integer" />
         <argument
-            android:name="Strength"
-            app:argType="string" />
+            android:name="strengthSelected"
+            app:argType="com.example.medicalappreminder_java.Constants.Strength" />
+
     </fragment>
 </navigation>

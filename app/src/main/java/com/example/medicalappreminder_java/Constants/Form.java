@@ -7,5 +7,7 @@ public enum Form {
     Powder,
     Drops,
     Inhaler,
-    Other
+    Other;
+
+
 }

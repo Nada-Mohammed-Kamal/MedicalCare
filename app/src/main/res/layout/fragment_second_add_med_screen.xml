@@ -34,17 +34,18 @@
                 />
 
                 <EditText
-                    android:id="@+id/addMedName"
+                    android:id="@+id/WhatYouTakingFor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:ems="10"
+                    android:hint="Optional"
                     android:inputType="textLongMessage"
                     android:minHeight="@dimen/_40sdp"
                     android:padding="@dimen/_10sdp"
                     android:textColorHighlight="@color/design_default_color_primary_variant"
                     android:textColorLink="@color/purple_700"
-                    android:textSize="@dimen/_18sdp" />
+                    android:textSize="@dimen/_15sdp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -128,6 +129,18 @@
 
                 <TextView
 
+                    android:id="@+id/textView12"
+                    android:layout_width="319dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/how_often_do_you_take_it"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/endDateid" />
+
+                <TextView
+
                     android:id="@+id/textView10"
                     android:layout_width="319dp"
                     android:layout_height="33dp"
@@ -135,8 +148,8 @@
                     android:text="@string/howa_many_times_in_a_day"
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/endDateid" />
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerHowOftenYouTakeIt" />
 
                 <EditText
                     android:id="@+id/doseTakenTime"
@@ -173,6 +186,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/set_dosing_schedule" />
+
+                <Spinner
+                    android:id="@+id/spinnerHowOftenYouTakeIt"
+                    android:layout_width="207dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

@@ -1,5 +1,7 @@
 package com.example.medicalappreminder_java.AddMedicine.View.AddViewFragments;
 
+import static com.example.medicalappreminder_java.Constants.Form.Pill;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,7 +31,9 @@ public class FirstAddMedScreen extends Fragment {
     EditText strengthAmount;
     Button nextToSecondScreen;
     int strengthAmountInt;
-    String formtxt,strengthtxt,addMedNametxt;
+    Form formtxt;
+    Strength strengthtxt;
+    String addMedNametxt;
     public FirstAddMedScreen() {
     }
     @Override
@@ -56,8 +62,8 @@ public class FirstAddMedScreen extends Fragment {
         addMedName = view.findViewById(R.id.addMedName);
         strengthAmount = view.findViewById(R.id.StrengthAmount);
         nextToSecondScreen = view.findViewById(R.id.nextToSecondScreen);
-        formtxt = "Pill";
-        strengthtxt = "g";
+        formtxt = Pill;
+        strengthtxt = Strength.g;
 
     }
     void addListeners(View view)
@@ -66,16 +72,16 @@ public class FirstAddMedScreen extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 radioButton = view.findViewById(checkedId);
-                formtxt = radioButton.getText().toString();
-                Toast.makeText(getActivity(),formtxt,Toast.LENGTH_SHORT).show();
+                formtxt = Form.valueOf(radioButton.getText().toString());
+                Toast.makeText(getActivity(),formtxt.toString(),Toast.LENGTH_SHORT).show();
             }
         });
         strength.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 radioButton = view.findViewById(checkedId);
-                strengthtxt = radioButton.getText().toString();
-                Toast.makeText(getActivity(),strengthtxt,Toast.LENGTH_SHORT).show();
+                strengthtxt = Strength.valueOf(radioButton.getText().toString());
+                Toast.makeText(getActivity(),strengthtxt.toString(),Toast.LENGTH_SHORT).show();
             }
         });
         nextToSecondScreen.setOnClickListener(new View.OnClickListener() {

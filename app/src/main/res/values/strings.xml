@@ -63,7 +63,14 @@
     <string name="timesPerDay">X times per day</string>
     <string name="medIcon">Medication Icon</string>
     <string name="medCondition">Condition</string>
+    <string name="how_often_do_you_take_it">How often do you take it?</string>
 
-
-
+    <string-array name="ChooseDayesOfDose">
+        <item>Every day</item>
+        <item>Every two days</item>
+        <item>Every three days</item>
+        <item>Every four days</item>
+        <item>Every five days</item>
+        <item>Every six days</item>
+    </string-array>
 </resources>
