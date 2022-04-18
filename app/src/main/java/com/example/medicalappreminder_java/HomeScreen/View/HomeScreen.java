@@ -87,7 +87,7 @@ public class HomeScreen extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.add_dependent:
-                        Toast.makeText(HomeScreen.this,"logOutButton",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeScreen.this,"logOutButton",Toast.LENGTH_SHORT).show();
                        // Navigation.findNavController(navigationView).navigate(R.id.);
                         fragmentManager = getSupportFragmentManager();
                         dependentInfoFragment = new DependentInfoFragment();

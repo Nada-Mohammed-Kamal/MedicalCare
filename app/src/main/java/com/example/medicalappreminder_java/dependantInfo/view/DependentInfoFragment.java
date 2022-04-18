@@ -2,11 +2,14 @@ package com.example.medicalappreminder_java.dependantInfo.view;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,8 @@ import java.util.UUID;
 
 
 public class DependentInfoFragment extends Fragment implements ViewInterface {
+    private FragmentManager fragmentManager;
+    FragmentTransaction transaction;
     TextView firstName;
     TextView lastName;
     TextView birthdate;
@@ -67,11 +72,6 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
          radioGroup = view.findViewById(R.id.radioGroup);
          addDepBtn = view.findViewById(R.id.addDepBtn);
          context = getActivity();
-        //ll fragment navigation
-         /*
-                anady 3ala get selected gender lama agy a save al object 3ashan a retrive al selected
-          */
-
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -96,6 +96,16 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 user.setGender(selectedGender);
                 user.setUuid(UUID.randomUUID());
                 depInfoPresenter.addDependant(user);
+
+                //go to home screen
+
+//                fragmentManager = getSupportFragmentManager();
+//                dependentInfoFragment = new DependentInfoFragment();
+//                transaction = fragmentManager.beginTransaction();
+//                transaction.setReorderingAllowed(true);
+//                transaction.add(R.id.nav_host_fragment_activity_main,dependentInfoFragment,"dependent");
+//                transaction.commit();
+
             }
         });
 
