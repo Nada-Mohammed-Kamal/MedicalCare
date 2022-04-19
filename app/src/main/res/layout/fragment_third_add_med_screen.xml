@@ -6,12 +6,24 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="3"
         android:background="#F3F0F7">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:padding="@dimen/_10sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/almost_done_would_you_like_to"
+            />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
+            android:id="@+id/cardView"
             android:layout_margin="@dimen/_10sdp"
             app:cardElevation="8dp"
             android:focusable="true"
@@ -20,20 +32,249 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/_10sdp"
-                >
-                <TextView
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/arrow"
+                        android:layout_width="70dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintBottom_toBottomOf="@+id/TextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/TextView"
+                        app:srcCompat="@drawable/ic_baseline_expand_more_24"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/get_refill_reminders"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hideView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="@string/what_are_you_taking_it_for"
-                    />
+                    android:visibility="gone"
+                    >
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="32dp"
+                        android:text="@string/pill_s_left"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/pill_left"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="32dp"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:minHeight="48dp"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView15"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <TextView
+
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="Remind me when I have:"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pill_left" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pill_s_left"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/pill_leftReminderMe"
+                        app:layout_constraintStart_toStartOf="@+id/textView15"
+                        app:layout_constraintTop_toTopOf="@+id/pill_leftReminderMe" />
+
+                    <EditText
+                        android:id="@+id/pill_leftReminderMe"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:minHeight="48dp"
+                        android:gravity="center"
+                        app:layout_constraintEnd_toEndOf="@+id/pill_left"
+                        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:id="@+id/cardViewAddInstraction"
+            android:layout_margin="@dimen/_10sdp"
+            app:cardElevation="8dp"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/_10sdp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/arrowForInstraction"
+                        android:layout_width="70dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintBottom_toBottomOf="@+id/addInstractionTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addInstractionTextView"
+                        app:srcCompat="@drawable/ic_baseline_expand_more_24"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/addInstractionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/should_this_be_taken_with_food"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    android:id="@+id/LinearLayoutHideview"
+                    android:visibility="gone"
+                    >
+                    <RadioGroup
+                        android:id="@+id/chooseEatingRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:gravity="center"
+                        >
+                    <RadioButton
+                        android:id="@+id/Before_eating"
+                        android:layout_width="@dimen/_130sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:checked="true"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:layout_marginTop = "@dimen/_10sdp"
+                        android:gravity="center"
+                        android:textColor="@drawable/radio_flat_text_selector"
+                        android:text="Before eating"
+                        />
+                        <RadioButton
+                            android:id="@+id/While_eating"
+                            android:layout_width="@dimen/_130sdp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:background="@drawable/radio_flat_selector"
+                            android:button="@android:color/transparent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:textColor="@drawable/radio_flat_text_selector"
+                            android:text="@string/while_eating"
+                            />
+                        <RadioButton
+                            android:id="@+id/After_eating"
+                            android:layout_width="@dimen/_130sdp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:background="@drawable/radio_flat_selector"
+                            android:button="@android:color/transparent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:textColor="@drawable/radio_flat_text_selector"
+                            android:text="@string/After_eating"
+                            />
+                        <RadioButton
+                            android:id="@+id/Doesnt_matter"
+                            android:layout_width="@dimen/_130sdp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:background="@drawable/radio_flat_selector"
+                            android:button="@android:color/transparent"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:textColor="@drawable/radio_flat_text_selector"
+                            android:text="@string/doesn_t_matter"
+                            />
+                    </RadioGroup>
+                    <TextView
+
+                        android:id="@+id/AnyOtherInstructions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/any_onther_instructions"
+                        android:textSize="@dimen/_15sdp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                         />
+
+                    <EditText
+                        android:id="@+id/editTextTextMultiLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/goToHomeFinishAddingMed"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:text="@string/finish"
+            android:background="@drawable/radio_flat_selector"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+
+            />
     </LinearLayout>
 </ScrollView>

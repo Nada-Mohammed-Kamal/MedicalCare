@@ -153,12 +153,16 @@ public class SecondAddMedScreen extends Fragment {
                     if(dateTimes.size() == 0)
                         Toast.makeText(getContext(),"Please set all doses time",Toast.LENGTH_SHORT).show();
 
-                    DataFromSecondAddMedScreen dataFromSecondAddMedScreen = new DataFromSecondAddMedScreen(WhatReasonToTake,startDate,endDate,
-                                                                                    howManyTimes,selected_val,dateTimes,medName,formMed,
-                                                                                       strength,strengthAmount);
+                    else
+                    {
+                        DataFromSecondAddMedScreen dataFromSecondAddMedScreen = new DataFromSecondAddMedScreen(WhatReasonToTake,startDate,endDate,
+                                howManyTimes,selected_val,dateTimes,medName,formMed,
+                                strength,strengthAmount);
+                        SecondAddMedScreenDirections.GoToThirdAddMedScreen action = SecondAddMedScreenDirections.goToThirdAddMedScreen(dataFromSecondAddMedScreen);
+                        Navigation.findNavController(view).navigate(action);
+                    }
 
-                    SecondAddMedScreenDirections.GoToThirdAddMedScreen action = SecondAddMedScreenDirections.goToThirdAddMedScreen(dataFromSecondAddMedScreen);
-                    Navigation.findNavController(view).navigate(action);
+
 
                 }
             }
