@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class AuthenticationHandler {
 
@@ -87,7 +88,7 @@ public class AuthenticationHandler {
      */
 
 
-    public void createUserWithEmailAndPassword(String email, String password) {
+    public void createUserWithEmailAndPassword(String email, String password , String userName ) {
 
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -96,6 +97,14 @@ public class AuthenticationHandler {
                     if (task.isSuccessful()) {
                         signUpViewRef.makeToast("User Registered successfully");
                     user = mAuth.getCurrentUser() ;
+                    if (user != null){
+
+                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(userName).build();
+                        user.updateProfile(profileChangeRequest) ;
+
+
+                    }
                     user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -126,8 +135,10 @@ public class AuthenticationHandler {
                     if (task.isSuccessful()) {
                         // go to specific screen
                         // shared preferences
+                        user = mAuth.getCurrentUser() ;
+                        //user.getDisplayName() ;
                         logInView.makeToast("Login successfully");
-                        sharedPrefrencesModel.writeInSharedPreferences(email,password);
+                        sharedPrefrencesModel.writeInSharedPreferences(email,password,user.getDisplayName());
                         logInView.gotoHomeScreen();
                     } else {
                         logInView.makeToast(task.getException().getMessage());

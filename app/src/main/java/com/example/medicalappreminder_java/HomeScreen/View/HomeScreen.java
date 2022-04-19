@@ -92,7 +92,7 @@ public class HomeScreen extends AppCompatActivity {
                         break;
                     case R.id.logOutButton:
                         SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(HomeScreen.this);
-                        sharedPrefrencesModel.writeInSharedPreferences(null,null);
+                        sharedPrefrencesModel.writeInSharedPreferences(null,null , null);
                         startActivity(new Intent(HomeScreen.this  , LoginActivity.class));
                         break;
                 }

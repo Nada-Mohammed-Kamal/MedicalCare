@@ -168,6 +168,7 @@ public class FireStoreHandler implements Serializable {
                         Medicine medicine = documentSnapshot.toObject(Medicine.class);
                         convMedicineList.add(medicine);
                     }
+                    
                     Toast.makeText(context, convMedicineList.get(1).getName(), Toast.LENGTH_SHORT).show();
                 }
             }
