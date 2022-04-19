@@ -5,46 +5,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
+
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.dependantInfo.view.DependentInfoFragment;
-import com.example.medicalappreminder_java.models.User;
-import com.example.medicalappreminder_java.roomdb.AppDatabase;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.List;
-
 public class HomeScreen extends AppCompatActivity {
     //AppDatabase db = AppDatabase.getDBInstance(getApplicationContext());
     //List<User> allUsers = db.userDao().getAllUsers();
-
-
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem menuItem;
-    private FragmentManager fragmentManager;
-    FragmentTransaction transaction;
-    DependentInfoFragment dependentInfoFragment;
-    ExtendedFloatingActionButton extendedFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +55,6 @@ public class HomeScreen extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);
-      //  NavigationUI.setupWithNavController(navigationView, navController2);
-
-       // extendedFloatingActionButton = findViewById(R.id.ExtendedFloatingActionButtonAddMed);
-            // do something with f
 
         findViewById(R.id.ExtendedFloatingActionButtonAddMed).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +63,9 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         });
+        //addNewDependentToDrawer("dependentName1");
+
+
     }
     private  void  setListeners(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -89,6 +78,7 @@ public class HomeScreen extends AppCompatActivity {
                         NavController navController = Navigation.findNavController(HomeScreen.this, R.id.nav_host_fragment_activity_main);
                         navController.navigateUp();
                         navController.navigate(R.id.dependentInfoFragment2);
+
                         break;
                     case R.id.logOutButton:
                         SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(HomeScreen.this);
@@ -130,6 +120,16 @@ public class HomeScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        Log.w("ANDROID MENU TUTORIAL:", "onCreateOptionsMenu(Menu menu)");
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drawer_menu, menu);
+        return true;
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -144,4 +144,15 @@ public class HomeScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+    public void addNewDependentToDrawer(String dependentName) {
+        // add new dependent to drawer
+        Menu mMenu = navigationView.getMenu();
+
+        MenuItem m = mMenu.findItem(R.id.Profiles);
+        Menu menuSun = m.getSubMenu();
+
+        menuSun.add(R.id.G1,3,500,dependentName);
+
+    }
 }
+

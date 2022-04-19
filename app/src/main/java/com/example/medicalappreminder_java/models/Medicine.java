@@ -49,8 +49,10 @@ public class Medicine {
     @ColumnInfo(name = "endDate")
     private Date endDate;
     @ColumnInfo(name = "fowHowManyDaysIsTheMedicineGoingToBeTaken")
+    //msh h3mlha
     private int fowHowManyDaysIsTheMedicineGoingToBeTaken;
     @ColumnInfo(name = "totalNumOfPills")
+    //not used
     private int totalNumOfPills;
     @ColumnInfo(name = "howManyTimesWillItBeTakenInADay")
     private int howManyTimesWillItBeTakenInADay;
@@ -65,6 +67,7 @@ public class Medicine {
     @ColumnInfo(name = "timeToShowTheReminderIn")
     private Date timeToShowTheReminderIn;
     @ColumnInfo(name = "rxNumber")
+    //not used
     private String rxNumber;
     @ColumnInfo(name = "remindMeWhenIHaveHowManyPillsLeft")
     private double remindMeWhenIHaveHowManyPillsLeft;
