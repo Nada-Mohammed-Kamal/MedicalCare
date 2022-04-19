@@ -11,7 +11,7 @@ import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
 
 public class SignUpPresenter implements SignUpPresenterInterafce {
 
-    String email , password;
+    String email , password , userName ;
     SignUpViewInterface signUpView ;
     LogInViewInterface logInView ;
     Context context ;
@@ -28,16 +28,16 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
     }
 
-    public void getEmailAndPassword(){
+    public void getEmailAndPasswordAndUserName(){
         email = signUpView.getEmail() ;
         password = signUpView.getPassword() ;
-
+        userName = signUpView.getUserName() ;
     }
 
     @Override
     public void registerUser(){
 
-        getEmailAndPassword();
+        getEmailAndPasswordAndUserName();
 
         if (email.isEmpty()){
             signUpView.setEmailEditTextError("Email is required");
@@ -58,9 +58,13 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
             signUpView.setPasswordEditTextError("Minimum length of password should be 6");
             return;
         }
+        if (userName.isEmpty()){
+            signUpView.setUserNameEditTextError("user name is required");
+            return;
+        }
 
         signUpView.setProgressbarVisible();
-        authenticationHandler.createUserWithEmailAndPassword(email,password);
+        authenticationHandler.createUserWithEmailAndPassword(email,password ,userName );
     }
 
 }
