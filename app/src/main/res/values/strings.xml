@@ -72,6 +72,7 @@
     <string name="After_eating">After eating</string>
     <string name="doesn_t_matter">Doesn\'t matter</string>
     <string name="any_onther_instructions">Any onther instructions?</string>
+    <string name="user_name">User name</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>

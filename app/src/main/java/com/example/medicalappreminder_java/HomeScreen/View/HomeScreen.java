@@ -11,7 +11,9 @@ import androidx.navigation.Navigation;
 
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -19,13 +21,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
 public class HomeScreen extends AppCompatActivity {
@@ -44,11 +48,12 @@ public class HomeScreen extends AppCompatActivity {
     }
     private void initComponents(){
 
-
+        SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+        String userName = preferences.getString("userNameKey" , "user name") ;
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Esraa");
+        toolbar.setTitle(userName);
         setSupportActionBar(toolbar);
         setMenu();
         setListeners();
@@ -63,6 +68,13 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         });
+        Menu mMenu = navigationView.getMenu();
+
+        MenuItem user_name_drwable = mMenu.findItem(R.id.home);
+        user_name_drwable.setTitle(userName);
+        View getHeaderView = navigationView.getHeaderView(0);
+        TextView t = getHeaderView.findViewById(R.id.namenav);
+        t.setText(userName);
         //addNewDependentToDrawer("dependentName1");
 
 

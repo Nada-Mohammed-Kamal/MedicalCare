@@ -10,7 +10,7 @@
                 <item
                     android:id="@+id/home"
                     android:orderInCategory="100"
-                    android:title="User name" />
+                    android:title="@string/user_name" />
                 <item
                     android:id="@+id/add_dependent"
                     android:orderInCategory="1000"
