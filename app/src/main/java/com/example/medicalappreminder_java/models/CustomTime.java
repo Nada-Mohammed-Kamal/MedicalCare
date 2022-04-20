@@ -1,10 +1,10 @@
 package com.example.medicalappreminder_java.models;
 
-public class DateTime {
+public class CustomTime {
     int hour;
     int minute;
 
-    public DateTime(int hour, int minute) {
+    public CustomTime(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
     }

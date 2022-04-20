@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
-import com.example.medicalappreminder_java.models.DateTime;
+import com.example.medicalappreminder_java.models.CustomTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class SecondAddMedScreen extends Fragment {
     Date endDate;
     int howManyTimes;
     String selected_val;
-    ArrayList<DateTime> dateTimes;
+    ArrayList<CustomTime> customTimes;
 
     String medName;
     Form formMed;
@@ -149,14 +148,14 @@ public class SecondAddMedScreen extends Fragment {
                     WhatReasonToTake = whatYouTakingForEditText.getText().toString();
                     selected_val = spinnerHowOftenYouTakeIt.getSelectedItem().toString();
                     howManyTimes = Integer.parseInt(doseTakenTime.getText().toString());
-                    dateTimes = myAdapter.getTimes();
-                    if(dateTimes.size() == 0)
+                    customTimes = myAdapter.getTimes();
+                    if(customTimes.size() == 0)
                         Toast.makeText(getContext(),"Please set all doses time",Toast.LENGTH_SHORT).show();
 
                     else
                     {
                         DataFromSecondAddMedScreen dataFromSecondAddMedScreen = new DataFromSecondAddMedScreen(WhatReasonToTake,startDate,endDate,
-                                howManyTimes,selected_val,dateTimes,medName,formMed,
+                                howManyTimes,selected_val, customTimes,medName,formMed,
                                 strength,strengthAmount);
                         SecondAddMedScreenDirections.GoToThirdAddMedScreen action = SecondAddMedScreenDirections.goToThirdAddMedScreen(dataFromSecondAddMedScreen);
                         Navigation.findNavController(view).navigate(action);

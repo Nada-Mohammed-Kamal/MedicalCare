@@ -1,7 +1,5 @@
 package com.example.medicalappreminder_java.models;
 
-import android.text.format.Time;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -10,7 +8,6 @@ import androidx.room.PrimaryKey;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
-import com.example.medicalappreminder_java.CustomTime;
 import com.google.firebase.firestore.Exclude;
 
 
@@ -186,7 +183,27 @@ public class Medicine {
         this.image = image;
     }
 
-
+    public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<CustomTime>, Status> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+        uuid = UUID.randomUUID();
+        this.name = name;
+        this.form = form;
+        this.strength = strength;
+        StrengthAmount = strengthAmount;
+        this.numberOfPillsLeft = numberOfPillsLeft;
+        this.image = image;
+        this.isEveryday = isEveryday;
+        Dose_howOften = dose_howOften;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.fowHowManyDaysIsTheMedicineGoingToBeTaken = fowHowManyDaysIsTheMedicineGoingToBeTaken;
+        this.howManyTimesWillItBeTakenInADay = howManyTimesWillItBeTakenInADay;
+        this.instructions = instructions;
+        this.state = state;
+        this.doseTimes = doseTimes;
+        this.hasRefillReminder = hasRefillReminder;
+        this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
+        this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
+    }
 
 
     public UUID getUuid() {
@@ -348,4 +365,5 @@ public class Medicine {
     public void setNumberOfPillsLeft(double numberOfPillsLeft) {
         this.numberOfPillsLeft = numberOfPillsLeft;
     }
+
 }

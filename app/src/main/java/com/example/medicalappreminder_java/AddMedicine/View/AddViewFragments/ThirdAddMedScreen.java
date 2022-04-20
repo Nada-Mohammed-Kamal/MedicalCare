@@ -21,9 +21,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.CalculateArrayOfDatesAndTimesOfTheMedication;
 import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
+import com.example.medicalappreminder_java.models.Medicine;
+
+import java.util.Date;
 
 
 public class ThirdAddMedScreen extends Fragment {
@@ -48,9 +55,10 @@ public class ThirdAddMedScreen extends Fragment {
     RadioButton radioButton;
 
     String choosingTxt;
-    int pillLeftNum;
-    int pillLeftReminderNum;
+    double pillLeftNum;
+    double pillLeftReminderNum;
     String moreInstraction;
+    DataFromSecondAddMedScreen data;
     public ThirdAddMedScreen() {
         // Required empty public constructor
     }
@@ -61,10 +69,11 @@ public class ThirdAddMedScreen extends Fragment {
         super.onCreate(savedInstanceState);
         //all previous data
         thirdAddMedScreenArgs = ThirdAddMedScreenArgs.fromBundle(getArguments());
-        DataFromSecondAddMedScreen data = thirdAddMedScreenArgs.getAllData();
+        data = thirdAddMedScreenArgs.getAllData();
 
         choosingTxt = "Before eating";
-
+        pillLeftNum = 0.0;
+        pillLeftReminderNum = 0.0;
 
     }
 
@@ -132,16 +141,21 @@ public class ThirdAddMedScreen extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!pillLeft.getText().toString().isEmpty()) {
-                    pillLeftNum = Integer.parseInt(pillLeft.getText().toString());
+                    pillLeftNum = Double.parseDouble(pillLeft.getText().toString());
                 }
                 if(!pillLeftReminder.getText().toString().isEmpty()) {
-                    pillLeftReminderNum = Integer.parseInt(pillLeftReminder.getText().toString());
+                    pillLeftReminderNum = Double.parseDouble(pillLeftReminder.getText().toString());
                 }
                 if(!editTextTextMultiLine.getText().toString().isEmpty()){
                     moreInstraction = editTextTextMultiLine.getText().toString();
                 }
-                //add med to room
-                Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+
+                //add med to room presenter code
+                CalculateArrayOfDatesAndTimesOfTheMedication calculate = new CalculateArrayOfDatesAndTimesOfTheMedication(data.getStartDate(),data.getEndDate());
+               // Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getSelected_val(),
+                    //    data.getStartDate(), data.getEndDate(), int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List< CustomTime >, Status > doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+
+                    Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });

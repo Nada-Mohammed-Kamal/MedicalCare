@@ -38,7 +38,12 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
         }
     }
 
-
+    public CalculateArrayOfDatesAndTimesOfTheMedication(Date startDate, Date endDate) {
+        StartDate = startDate;
+        this.endDate = endDate;
+        Calendar calendar = new GregorianCalendar();
+        dates = getDaysBetweenDates(startDate , endDate);
+    }
 
     public List<Date> getDaysBetweenDates(Date startdate, Date enddate)
     {
