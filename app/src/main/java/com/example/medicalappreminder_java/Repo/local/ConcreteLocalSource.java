@@ -126,7 +126,15 @@ public class ConcreteLocalSource implements LocalSourceInterface {
     //not implemented yet
     @Override
     public User findUserByEmail(String email) {
-        return null;
+
+        final User[] userByEmail = new User[1];
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userByEmail[0] = userDao.findUserByEmail(email);
+            }
+        }).start();
+        return userByEmail[0];
     }
 
     @Override
