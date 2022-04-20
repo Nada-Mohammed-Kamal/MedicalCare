@@ -27,7 +27,6 @@ public class AllMedPresenter implements AllMedPresenterInterface{
     }
     @Override
     public void getMeds() {
-       // repositoryInterface.getAllMovies(this);
         RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(_context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,_context);

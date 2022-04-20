@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,15 +47,17 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Medicine medDTO = medList.get(position);
-      //  String decMed = medDTO.getStrengthAmount() + medDTO.getStrength() + ",take" +medDTO.getForm();
-       // holder.medTime.setText();
-      //  holder.medDesc.setText(medDTO.getMedDescription());
+        String decMed = ""+ medDTO.getStrengthAmount() + medDTO.getStrength() + ",take " +medDTO.getForm();
+       // holder.medTime.setText(medDTO.get);
+        holder.medDesc.setText(decMed);
         holder.medName.setText(medDTO.getName());
         holder.medIcon.setImageResource(medDTO.getImage());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 onMoviesClickListener.onClick(medDTO);
+                Toast.makeText(context,"Med clicked",Toast.LENGTH_SHORT).show();
             }
         });
     }

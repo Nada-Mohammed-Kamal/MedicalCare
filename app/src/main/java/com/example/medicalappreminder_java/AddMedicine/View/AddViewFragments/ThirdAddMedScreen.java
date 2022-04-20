@@ -27,6 +27,8 @@ import com.example.medicalappreminder_java.CalculateArrayOfDatesAndTimesOfTheMed
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedViewInterface;
+import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeFragment;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -171,7 +173,7 @@ public class ThirdAddMedScreen extends Fragment {
                 Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getEveryHowManyDaysWilltheMedBeTaken(),
                         data.getStartDate(), data.getEndDate(), calculate.getForHowLongWillTheMedBeTaken(),
                         data.getHowManyTimes(),moreInstraction,"Active", data.getCustomTimes(),
-                        hasRefillRemind, Double.parseDouble(pillLeftReminder.getText().toString()), calculate.getDates());
+                        hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
                 RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
@@ -184,8 +186,8 @@ public class ThirdAddMedScreen extends Fragment {
                 listOfMedications.add(medicine);
                 currentUser.setListOfMedications(listOfMedications);
                 repoClass.updateUser(currentUser);
-
-                    Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+               
+                Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
