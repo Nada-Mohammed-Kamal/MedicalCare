@@ -59,6 +59,7 @@ public class ThirdAddMedScreen extends Fragment {
     double pillLeftReminderNum;
     String moreInstraction;
     DataFromSecondAddMedScreen data;
+    boolean hasRefillRemind;
     public ThirdAddMedScreen() {
         // Required empty public constructor
     }
@@ -74,6 +75,7 @@ public class ThirdAddMedScreen extends Fragment {
         choosingTxt = "Before eating";
         pillLeftNum = 0.0;
         pillLeftReminderNum = 0.0;
+        hasRefillRemind = false;
 
     }
 
@@ -146,6 +148,10 @@ public class ThirdAddMedScreen extends Fragment {
                 if(!pillLeftReminder.getText().toString().isEmpty()) {
                     pillLeftReminderNum = Double.parseDouble(pillLeftReminder.getText().toString());
                 }
+                if(pillLeftReminderNum != 0.0 && pillLeftNum != 0.0)
+                {
+                    hasRefillRemind = true;
+                }
                 if(!editTextTextMultiLine.getText().toString().isEmpty()){
                     moreInstraction = editTextTextMultiLine.getText().toString();
                     moreInstraction = moreInstraction + "  " + choosingTxt;
@@ -153,8 +159,10 @@ public class ThirdAddMedScreen extends Fragment {
 
                 //add med to room presenter code
                 CalculateArrayOfDatesAndTimesOfTheMedication calculate = new CalculateArrayOfDatesAndTimesOfTheMedication(data.getStartDate(),data.getEndDate(),data.getEveryHowManyDaysWilltheMedBeTaken());
-                Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getSelected_val(),
-                       data.getStartDate(), data.getEndDate(), calculate.getForHowLongWillTheMedBeTaken(),data.getHowManyTimes(),moreInstraction,"Active", HashMap<List< CustomTime >, Status > doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+                /*Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getEveryHowManyDaysWilltheMedBeTaken(),
+                        data.getStartDate(), data.getEndDate(), calculate.getForHowLongWillTheMedBeTaken(),
+                        data.getHowManyTimes(),moreInstraction,"Active", HashMap<List< CustomTime >, Status > doseTimes,
+                        hasRefillRemind, pillLeftReminder, calculate.getDates());*/
 
                     Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
                 getActivity().finish();
