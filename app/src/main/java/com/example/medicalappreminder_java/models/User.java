@@ -27,7 +27,7 @@ public class User {
     Date birthdate;
     @ColumnInfo(name = "StringWIthListOfDependantEmails")
     //String stringWIthListOfDependantEmails;
-    List<User> listOfDependantEmails;
+    List<User> listOfDependant;
     @ColumnInfo(name = "ListOfMedications")
     //String stringWithListOfMedicationIds;
     List<Medicine> ListOfMedications;
@@ -51,25 +51,32 @@ public class User {
         this.uuid = uuid;
     }
 
-    public User(String firstName, String lastName, UUID uuid, @NonNull String email, String gender, Date birthdate, List<User> listOfDependantEmails, List<Medicine> listOfMedications) {
+    public User(String firstName, String lastName, UUID uuid, @NonNull String email, String gender, Date birthdate, List<User> listOfDependant, List<Medicine> listOfMedications) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.uuid = uuid;
         this.email = email;
         this.gender = gender;
         this.birthdate = birthdate;
-        this.listOfDependantEmails = listOfDependantEmails;
+        this.listOfDependant = listOfDependant;
         ListOfMedications = listOfMedications;
     }
 
-    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependantEmails, List<Medicine> listOfMedications) {
+    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependant, List<Medicine> listOfMedications) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
         this.birthdate = birthdate;
-        this.listOfDependantEmails= listOfDependantEmails;
+        this.listOfDependant = listOfDependant;
         ListOfMedications = listOfMedications;
+    }
+
+    public User(String firstName, String email, List<User> listOfDependant) {
+        uuid = UUID.randomUUID();
+        this.firstName = firstName;
+        this.email = email;
+        this.listOfDependant = listOfDependant;
     }
 
     public User() {
@@ -116,12 +123,12 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public List<User> getListOfDependantEmails() {
-        return listOfDependantEmails;
+    public List<User> getListOfDependant() {
+        return listOfDependant;
     }
 
-    public void setListOfDependantEmails(List<User> listOfDependantIds) {
-        this.listOfDependantEmails = listOfDependantIds;
+    public void setListOfDependant(List<User> listOfDependantIds) {
+        this.listOfDependant = listOfDependantIds;
     }
 
     public List<Medicine> getListOfMedications() {

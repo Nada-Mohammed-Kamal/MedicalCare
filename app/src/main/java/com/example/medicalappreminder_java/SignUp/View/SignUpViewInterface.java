@@ -10,6 +10,7 @@ public interface SignUpViewInterface {
     public String getUserName() ;
     public void setEmailEditTextError(String error) ;
     public void setPasswordEditTextError(String error) ;
+    public void setUserNameEditTextError(String error) ;
     public void makeToast(String message) ;
     public void setProgressbarVisible() ;
     public void setProgressbarGone();
