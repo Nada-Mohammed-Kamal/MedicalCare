@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenter;
@@ -77,7 +78,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
 
     public void setMedicineDetails(){
 
-        medicine.setDose_howOften("every 2 days ");
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
         medicine.setName("panadol");
         medicine.setHowManyTimesWillItBeTakenInADay(2);
         medicine.setCondition("headache");
@@ -91,12 +92,12 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         medicine.setTotalNumOfPills(20);
         medicine.setImage(R.drawable.inhaler);
       //  medicine.setDoseTimes(dates);
-        medicine.setDose_howOften("twice daily");
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
         medicine.setEveryday(true);
         if (medicine.isEveryday() == true) {
 //            howOftenTextView.setText("Every day ");
         }else {
-            howOftenTextView.setText(medicine.getDose_howOften());
+            howOftenTextView.setText(medicine.getDose_howOften().toString());
             //howOftenTextView.append();
         }
 
