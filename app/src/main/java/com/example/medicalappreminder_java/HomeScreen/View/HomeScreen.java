@@ -37,8 +37,12 @@ import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
+import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
 public class HomeScreen extends AppCompatActivity {
     //AppDatabase db = AppDatabase.getDBInstance(getApplicationContext());
     //List<User> allUsers = db.userDao().getAllUsers();
@@ -46,22 +50,28 @@ public class HomeScreen extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem menuItem;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         initComponents();
-
+        //presenter code
         RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(this);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,this);
-        repoClass.findUserByEmail()
+        User currentUser = repoClass.findUserByEmail(userEmail);
+        List<User> listOfDependant = currentUser.getListOfDependant();
+        for (int i = 0; i < listOfDependant.size(); i++) {
+            addNewDependentToDrawer(listOfDependant.get(i).getFirstName() + " " + listOfDependant.get(i).getLastName());
+        }
     }
     private void initComponents(){
 
         SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
         String userName = preferences.getString("userNameKey" , "user name") ;
+        userEmail = preferences.getString("emailKey" , "user email") ;
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);

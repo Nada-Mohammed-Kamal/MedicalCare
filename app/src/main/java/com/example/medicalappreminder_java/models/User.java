@@ -72,6 +72,13 @@ public class User {
         ListOfMedications = listOfMedications;
     }
 
+    public User(String firstName, String email, List<User> listOfDependant) {
+        uuid = UUID.randomUUID();
+        this.firstName = firstName;
+        this.email = email;
+        this.listOfDependant = listOfDependant;
+    }
+
     public User() {
     }
 

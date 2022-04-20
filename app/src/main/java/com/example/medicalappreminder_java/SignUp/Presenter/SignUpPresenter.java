@@ -6,7 +6,15 @@ import android.util.Patterns;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.FireBaseModels.Authentication.AuthenticationHandler;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
+import com.example.medicalappreminder_java.models.User;
+
+import java.util.ArrayList;
 
 
 public class SignUpPresenter implements SignUpPresenterInterafce {
@@ -65,6 +73,11 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
 
         signUpView.setProgressbarVisible();
         authenticationHandler.createUserWithEmailAndPassword(email,password ,userName );
+        User user = new User(userName, email, new ArrayList<User>());
+        RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+        repoClass.insertUser(user);
     }
 
 }
