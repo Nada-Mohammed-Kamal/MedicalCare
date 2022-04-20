@@ -184,7 +184,7 @@ public class Medicine {
         this.image = image;
     }
 
-    public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<CustomTime>, Status> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+    public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday,  EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<CustomTime>, Status> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
         uuid = UUID.randomUUID();
         this.name = name;
         this.form = form;
