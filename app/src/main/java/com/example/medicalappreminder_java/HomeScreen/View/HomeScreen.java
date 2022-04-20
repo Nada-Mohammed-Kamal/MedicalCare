@@ -97,7 +97,7 @@ public class HomeScreen extends AppCompatActivity {
         View getHeaderView = navigationView.getHeaderView(0);
         TextView t = getHeaderView.findViewById(R.id.namenav);
         t.setText(userName);
-        //addNewDependentToDrawer("dependentName1");
+
 
 
     }
@@ -153,16 +153,6 @@ public class HomeScreen extends AppCompatActivity {
     private  void  setMenu(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        Log.w("ANDROID MENU TUTORIAL:", "onCreateOptionsMenu(Menu menu)");
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.drawer_menu, menu);
-        return true;
-
     }
 
     @Override
