@@ -5,6 +5,7 @@ import android.text.format.Time;
 import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.common.reflect.TypeToken;

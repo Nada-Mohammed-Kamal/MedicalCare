@@ -52,18 +52,29 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
         return forHowLongWillTheMedBeTaken;
     }
 
-    public CalculateArrayOfDatesAndTimesOfTheMedication(Date startDate, Date endDate, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken) {
+    public CalculateArrayOfDatesAndTimesOfTheMedication(Date startDate, Date endDate, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken , List<CustomTime> times) {
             startDate = startDate;
             this.endDate = endDate;
             this.everyHowManyDaysWillTheMedBeTaken = everyHowManyDaysWillTheMedBeTaken;
+
 
             Calendar calendar = new GregorianCalendar();
             dates = getDaysBetweenDates(startDate, endDate);
             forHowLongWillTheMedBeTaken = dates.size();
             dates = getOnlyTheDaysToTakeTheMedInFromTheInterval(dates,everyHowManyDaysWillTheMedBeTaken);
 
+        HashMap<CustomTime , Status> timeStatusHashMap = new HashMap<>();
+        for(int i = 0 ; i < times.size() ; i++){
+            timeStatusHashMap.put(times.get(i) , Status.notItsTimeYet);
         }
-        public List<Date> getDaysBetweenDates (Date startdate, Date enddate)
+        doseTimes = timeStatusHashMap;
+        }
+
+    public HashMap<CustomTime, Status> getDoseTimes() {
+        return doseTimes;
+    }
+
+    public List<Date> getDaysBetweenDates (Date startdate, Date enddate)
         {
             List<Date> dates = new ArrayList<>();
             Calendar calendar = new GregorianCalendar();
