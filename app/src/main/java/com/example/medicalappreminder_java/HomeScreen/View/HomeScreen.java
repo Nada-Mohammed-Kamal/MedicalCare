@@ -29,6 +29,13 @@ import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.R;
+
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
+
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
@@ -45,6 +52,11 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         initComponents();
+
+        RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(this);
+        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,this);
+        repoClass.findUserByEmail()
     }
     private void initComponents(){
 
