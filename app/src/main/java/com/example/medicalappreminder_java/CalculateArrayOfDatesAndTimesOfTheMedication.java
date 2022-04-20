@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CalculateArrayOfDatesAndTimesOfTheMedication {
-    private HashMap<CustomTime , Status> doseTimes;
+    private List<CustomTime> doseTimes;
     private List<Date> dates;
     private Date startDate , endDate;
     private int numberOfTimesInADay;
@@ -24,7 +24,7 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
     private int forHowLongWillTheMedBeTaken;
     private EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken;
 
-    public CalculateArrayOfDatesAndTimesOfTheMedication(int forHowLongWillTheMedBeTaken ,HashMap<CustomTime, Status> doseTimes, List<Date> dates, Date startDate, Date endDate, int numberOfTimesInADay , EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken) {
+    public CalculateArrayOfDatesAndTimesOfTheMedication(int forHowLongWillTheMedBeTaken ,List<CustomTime> doseTimes, List<Date> dates, Date startDate, Date endDate, int numberOfTimesInADay , EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken) {
         this.doseTimes = doseTimes;
         this.dates = dates;
         this.startDate = startDate;
@@ -41,7 +41,7 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
         dates = getOnlyTheDaysToTakeTheMedInFromTheInterval(dates, everyHowManyDaysWillTheMedBeTaken);
 
         //times
-        doseTimes = getTheNumberOfTimesAndTheExactTimesInADay(3);
+        //doseTimes = getTheNumberOfTimesAndTheExactTimesInADay(3);
     }
 
     public List<Date> getDates() {
@@ -63,14 +63,14 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
             forHowLongWillTheMedBeTaken = dates.size();
             dates = getOnlyTheDaysToTakeTheMedInFromTheInterval(dates,everyHowManyDaysWillTheMedBeTaken);
 
-        HashMap<CustomTime , Status> timeStatusHashMap = new HashMap<>();
-        for(int i = 0 ; i < times.size() ; i++){
-            timeStatusHashMap.put(times.get(i) , Status.notItsTimeYet);
-        }
-        doseTimes = timeStatusHashMap;
+//        List<CustomTime> timeStatusHashMap = new ArrayList<>();
+//        for(int i = 0 ; i < times.size() ; i++){
+//            timeStatusHashMap.put(times.get(i) , Status.notItsTimeYet);
+//        }
+//        doseTimes = timeStatusHashMap;
         }
 
-    public HashMap<CustomTime, Status> getDoseTimes() {
+    public List<CustomTime> getDoseTimes() {
         return doseTimes;
     }
 

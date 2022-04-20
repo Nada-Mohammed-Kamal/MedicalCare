@@ -12,6 +12,7 @@ import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
+import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
 
         signUpView.setProgressbarVisible();
         authenticationHandler.createUserWithEmailAndPassword(email,password ,userName );
-        User user = new User(userName, email, new ArrayList<User>());
+        User user = new User(userName, email, new ArrayList<User>() , new ArrayList<Medicine>());
         RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
