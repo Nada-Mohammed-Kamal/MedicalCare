@@ -1,11 +1,13 @@
 package com.example.medicalappreminder_java.activeandinactivemedscreen.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,9 +55,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.myViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         holder.nameTextView.setText(data.get(position).getName());
-        holder.ageTextView.setText(""+data.get(position).getStrength());
-        //holder.emailTextView.setText(data.get(position).getStrengthAmount());
+        holder.ageTextView.setText(""+ data.get(position).getStrengthAmount()+ " "  +data.get(position).getStrength() );
+        holder.emailTextView.setText(""+data.get(position).getNumberOfPillsLeft() + " Pill(s) left" );
         holder.imageView.setImageResource(data.get(position).getImage());
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context , "" + holder.nameTextView.getText().toString() , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -127,8 +127,6 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 List<User> listOfDependant2 = currentUser.getListOfDependant();
 
                 Navigation.findNavController(view).navigate(R.id.actionGoToHome);
-
-
             }
         });
 
