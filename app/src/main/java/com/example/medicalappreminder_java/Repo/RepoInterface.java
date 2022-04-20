@@ -38,6 +38,20 @@ public interface RepoInterface {
 
     //remote
     //put here the methods that are in the Remote source interface
+    public void addUserToFireStore(User user) ;
+    public void addMedicineToFireStore(Medicine medicine) ;
+    public void getUsersFromFireStore() ;
+    public void getMedicinesFromFireStore() ;
+    public void updateUserFromFireStore(User oldUser , User newUser) ;
+    public void updateMedicineFromFireStore(Medicine oldMedicine , Medicine newMedicine) ;
+    public void deleteUserFromFireStore(User user) ;
+    public void deleteMedicineFromFireStore(Medicine medicine) ;
+    public List<User> getUsersList() ;
+    public List<Medicine> getMedicinesList();
+    public LiveData<List<Medicine>> getMedicineLiveData();
+    public void setMedicineLiveData(LiveData<List<Medicine>> medicineLiveData);
+    public LiveData<List<User>> getUserLiveData() ;
+    public void setUserLiveData(LiveData<List<User>> userLiveData);
 
 
 }

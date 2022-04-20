@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 public class SharedPrefrencesModel {
 
     String emailFromPref , passwordFromPref  , userNameFromPref;
-    public static String preferenceFile = "preferencesFile";
+    public static final String preferenceFile = "preferencesFile";
     Context context ;
-    public static SharedPrefrencesModel sharedPrefrencesModel = null ;
+    public static  SharedPrefrencesModel sharedPrefrencesModel = null ;
 
     private SharedPrefrencesModel(Context context){
         this.context = context ;
@@ -29,6 +29,16 @@ public class SharedPrefrencesModel {
         editor.putString("userNameKey" , userName) ;
         editor.commit() ;
     }
+
+    public void writeInSharedPreferences(String email , String userName){
+        SharedPreferences preferences = context.getSharedPreferences(preferenceFile , Context.MODE_PRIVATE) ;
+        SharedPreferences.Editor editor = preferences.edit() ;
+        editor.putString("emailKey" , email) ;
+        editor.putString("userNameKey" , userName) ;
+        editor.commit() ;
+    }
+
+
 
     public void readFromSharedPreferences(){
         SharedPreferences preferences = context.getSharedPreferences(preferenceFile , Context.MODE_PRIVATE) ;

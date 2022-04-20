@@ -169,9 +169,10 @@ public class AuthenticationHandler {
                 Log.e(TAG, "onActivityResult: Google Sign In was successful");
                 logInView.makeToast("Google Sign In was successful");
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(context) ;
+                //GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(context) ;
                 Log.e(TAG, "googleOnActivityResult: "+ account.getDisplayName());
                 logInView.makeToast(account.getDisplayName());
+                sharedPrefrencesModel.writeInSharedPreferences(account.getEmail(), account.getDisplayName());
                 logInView.gotoHomeScreen();
                 //firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
