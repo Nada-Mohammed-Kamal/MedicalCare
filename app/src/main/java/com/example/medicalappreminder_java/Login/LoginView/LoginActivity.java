@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
@@ -151,6 +152,10 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         Intent intent = new Intent(this, HomeScreen.class)  ;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) ;
         intent.putExtra(SignUpActivity.userNameKey ,userName ) ;
+        //SharedPreferences preferences = getSharedPreferences(SharedPrefrencesModel.preferenceFile , Context.MODE_PRIVATE) ;
+        //emailFromPref = preferences.getString("emailKey","N/A");
+        //userNameFromPref = preferences.getString("userNameKey","N/A") ;
+
         startActivity(intent);
 
     }

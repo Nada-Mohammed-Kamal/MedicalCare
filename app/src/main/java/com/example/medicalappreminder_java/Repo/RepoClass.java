@@ -103,6 +103,77 @@ public class RepoClass implements RepoInterface {
         localSourceInterface.updateUser(user);
     }
 
+    @Override
+    public void addUserToFireStore(User user) {
+        remoteSourceInterface.addUserToFireStore(user);
+    }
+
+    @Override
+    public void addMedicineToFireStore(Medicine medicine) {
+        remoteSourceInterface.addMedicineToFireStore(medicine);
+    }
+
+    @Override
+    public void getUsersFromFireStore() {
+        remoteSourceInterface.getUsersFromFireStore();
+    }
+
+    @Override
+    public void getMedicinesFromFireStore() {
+        remoteSourceInterface.getMedicinesFromFireStore();
+    }
+
+    @Override
+    public void updateUserFromFireStore(User oldUser, User newUser) {
+        remoteSourceInterface.updateUserFromFireStore(oldUser,newUser);
+    }
+
+    @Override
+    public void updateMedicineFromFireStore(Medicine oldMedicine, Medicine newMedicine) {
+        remoteSourceInterface.updateMedicineFromFireStore(oldMedicine,newMedicine);
+    }
+
+    @Override
+    public void deleteUserFromFireStore(User user) {
+        remoteSourceInterface.deleteUserFromFireStore(user);
+    }
+
+    @Override
+    public void deleteMedicineFromFireStore(Medicine medicine) {
+        remoteSourceInterface.deleteMedicineFromFireStore(medicine);
+    }
+
+    @Override
+    public List<User> getUsersList() {
+        return remoteSourceInterface.getUsersList() ;
+
+    }
+
+    @Override
+    public List<Medicine> getMedicinesList() {
+        return remoteSourceInterface.getMedicinesList() ;
+    }
+
+    @Override
+    public LiveData<List<Medicine>> getMedicineLiveData() {
+        return remoteSourceInterface.getMedicineLiveData();
+    }
+
+    @Override
+    public void setMedicineLiveData(LiveData<List<Medicine>> medicineLiveData) {
+        remoteSourceInterface.setMedicineLiveData(medicineLiveData);
+    }
+
+    @Override
+    public LiveData<List<User>> getUserLiveData() {
+        return remoteSourceInterface.getUserLiveData();
+    }
+
+    @Override
+    public void setUserLiveData(LiveData<List<User>> userLiveData) {
+        remoteSourceInterface.setUserLiveData(userLiveData);
+    }
+
     //end of local part
 
     //remote
