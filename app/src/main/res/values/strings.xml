@@ -64,6 +64,15 @@
     <string name="medIcon">Medication Icon</string>
     <string name="medCondition">Condition</string>
     <string name="how_often_do_you_take_it">How often do you take it?</string>
+    <string name="almost_done_would_you_like_to">Almost done, Would you like to:ِ</string>
+    <string name="get_refill_reminders">Get Refill Reminders?</string>
+    <string name="pill_s_left">Pill(s) left</string>
+    <string name="should_this_be_taken_with_food">Should this be taken with food?</string>
+    <string name="while_eating">While eating</string>
+    <string name="After_eating">After eating</string>
+    <string name="doesn_t_matter">Doesn\'t matter</string>
+    <string name="any_onther_instructions">Any onther instructions?</string>
+    <string name="user_name">User name</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>

@@ -13,10 +13,9 @@
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_account_circle"
-        android:background="@drawable/white_oval"
-        app:civ_border_width="@dimen/_3sdp"
-        app:civ_border_color="@android:color/black"/>
+        android:src="@drawable/img"
+
+        />
 
     <TextView
         android:id="@+id/namenav"
