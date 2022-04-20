@@ -148,12 +148,13 @@ public class ThirdAddMedScreen extends Fragment {
                 }
                 if(!editTextTextMultiLine.getText().toString().isEmpty()){
                     moreInstraction = editTextTextMultiLine.getText().toString();
+                    moreInstraction = moreInstraction + "  " + choosingTxt;
                 }
 
                 //add med to room presenter code
-                CalculateArrayOfDatesAndTimesOfTheMedication calculate = new CalculateArrayOfDatesAndTimesOfTheMedication(data.getStartDate(),data.getEndDate());
-               // Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getSelected_val(),
-                    //    data.getStartDate(), data.getEndDate(), int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List< CustomTime >, Status > doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+                CalculateArrayOfDatesAndTimesOfTheMedication calculate = new CalculateArrayOfDatesAndTimesOfTheMedication(data.getStartDate(),data.getEndDate(),data.getEveryHowManyDaysWilltheMedBeTaken());
+                Medicine medicine = new Medicine(data.getMedName(), data.getFormMed(), data.getStrength(), data.getStrengthAmount(), pillLeftNum, data.getImg(), data.isEveryDay(),data.getSelected_val(),
+                       data.getStartDate(), data.getEndDate(), calculate.getForHowLongWillTheMedBeTaken(),data.getHowManyTimes(),moreInstraction,"Active", HashMap<List< CustomTime >, Status > doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
 
                     Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
                 getActivity().finish();

@@ -1,5 +1,6 @@
 package com.example.medicalappreminder_java.models;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
@@ -13,7 +14,7 @@ public class DataFromSecondAddMedScreen implements Serializable {
     Date startDate;
     Date endDate;
     int howManyTimes;
-    String selected_val;
+    EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWilltheMedBeTaken;
     ArrayList<CustomTime> customTimes;
 
     String medName;
@@ -39,8 +40,12 @@ public class DataFromSecondAddMedScreen implements Serializable {
         return howManyTimes;
     }
 
-    public String getSelected_val() {
-        return selected_val;
+    public EveryHowManyDaysWilltheMedBeTaken getEveryHowManyDaysWilltheMedBeTaken() {
+        return everyHowManyDaysWilltheMedBeTaken;
+    }
+
+    public ArrayList<CustomTime> getCustomTimes() {
+        return customTimes;
     }
 
     public ArrayList<CustomTime> getDateTimes() {
@@ -71,13 +76,13 @@ public class DataFromSecondAddMedScreen implements Serializable {
         return isEveryDay;
     }
 
-    public DataFromSecondAddMedScreen(String whatReasonToTake, Date startDate, Date endDate, int howManyTimes, String selected_val, ArrayList<CustomTime> customTimes, String medName, Form formMed, Strength strength, int strengthAmount) {
+    public DataFromSecondAddMedScreen(String whatReasonToTake, Date startDate, Date endDate, int howManyTimes, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWilltheMedBeTaken, ArrayList<CustomTime> customTimes, String medName, Form formMed, Strength strength, int strengthAmount) {
         super();
         this.whatReasonToTake = whatReasonToTake;
         this.startDate = startDate;
         this.endDate = endDate;
         this.howManyTimes = howManyTimes;
-        this.selected_val = selected_val;
+        this.everyHowManyDaysWilltheMedBeTaken = everyHowManyDaysWilltheMedBeTaken;
         this.customTimes = customTimes;
         this.medName = medName;
         this.formMed = formMed;
@@ -105,7 +110,7 @@ public class DataFromSecondAddMedScreen implements Serializable {
         else {
             img = R.drawable.other_form;
         }
-        if (selected_val.equals("Every day")){
+        if (everyHowManyDaysWilltheMedBeTaken == EveryHowManyDaysWilltheMedBeTaken.Every_day){
             isEveryDay = true;
         }
         else{

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.models.CustomTime;
 
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CalculateArrayOfDatesAndTimesOfTheMedication {
-    HashMap<CustomTime , Status> doseTimes;
-    List<Date> dates;
-    Date startDate , endDate;
-    int numberOfTimesInADay;
-    String TAG = "OUTPUT";
-    int forHowLongWillTheMedBeTaken;
-    EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken;
+    private HashMap<CustomTime , Status> doseTimes;
+    private List<Date> dates;
+    private Date startDate , endDate;
+    private int numberOfTimesInADay;
+    private String TAG = "OUTPUT";
+    private int forHowLongWillTheMedBeTaken;
+    private EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken;
 
     public CalculateArrayOfDatesAndTimesOfTheMedication(int forHowLongWillTheMedBeTaken ,HashMap<CustomTime, Status> doseTimes, List<Date> dates, Date startDate, Date endDate, int numberOfTimesInADay , EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken) {
         this.doseTimes = doseTimes;
@@ -35,34 +36,46 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
 
         //remove those and call them when needed or call the vars directly.
         //to get the list of dates
-        dates = getDaysBetweenDates(startDate , endDate);
+        dates = getDaysBetweenDates(startDate, endDate);
         forHowLongWillTheMedBeTaken = dates.size();
         dates = getOnlyTheDaysToTakeTheMedInFromTheInterval(dates, everyHowManyDaysWillTheMedBeTaken);
 
         //times
         doseTimes = getTheNumberOfTimesAndTheExactTimesInADay(3);
-
-    public CalculateArrayOfDatesAndTimesOfTheMedication(Date startDate, Date endDate) {
-        StartDate = startDate;
-        this.endDate = endDate;
-        Calendar calendar = new GregorianCalendar();
-        dates = getDaysBetweenDates(startDate , endDate);
     }
 
-    public List<Date> getDaysBetweenDates(Date startdate, Date enddate)
-    {
-        List<Date> dates = new ArrayList<>();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startdate);
-
-        while (calendar.getTime().before(enddate))
-        {
-            Date result = calendar.getTime();
-            dates.add(result);
-            calendar.add(Calendar.DATE, 1);
-        }
+    public List<Date> getDates() {
         return dates;
     }
+
+    public int getForHowLongWillTheMedBeTaken() {
+        return forHowLongWillTheMedBeTaken;
+    }
+
+    public CalculateArrayOfDatesAndTimesOfTheMedication(Date startDate, Date endDate, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken) {
+            startDate = startDate;
+            this.endDate = endDate;
+            this.everyHowManyDaysWillTheMedBeTaken = everyHowManyDaysWillTheMedBeTaken;
+
+            Calendar calendar = new GregorianCalendar();
+            dates = getDaysBetweenDates(startDate, endDate);
+            forHowLongWillTheMedBeTaken = dates.size();
+            dates = getOnlyTheDaysToTakeTheMedInFromTheInterval(dates,everyHowManyDaysWillTheMedBeTaken);
+
+        }
+        public List<Date> getDaysBetweenDates (Date startdate, Date enddate)
+        {
+            List<Date> dates = new ArrayList<>();
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(startdate);
+
+            while (calendar.getTime().before(enddate)) {
+                Date result = calendar.getTime();
+                dates.add(result);
+                calendar.add(Calendar.DATE, 1);
+            }
+            return dates;
+        }
 
 
     public List<Date> getOnlyTheDaysToTakeTheMedInFromTheInterval(List<Date> list, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken){
@@ -122,7 +135,7 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
 
 
     //de btgeeb al mawa3eed balzabt fal yoom
-    public HashMap<CustomTime , Status> getTheNumberOfTimesAndTheExactTimesInADay(int numOfTimesAsInt){
+    public HashMap<CustomTime, Status> getTheNumberOfTimesAndTheExactTimesInADay(int numOfTimesAsInt){
         HashMap<CustomTime , Status> timesAndStatus = new HashMap<>();
         for (int i = 0; i < numOfTimesAsInt; i++) {
             //bna5ol number of clocks bal da5el
