@@ -67,6 +67,7 @@ public class HomeScreen extends AppCompatActivity {
             addNewDependentToDrawer(listOfDependant.get(i).getFirstName() + " " + listOfDependant.get(i).getLastName());
         }
     }
+
     private void initComponents(){
 
         SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;

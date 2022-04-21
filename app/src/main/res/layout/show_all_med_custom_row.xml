@@ -11,7 +11,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_marginTop="16dp"
         app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
+        app:civ_border_width="1dp"
         app:layout_constraintStart_toStartOf="@+id/doseTimeRecylerViewHomeScreen"
         app:layout_constraintTop_toBottomOf="@+id/doseTimeRecylerViewHomeScreen" />
 
