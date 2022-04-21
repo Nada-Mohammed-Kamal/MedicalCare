@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -72,12 +73,12 @@ public class User {
         ListOfMedications = listOfMedications;
     }
 
-    public User(String firstName, String email, List<User> listOfDependant , List<Medicine> medicines) {
+    public User(String firstName, String email) {
         uuid = UUID.randomUUID();
         this.firstName = firstName;
         this.email = email;
-        this.ListOfMedications = medicines;
-        this.listOfDependant = listOfDependant;
+        this.ListOfMedications = new ArrayList<>();
+        this.listOfDependant = new ArrayList<>();
     }
 
     public User() {

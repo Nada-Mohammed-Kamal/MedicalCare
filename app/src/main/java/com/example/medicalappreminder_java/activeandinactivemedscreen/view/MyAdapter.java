@@ -9,9 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medicalappreminder_java.Constants.Keys;
+import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderActivity;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.Medicine;
 
@@ -54,6 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.myViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+        Medicine medicine = data.get(position);
         holder.nameTextView.setText(data.get(position).getName());
         holder.ageTextView.setText(""+ data.get(position).getStrengthAmount()+ " "  +data.get(position).getStrength() );
         holder.emailTextView.setText(""+data.get(position).getNumberOfPillsLeft() + " Pill(s) left" );
@@ -62,6 +66,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.myViewHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context , "" + holder.nameTextView.getText().toString() , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context.getApplicationContext(), DrugReminderActivity.class);
+                intent.putExtra(Keys.USER_MED,medicine);
+                context.startActivity(intent);
             }
         });
     }

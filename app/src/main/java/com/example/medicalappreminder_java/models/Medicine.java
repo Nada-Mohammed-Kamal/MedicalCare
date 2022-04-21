@@ -12,13 +12,15 @@ import com.example.medicalappreminder_java.Constants.Strength;
 import com.google.firebase.firestore.Exclude;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-public class Medicine {
+public class Medicine implements Serializable {
     @ColumnInfo(name = "id")
     @PrimaryKey
     @NonNull
@@ -185,6 +187,7 @@ public class Medicine {
     }
 
     public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+        super();
         uuid = UUID.randomUUID();
         this.name = name;
         this.form = form;

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        startActivity(new Intent(MainActivity.this  , LoginActivity.class));
+        //startActivity(new Intent(MainActivity.this  , LoginActivity.class));
 
 
         //startActivity(new Intent(MainActivity.this  , NotificationDialogActivity.class));
@@ -52,15 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 //
-//      SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-//        emailFromPref = preferences.getString("emailKey","N/A");
-//        passwordFromPref = preferences.getString("passwordKey" , "N/A");
-//
-//        if (emailFromPref.equals("N/A") ) {
-//            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//        }else {
-//            startActivity(new Intent(MainActivity.this, HomeScreen.class));
-//        }
+         SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+        emailFromPref = preferences.getString("emailKey","N/A");
+        passwordFromPref = preferences.getString("passwordKey" , "N/A");
+
+        if (emailFromPref.equals("N/A") ) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }else {
+            startActivity(new Intent(MainActivity.this, HomeScreen.class));
+        }
 
 
 //        getSupportActionBar().hide();
