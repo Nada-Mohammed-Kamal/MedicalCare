@@ -32,6 +32,7 @@ import com.example.medicalappreminder_java.models.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class DrugReminderActivity extends AppCompatActivity implements DrugReminderViewInterface {
@@ -92,13 +93,46 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
                 repoClass.updateUser(currentUser);
             }
         });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Go to edit screen
+               /* Intent intent = new Intent(this,Edit.class);
+                intent.putExtra(Keys.USER_MED,medicine);
+                startActivities(intent);*/
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
+
+                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                String userEmail = preferences.getString("emailKey" , "user email") ;
+                User currentUser = repoClass.findUserByEmail(userEmail);
+                List<Medicine> listOfMedications = currentUser.getListOfMedications();
+
+                //ConcurrentModificationException while remove medicine
+                for(Iterator<Medicine> med = listOfMedications.iterator();med.hasNext();){
+                    Medicine removedMed = med.next();
+                    if(removedMed.getUuid().equals(medicine.getUuid())) {
+                        listOfMedications.remove(removedMed);
+                        repoClass.deleteMedicine(medicine);
+
+                    }
+                }
+                currentUser.setListOfMedications(listOfMedications);
+                repoClass.updateUser(currentUser);
+            }
+        });
     }
 
     public void settingIds (){
         deleteButton = findViewById(R.id.deleteDrugButton) ;
         editButton = findViewById(R.id.editDrugButton) ;
         suspendButton = findViewById(R.id.suspendButton) ;
-        refillButton = findViewById(R.id.refillButton) ;
         drugIconImageView = findViewById(R.id.reminderDrugIconImageView) ;
         drugNameTextView = findViewById(R.id.drugNameTextV) ;
         drugStrengthTextView = findViewById(R.id.drugStrenghtTextView) ;

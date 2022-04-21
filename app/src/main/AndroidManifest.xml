@@ -30,7 +30,8 @@
 		 <activity
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
             android:exported="true" android:screenOrientation="portrait"
-             android:parentActivityName=".HomeScreen.View.HomeScreen"/>
+             android:parentActivityName=".HomeScreen.View.HomeScreen"
+             android:label="Medicine Brief Details"/>
         <activity
             android:name=".NotificationDialog.NotificationDialogActivity"
             android:exported="true" />

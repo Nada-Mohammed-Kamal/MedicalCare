@@ -74,6 +74,7 @@
     <string name="any_onther_instructions">Any onther instructions?</string>
     <string name="user_name">User name</string>
     <string name="add_dose">Add Dose</string>
+    <string name="suspend">Suspend</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>
