@@ -72,10 +72,11 @@ public class User {
         ListOfMedications = listOfMedications;
     }
 
-    public User(String firstName, String email, List<User> listOfDependant) {
+    public User(String firstName, String email, List<User> listOfDependant , List<Medicine> medicines) {
         uuid = UUID.randomUUID();
         this.firstName = firstName;
         this.email = email;
+        this.ListOfMedications = medicines;
         this.listOfDependant = listOfDependant;
     }
 

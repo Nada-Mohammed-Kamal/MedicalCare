@@ -5,7 +5,7 @@ import android.text.format.Time;
 import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.Status;
-import com.example.medicalappreminder_java.CustomTime;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.common.reflect.TypeToken;
@@ -63,6 +63,16 @@ public class Converters {
         return json;
     }
 
+    //List<CustomTime> ListOfCustomTimes
+    @TypeConverter
+    public static List<CustomTime> convertCustomTimeFromStringToList(String value) {
+        Type listType = new TypeToken<List<CustomTime>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+
+
+
     //date
     @TypeConverter
     public static Date toDate(Long dateLong){
@@ -84,7 +94,7 @@ public class Converters {
 
     @TypeConverter
     @JvmStatic
-    public static String mapToString(HashMap<List<CustomTime>, Status> value) {
+    public static String mapToString(List<CustomTime> value) {
         return value == null ? "" : new Gson().toJson(value);
     }
 }

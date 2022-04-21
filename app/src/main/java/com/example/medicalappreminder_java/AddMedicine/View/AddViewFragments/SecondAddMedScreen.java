@@ -1,5 +1,12 @@
 package com.example.medicalappreminder_java.AddMedicine.View.AddViewFragments;
 
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_day;
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_five_days;
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_four_days;
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_six_days;
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_three_days;
+import static com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken.Every_two_days;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -12,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +31,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AdapterForTakeDoseTimes.DoseTimesAdapter;
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
-import com.example.medicalappreminder_java.models.DateTime;
+import com.example.medicalappreminder_java.models.CustomTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,8 +64,8 @@ public class SecondAddMedScreen extends Fragment {
     Date endDate;
     int howManyTimes;
     String selected_val;
-    ArrayList<DateTime> dateTimes;
-
+    ArrayList<CustomTime> customTimes;
+    EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWilltheMedBeTaken;
     String medName;
     Form formMed;
     Strength strength;
@@ -149,14 +156,32 @@ public class SecondAddMedScreen extends Fragment {
                     WhatReasonToTake = whatYouTakingForEditText.getText().toString();
                     selected_val = spinnerHowOftenYouTakeIt.getSelectedItem().toString();
                     howManyTimes = Integer.parseInt(doseTakenTime.getText().toString());
-                    dateTimes = myAdapter.getTimes();
-                    if(dateTimes.size() == 0)
+                    customTimes = myAdapter.getTimes();
+                    if(customTimes.size() == 0)
                         Toast.makeText(getContext(),"Please set all doses time",Toast.LENGTH_SHORT).show();
 
                     else
                     {
+                        if(selected_val.equals("Every day")){
+                            everyHowManyDaysWilltheMedBeTaken = Every_day;
+                        }
+                        else if(selected_val.equals("Every two days")) {
+                            everyHowManyDaysWilltheMedBeTaken = Every_two_days;
+                        }
+                        else if(selected_val.equals("Every three days")) {
+                            everyHowManyDaysWilltheMedBeTaken = Every_three_days;
+                        }
+                        else if(selected_val.equals("Every four days")) {
+                            everyHowManyDaysWilltheMedBeTaken = Every_four_days;
+                        }
+                        else if(selected_val.equals("Every five days")) {
+                            everyHowManyDaysWilltheMedBeTaken = Every_five_days;
+                        }
+                        else if(selected_val.equals("Every six days")) {
+                            everyHowManyDaysWilltheMedBeTaken = Every_six_days;
+                        }
                         DataFromSecondAddMedScreen dataFromSecondAddMedScreen = new DataFromSecondAddMedScreen(WhatReasonToTake,startDate,endDate,
-                                howManyTimes,selected_val,dateTimes,medName,formMed,
+                                howManyTimes,everyHowManyDaysWilltheMedBeTaken, customTimes,medName,formMed,
                                 strength,strengthAmount);
                         SecondAddMedScreenDirections.GoToThirdAddMedScreen action = SecondAddMedScreenDirections.goToThirdAddMedScreen(dataFromSecondAddMedScreen);
                         Navigation.findNavController(view).navigate(action);

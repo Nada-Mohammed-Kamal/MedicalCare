@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
@@ -141,8 +142,13 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
     }
 
     public void settingMedicineDetails(){
-        medicine = new Medicine() ;
-        medicine.setDose_howOften("every 2 days ");
+
+        //medicine = new Medicine() ;
+        //medicine.setDose_howOften("every 2 days ");
+
+        Medicine medicine = new Medicine() ;
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
+
         medicine.setName("zzzzzzz");
         medicine.setHowManyTimesWillItBeTakenInADay(2);
         medicine.setCondition("headacheeeeeee");
@@ -155,7 +161,7 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         medicine.setHasRefillReminder(true);
         medicine.setTotalNumOfPills(20);
         medicine.setImage(R.drawable.inhaler);
-        medicine.setDose_howOften("twice daily");
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
         medicine.setEveryday(true);
     }
 
