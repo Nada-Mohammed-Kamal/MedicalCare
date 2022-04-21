@@ -30,28 +30,29 @@ public class FireStoreHandler implements RemoteSourceInterface {
     private CollectionReference usersFirestoreDb, medicineFirestoreDb;
     private String userCollectionName = "usersFirestoreDb", medicineCollectionName = "medicineFirestoreDb";
     List<User> convertedUserList ;
-    List<Medicine> convMedicineList ;
+    List<Medicine> convertedMedicineList;
     LiveData<List<User>> userLiveData;
     MutableLiveData<List<User>> user_mutable_live_data;
     LiveData<List<Medicine>> medicineLiveData ;
     MutableLiveData<List<Medicine>> medicine_mutable_live_data ;
 
-    public FireStoreHandler(Context context , List<User> userList) {
-        fireStoreDb = FirebaseFirestore.getInstance();
-        this.context = context ;
-        this.convertedUserList = userList ;
-        //convertedUserList = new ArrayList<>() ;
-        convMedicineList = new ArrayList<>() ;
+    public FireStoreHandler(){
 
     }
 
     public FireStoreHandler(Context context ) {
-        fireStoreDb = FirebaseFirestore.getInstance();
+
         this.context = context ;
+        fireStoreDb = FirebaseFirestore.getInstance();
+
         convertedUserList = new ArrayList<>() ;
-        convMedicineList = new ArrayList<>() ;
+        convertedMedicineList = new ArrayList<>() ;
+
         user_mutable_live_data = new MutableLiveData<>() ;
         userLiveData  = user_mutable_live_data;
+
+        medicine_mutable_live_data = new MutableLiveData<>() ;
+        medicineLiveData = medicine_mutable_live_data ;
     }
 
     @Override
@@ -99,11 +100,9 @@ public class FireStoreHandler implements RemoteSourceInterface {
         usersFirestoreDb.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-
                 // ***** replace toast with func make toast from view *****
                 //Toast.makeText(context, "user added", Toast.LENGTH_SHORT).show();
                 Log.e("fireDB", "onSuccess: added user");
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -119,16 +118,13 @@ public class FireStoreHandler implements RemoteSourceInterface {
     public void addMedicineToFireStore(Medicine medicine) {
 
         // ***** add validation to presenter *****
-
         medicineFirestoreDb = fireStoreDb.collection(medicineCollectionName);
         medicineFirestoreDb.add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-
                 // ***** replace toast with func make toast from view *****
                 //Toast.makeText(context, "medicine added", Toast.LENGTH_SHORT).show();
                 Log.e("fireDB", "onSuccess: medicne added");
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -150,6 +146,8 @@ public class FireStoreHandler implements RemoteSourceInterface {
                     for (DocumentSnapshot documentSnapshot : userDocumentSnapshotList) {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
+                        // there is bug every call to get will add to the arraylist again
+                        // so there will be duplicate data
                         convertedUserList.add(user) ;
                         user_mutable_live_data.setValue(convertedUserList);
                     }
@@ -176,9 +174,9 @@ public class FireStoreHandler implements RemoteSourceInterface {
                     for (DocumentSnapshot documentSnapshot : medicineDocumentSnapshotList) {
                         Medicine medicine = documentSnapshot.toObject(Medicine.class);
                         medicine.setFireStoreId(documentSnapshot.getId());
-                        convMedicineList.add(medicine);
+                        convertedMedicineList.add(medicine);
+                        medicine_mutable_live_data.setValue(convertedMedicineList);
                     }
-                    
                     //Toast.makeText(context, convMedicineList.get(1).getName(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -242,7 +240,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public List<Medicine> getMedicinesList(){
-        return convMedicineList ;
+        return convertedMedicineList;
     }
 
     @Override

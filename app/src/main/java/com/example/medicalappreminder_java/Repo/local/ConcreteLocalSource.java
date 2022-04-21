@@ -157,13 +157,7 @@ public class ConcreteLocalSource implements LocalSourceInterface {
 
     @Override
     public void deleteUser(User user) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                userDao.deleteUser(user);
-            }
-        }).start();
-
+        userDao.deleteUser(user);
     }
 
     @Override

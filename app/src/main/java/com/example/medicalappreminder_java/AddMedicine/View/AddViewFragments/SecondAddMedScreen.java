@@ -153,7 +153,10 @@ public class SecondAddMedScreen extends Fragment {
                 }
                 else
                 {
-                    WhatReasonToTake = whatYouTakingForEditText.getText().toString();
+                    if(!whatYouTakingForEditText.getText().toString().isEmpty())
+                         WhatReasonToTake = whatYouTakingForEditText.getText().toString();
+                    else
+                        WhatReasonToTake = "";
                     selected_val = spinnerHowOftenYouTakeIt.getSelectedItem().toString();
                     howManyTimes = Integer.parseInt(doseTakenTime.getText().toString());
                     customTimes = myAdapter.getTimes();

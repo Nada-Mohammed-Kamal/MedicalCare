@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        startActivity(new Intent(MainActivity.this  , LoginActivity.class));
+        //startActivity(new Intent(MainActivity.this  , LoginActivity.class));
 
 
         //startActivity(new Intent(MainActivity.this  , NotificationDialogActivity.class));
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //
-      SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+         SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
         emailFromPref = preferences.getString("emailKey","N/A");
         passwordFromPref = preferences.getString("passwordKey" , "N/A");
 

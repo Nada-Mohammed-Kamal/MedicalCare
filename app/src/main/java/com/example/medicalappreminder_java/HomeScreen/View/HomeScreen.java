@@ -22,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
@@ -33,10 +32,9 @@ import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 
-import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
@@ -58,7 +56,7 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         initComponents();
         //presenter code
-        RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(this);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,this);
         User currentUser = repoClass.findUserByEmail(userEmail);

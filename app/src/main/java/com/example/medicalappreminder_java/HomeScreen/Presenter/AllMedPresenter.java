@@ -7,7 +7,8 @@ import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedVi
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
@@ -27,7 +28,7 @@ public class AllMedPresenter implements AllMedPresenterInterface{
     }
     @Override
     public void getMeds() {
-        RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(_context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,_context);
         SharedPreferences preferences = _context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
