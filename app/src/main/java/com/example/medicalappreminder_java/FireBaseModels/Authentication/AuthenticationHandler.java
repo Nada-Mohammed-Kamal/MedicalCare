@@ -13,6 +13,7 @@ import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
+import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -179,7 +180,7 @@ public class AuthenticationHandler {
                 Log.e(TAG, "googleOnActivityResult: "+ account.getDisplayName());
                 logInView.makeToast(account.getDisplayName());
                 sharedPrefrencesModel.writeInSharedPreferences(account.getEmail(), account.getDisplayName());
-                User user = new User(account.getDisplayName(), account.getEmail(), new ArrayList<User>());
+                User user = new User(account.getDisplayName(), account.getEmail(), new ArrayList<User>() , new ArrayList<Medicine>());
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
                 RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);

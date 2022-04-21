@@ -33,7 +33,8 @@ import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
@@ -175,7 +176,7 @@ public class ThirdAddMedScreen extends Fragment {
                         data.getHowManyTimes(),moreInstraction,"Active", data.getCustomTimes(),
                         hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
-                RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
                 RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
                 repoClass.insertMedicine(medicine);
