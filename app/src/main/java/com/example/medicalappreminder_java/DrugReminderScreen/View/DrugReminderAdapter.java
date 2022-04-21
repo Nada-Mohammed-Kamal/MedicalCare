@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class DrugReminderAdapter extends RecyclerView.Adapter<DrugReminderAdapte
 
     private final Context context ;
     private Medicine medicineObject;
-
+    private List<CustomTime> customTimes;
     public class DrugReminderViewHolder extends RecyclerView.ViewHolder {
 
         public TextView drugTimeTextView , pillsNumberTextView ;
@@ -39,6 +40,7 @@ public class DrugReminderAdapter extends RecyclerView.Adapter<DrugReminderAdapte
     public DrugReminderAdapter(Context context, Medicine medicineObject) {
         this.context = context;
         this.medicineObject = medicineObject;
+        customTimes = medicineObject.getDoseTimes();
         Log.e("drugReminderRV", "DrugReminderAdapter: ");
     }
 
@@ -56,16 +58,17 @@ public class DrugReminderAdapter extends RecyclerView.Adapter<DrugReminderAdapte
     @Override
     public void onBindViewHolder( DrugReminderViewHolder viewHolder, int position) {
         // number of pills in one time
+        CustomTime customTime = customTimes.get(position);
         String howOften = ""+medicineObject.getTotalNumOfPills() ;
         // dose times
-        viewHolder.drugTimeTextView.setText("08:00 am");
+        viewHolder.drugTimeTextView.setText(customTime.getHour() + ":"+customTime.getMinute());
         viewHolder.pillsNumberTextView.setText("Take " + howOften + " Pill(s)");
         Log.e("drugReminderRV", "onBindViewHolder: ");
     }
 
     @Override
     public int getItemCount() {
-        return 1 ;
+        return customTimes.size() ;
 
     }
 

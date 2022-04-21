@@ -76,7 +76,7 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         authenticationHandler.createUserWithEmailAndPassword(email,password ,userName );
 
         //User user = new User(userName, email, new ArrayList<User>());
-        User user = new User(userName, email, new ArrayList<User>() , new ArrayList<Medicine>());
+        User user = new User(userName, email);
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
 
 

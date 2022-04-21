@@ -29,7 +29,8 @@
 
 		 <activity
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
-            android:exported="true" android:screenOrientation="portrait"/>
+            android:exported="true" android:screenOrientation="portrait"
+             android:parentActivityName=".HomeScreen.View.HomeScreen"/>
         <activity
             android:name=".NotificationDialog.NotificationDialogActivity"
             android:exported="true" />
