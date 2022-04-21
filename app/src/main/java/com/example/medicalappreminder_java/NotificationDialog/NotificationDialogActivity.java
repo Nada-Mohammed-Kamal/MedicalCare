@@ -44,8 +44,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
     FireStoreHandler fireStoreHandler ;
 
     User user ;
-    List<User> usersList ;
-    List<Medicine> medicinesList ;
+    Medicine medicine ;
+    //List<User> usersList ;
+    //List<Medicine> medicinesList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +57,15 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         settingUserDetails();
         settingMedicineDetails();
         setObservers();
-        fireStoreHandler.getUsersFromFireStore();
-        //usersList = fireStoreHandler.getUsersList() ;
-        //userName.setText(usersList.get(0).getFirstName());
+        
+        //fireStoreHandler.getUsersFromFireStore();
 
         storeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(NotificationDialogActivity.this, "stooooore", Toast.LENGTH_SHORT).show();
-
-                //fireStoreHandler.addUserToFireStore(user);
-                //fireStoreHandler.addMedicineToFireStore(medicine);
+                fireStoreHandler.addUserToFireStore(user);
+                fireStoreHandler.addMedicineToFireStore(medicine);
             }
         });
 
@@ -76,19 +75,6 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
                 Toast.makeText(getApplicationContext(), "gettttt", Toast.LENGTH_SHORT).show();
                 fireStoreHandler.getUsersFromFireStore();
                 fireStoreHandler.getMedicinesFromFireStore() ;
-
-                usersList = fireStoreHandler.getUsersList() ;
-
-                if (usersList.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "users list is empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "user list is not empty", Toast.LENGTH_SHORT).show();
-                }
-
-                //usersList = fireStoreHandler.getUsersList() ;
-                //Toast.makeText(getApplicationContext(),userList.get(0).getFirstName(), Toast.LENGTH_SHORT).show();
-                userName.setText(usersList.get(0).getFirstName());
-                //medName.setText(medicinesList.get(0).getName());
             }
         });
 
@@ -116,8 +102,19 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
             @Override
             public void onChanged(List<User> userList) {
                 // set ui
-                //userName.setText(usersList.get(0).getFirstName());
+                if (userList.size() > 0){
+                    userName.setText(userList.get(0).getFirstName());
+                }
                 //medName.setText(medicinesList.get(0).getName());
+            }
+        });
+
+        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
+            @Override
+            public void onChanged(List<Medicine> medicinesList) {
+                if (medicinesList.size() > 0){
+                    medName.setText(medicinesList.get(0).getName());
+                }
             }
         });
     }
@@ -132,8 +129,6 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         userName = findViewById(R.id.userNameTextViewww) ;
         medName = findViewById(R.id.medicineNameTextViewww) ;
         dialog = new Dialog(this) ;
-        usersList = new ArrayList<>() ;
-        medicinesList = new ArrayList<>() ;
         fireStoreHandler = new FireStoreHandler(this ) ;
     }
 
@@ -144,8 +139,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         user.setGender("male");
 
     }
+
     public void settingMedicineDetails(){
-        Medicine medicine = new Medicine() ;
+        medicine = new Medicine() ;
         medicine.setDose_howOften("every 2 days ");
         medicine.setName("zzzzzzz");
         medicine.setHowManyTimesWillItBeTakenInADay(2);

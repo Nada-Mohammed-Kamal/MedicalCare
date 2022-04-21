@@ -7,12 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +23,7 @@ import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.dependantInfo.PresenterInterface;
 import com.example.medicalappreminder_java.dependantInfo.ViewInterface;
@@ -87,7 +83,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
         SharedPreferences preferences = getActivity().getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
         userEmail = preferences.getString("emailKey" , "user email") ;
 
-         remoteSourceInterface = new FirestoreManger();
+         remoteSourceInterface = new FireStoreHandler();
          localSourceInterface = new ConcreteLocalSource(context);
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -117,7 +113,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 //------------------------------------- Presenter imp --------------------------------------
                 List<User> dependents = new ArrayList<>();
                 dependents.add(user);
-                RemoteSourceInterface remoteSourceInterface = new FirestoreManger();
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
                 RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
                 User currentUser = repoClass.findUserByEmail(userEmail);
