@@ -35,10 +35,13 @@ import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
@@ -56,6 +59,7 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         initComponents();
         //presenter code
+
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(this);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,this);
@@ -64,6 +68,8 @@ public class HomeScreen extends AppCompatActivity {
         for (int i = 0; i < listOfDependant.size(); i++) {
             addNewDependentToDrawer(listOfDependant.get(i).getFirstName() + " " + listOfDependant.get(i).getLastName());
         }
+
+
     }
 
     private void initComponents(){
