@@ -180,6 +180,7 @@ public class AuthenticationHandler {
                 Log.e(TAG, "googleOnActivityResult: "+ account.getDisplayName());
                 logInView.makeToast(account.getDisplayName());
                 sharedPrefrencesModel.writeInSharedPreferences(account.getEmail(), account.getDisplayName());
+
                 User user = new User(account.getDisplayName(), account.getEmail());
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);

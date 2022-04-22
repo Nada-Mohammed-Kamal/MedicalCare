@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.medicalappreminder_java" >
-
+    package="com.example.medicalappreminder_java">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +13,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MedicalAppReminderJava" >
+        android:theme="@style/Theme.MedicalAppReminderJava">
+        <receiver
+            android:name=".NetworkConnection.NetworkChangeListener"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".MedicationModification.View.MedicationModification"
             android:exported="false"
@@ -22,35 +26,39 @@
             android:parentActivityName=".HomeScreen.View.HomeScreen"/>
         <activity
             android:name=".AddMedicine.View.AddMedicine"
+            android:exported="false"
             android:label="@string/add_med"
             android:parentActivityName=".HomeScreen.View.HomeScreen"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeScreen.View.HomeScreen"
-            android:exported="false" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
-
-		 <activity
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme" />
+        <activity
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
-            android:exported="true" android:screenOrientation="portrait"
-             android:parentActivityName=".HomeScreen.View.HomeScreen"
-             android:label="Medicine Brief Details"/>
+            android:exported="true"
+            android:label="Medicine Brief Details"
+            android:parentActivityName=".HomeScreen.View.HomeScreen"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NotificationDialog.NotificationDialogActivity"
             android:exported="true" />
-
-  
         <activity
             android:name=".SignUp.View.SignUpActivity"
-            android:exported="true" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".Login.LoginView.LoginActivity"
-            android:exported="true" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait">
-
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
