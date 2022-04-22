@@ -37,6 +37,8 @@ public class AuthenticationHandler {
     LogInViewInterface logInView ;
     private Context context ;
     SharedPrefrencesModel sharedPrefrencesModel ;
+    User fireStoreUser;
+    FireStoreHandler fireStoreHandler;
 
     private FirebaseAuth mAuth;
     private FirebaseUser user ;
@@ -82,8 +84,8 @@ public class AuthenticationHandler {
         this.logInView = logInView ;
         mAuth = FirebaseAuth.getInstance();
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build() ;
-        googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions) ;
-        sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
+        googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions);
+        sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context);
     }
 
 
@@ -106,12 +108,17 @@ public class AuthenticationHandler {
                     if (task.isSuccessful()) {
                         signUpViewRef.makeToast("User Registered successfully");
                     user = mAuth.getCurrentUser() ;
+
                     if (user != null){
 
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(userName).build();
                         user.updateProfile(profileChangeRequest) ;
                     }
+                    fireStoreUser = new User(userName , email);
+                    fireStoreUser.setFirstName(userName);
+                    fireStoreHandler = new FireStoreHandler();
+                    fireStoreHandler.addUserToFireStore(fireStoreUser);
                     user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -146,6 +153,15 @@ public class AuthenticationHandler {
                         //user.getDisplayName() ;
                         logInView.makeToast("Login successfully");
                         sharedPrefrencesModel.writeInSharedPreferences(email,password,user.getDisplayName());
+                        //to check if the user is in the room or not to add him
+                        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                        User userByEmail = repoClass.findUserByEmail(email);
+                        if(userByEmail == null){
+                            ////////////here
+                            repoClass.insertUser(fireStoreUser);
+                        }
                         logInView.gotoHomeScreen();
                     } else {
                         logInView.makeToast(task.getException().getMessage());
