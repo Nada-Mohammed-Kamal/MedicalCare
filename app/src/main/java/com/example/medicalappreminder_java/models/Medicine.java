@@ -380,15 +380,7 @@ public class Medicine implements Serializable {
 
 
     ////////////////////////////////////////////////////////////////////////////////
-    public static List<User> convertUsersFromStringToList(String value) {
-        Type listType = new TypeToken<List<User>>() {}.getType();
-        return new Gson().fromJson(value, listType);
-    }
-    public static String convertUsersFromListToString(List<User> list) {
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        return json;
-    }
+
 
     //list<date>
     public static List<Date> convertMedFromStringToList(String value) {
