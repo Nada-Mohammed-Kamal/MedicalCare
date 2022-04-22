@@ -146,7 +146,7 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         //medicine = new Medicine() ;
         //medicine.setDose_howOften("every 2 days ");
 
-        Medicine medicine = new Medicine() ;
+        medicine = new Medicine() ;
         medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
 
         medicine.setName("zzzzzzz");
