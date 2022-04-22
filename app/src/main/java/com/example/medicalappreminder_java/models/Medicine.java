@@ -1,23 +1,31 @@
 package com.example.medicalappreminder_java.models;
 
+import android.text.format.Time;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
 
 import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.Exclude;
+import com.google.gson.Gson;
 
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import kotlin.jvm.JvmStatic;
 
 @Entity
 public class Medicine implements Serializable {
@@ -368,6 +376,86 @@ public class Medicine implements Serializable {
 
     public void setNumberOfPillsLeft(double numberOfPillsLeft) {
         this.numberOfPillsLeft = numberOfPillsLeft;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    public static List<User> convertUsersFromStringToList(String value) {
+        Type listType = new TypeToken<List<User>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+    public static String convertUsersFromListToString(List<User> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    //list<date>
+    public static List<Date> convertMedFromStringToList(String value) {
+        Type listType = new TypeToken<List<Date>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    public static String convertMedFromListToString(List<Date> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    //List<User> listOfDependantEmails
+    //List<Medicine> ListOfMedications
+    public static List<Medicine> convertMedicineFromStringToList(String value) {
+        Type listType = new TypeToken<List<Medicine>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    public static String convertMedicineFromListToString(List<Medicine> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    //List<CustomTime> ListOfCustomTimes
+    public static List<CustomTime> convertCustomTimeFromStringToList(String value) {
+        Type listType = new TypeToken<List<CustomTime>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+
+    public static String convertHowOftenToString(EveryHowManyDaysWilltheMedBeTaken e) {
+        Gson gson = new Gson();
+        String json = gson.toJson(e);
+        return json;
+    }
+
+    //EveryHowManyDaysWillMedBeTaken convertHowOftenFromStringToHowOften
+    public static EveryHowManyDaysWilltheMedBeTaken convertHowOftenFromStringToHowOftenObj(String value) {
+        Type listType = new TypeToken<EveryHowManyDaysWilltheMedBeTaken>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    //date
+    public static Date toDate(Long dateLong){
+        return dateLong == null ? null: new Date(dateLong);
+    }
+
+    @TypeConverter
+    public static Long fromDate(Date date){
+        return date == null ? null : date.getTime();
+    }
+
+    //hashmap
+    @TypeConverter
+    @JvmStatic
+    public static HashMap<List<CustomTime>, Status> stringToMap(String value){
+        Type listType = new TypeToken<HashMap<List<Time>, Status>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    @JvmStatic
+    public static String mapToString(List<CustomTime> value) {
+        return value == null ? "" : new Gson().toJson(value);
     }
 
 }
