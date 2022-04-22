@@ -20,6 +20,7 @@ import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenter;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenterInterface;
 
+import com.example.medicalappreminder_java.MedicationModification.View.MedicationModification;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -97,9 +98,9 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
             @Override
             public void onClick(View view) {
                 //Go to edit screen
-               /* Intent intent = new Intent(this,Edit.class);
+               Intent intent = new Intent(DrugReminderActivity.this, MedicationModification.class);
                 intent.putExtra(Keys.USER_MED,medicine);
-                startActivities(intent);*/
+               startActivity(intent);
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
