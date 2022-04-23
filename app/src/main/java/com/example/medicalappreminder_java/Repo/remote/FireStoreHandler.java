@@ -161,12 +161,15 @@ public class FireStoreHandler implements RemoteSourceInterface {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
 
+
                         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
                         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
                         User userByEmail = repoClass.findUserByEmail(user.getEmail());
                         userByEmail.setFireStoreId(documentSnapshot.getId());
                         repoClass.updateUser(userByEmail);
+
+
                         // there is bug every call to get will add to the arraylist again
                         // so there will be duplicate data
                         convertedUserList.add(user) ;

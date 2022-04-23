@@ -110,18 +110,8 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 user.setGender(selectedGender);
                 user.setUuid(UUID.randomUUID());
                 depInfoPresenter.addDependant(user);
-                //------------------------------------- Presenter imp --------------------------------------
-                List<User> dependents = new ArrayList<>();
-                dependents.add(user);
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<User> listOfDependant = currentUser.getListOfDependant();
-                currentUser.setListOfDependant(dependents);
-                repoClass.updateUser(currentUser);
-                List<User> listOfDependant2 = currentUser.getListOfDependant();
 
+                depInfoPresenter.addDependantToTheCurrentUser(user , context , userEmail);
                 Navigation.findNavController(view).navigate(R.id.actionGoToHome);
             }
         });
