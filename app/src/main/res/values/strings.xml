@@ -64,6 +64,12 @@
     <string name="medIcon">Medication Icon</string>
     <string name="medCondition">Condition</string>
     <string name="how_often_do_you_take_it">How often do you take it?</string>
+    <string name="prescription">Prescription Refill</string>
+    <string name="prescriptionDetails">I currently have X pills, remind me when I have X pills remaining</string>
+    <string name="instruction">e.g: Before eating</string>
+    <string name="instructions">Instructions</string>
+    <string name="instructionDetails">e.g: Before eating</string>
+    <string name="strengthValue">e.g: 3 mg</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>

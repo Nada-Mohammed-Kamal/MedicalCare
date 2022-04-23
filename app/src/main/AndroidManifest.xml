@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava" >
         <activity
-            android:name=".MedicationModification.View.MedicationModification"
+            android:name=".MedModification.View.MedModifyActivity"
             android:exported="false" />
         <activity
             android:name=".AddMedicine.View.AddMedicine"

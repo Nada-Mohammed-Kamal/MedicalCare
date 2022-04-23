@@ -26,48 +26,70 @@ public class Medicine {
     @NonNull
     @Exclude
     private UUID uuid;
+
     @ColumnInfo(name = "name")
     private String name;
+
     @ColumnInfo(name = "form")
     private Form form;
+
     @ColumnInfo(name = "strength")
     private Strength strength;
+
     @ColumnInfo(name = "StrengthAmount")
     private int StrengthAmount;
+
     @ColumnInfo(name = "numberOfPillsLeft")
     private double numberOfPillsLeft;//(auto dec ma3 kol mara na5od al 7abaya w initially hatab2a bt equal al total),
+
     @ColumnInfo(name = "image")
     private int image;
+
     @ColumnInfo(name = "isEveryday")
     private boolean isEveryday;
+
     @ColumnInfo(name = "condition")
     private String condition;
+
     @ColumnInfo(name = "Dose_howOften")
     private String Dose_howOften;
+
     @ColumnInfo(name = "startDate")
     private Date startDate;
+
     @ColumnInfo(name = "endDate")
     private Date endDate;
+
     @ColumnInfo(name = "fowHowManyDaysIsTheMedicineGoingToBeTaken")
     private int fowHowManyDaysIsTheMedicineGoingToBeTaken;
+
     @ColumnInfo(name = "totalNumOfPills")
     private int totalNumOfPills;
+
     @ColumnInfo(name = "howManyTimesWillItBeTakenInADay")
     private int howManyTimesWillItBeTakenInADay;
+
     @ColumnInfo(name = "instructions")
     private String instructions;
+
     @ColumnInfo(name = "state")
     private String state;//active , inactive
+
     @ColumnInfo(name = "doseTimes")
     private HashMap<List<CustomTime>, Status> doseTimes;
+
     @ColumnInfo(name = "hasRefillReminder")
     private boolean hasRefillReminder;
+
     @ColumnInfo(name = "timeToShowTheReminderIn")
     private Date timeToShowTheReminderIn;
+
     @ColumnInfo(name = "rxNumber")
     private String rxNumber;
+
     @ColumnInfo(name = "remindMeWhenIHaveHowManyPillsLeft")
     private double remindMeWhenIHaveHowManyPillsLeft;
+
     @ColumnInfo(name = "fireStoreId")
     private String fireStoreId;
 
