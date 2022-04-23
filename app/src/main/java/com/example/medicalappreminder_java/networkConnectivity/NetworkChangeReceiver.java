@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 String TAG = "TAG";
+
+
     @Override
     public void onReceive(final Context context, final Intent intent) {
         try{

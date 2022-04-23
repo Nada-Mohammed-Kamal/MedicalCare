@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
             //startActivity(new Intent(MainActivity.this  , DrugReminderActivity.class));
 
 
-    //
-             SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+            SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
             emailFromPref = preferences.getString("emailKey","N/A");
             passwordFromPref = preferences.getString("passwordKey" , "N/A");
 

@@ -3,10 +3,16 @@ package com.example.medicalappreminder_java.FireBaseModels.Authentication;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
+import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
@@ -29,32 +35,33 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuthenticationHandler {
 
-    public static AuthenticationHandler authenticationHandler = null ;
-    SignUpViewInterface signUpViewRef ;
-    LogInViewInterface logInView ;
-    private Context context ;
-    SharedPrefrencesModel sharedPrefrencesModel ;
+    public static AuthenticationHandler authenticationHandler = null;
+    SignUpViewInterface signUpViewRef;
+    LogInViewInterface logInView;
+    private Context context;
+    SharedPrefrencesModel sharedPrefrencesModel;
     User fireStoreUser;
     FireStoreHandler fireStoreHandler;
+    LifecycleOwner lifecycleOwner;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser user ;
+    private FirebaseUser user;
     private static final String TAG = "GoogleActivity";
     public static final int RC_SIGN_IN = 1000;
     private GoogleSignInClient googleSignInClient;
     private GoogleSignInOptions googleSignInOptions;
 
 
-
-    public AuthenticationHandler(Context context , SignUpViewInterface signUpView ){
-        this.context = context ;
-        this.signUpViewRef = signUpView ;
+    public AuthenticationHandler(Context context, SignUpViewInterface signUpView) {
+        this.context = context;
+        this.signUpViewRef = signUpView;
         mAuth = FirebaseAuth.getInstance();
-        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build() ;
-        googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions) ;
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions);
 
          /*
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -79,11 +86,13 @@ public class AuthenticationHandler {
                 .build();
         */
     }
-    public AuthenticationHandler(Context context , LogInViewInterface logInView){
-        this.context = context ;
-        this.logInView = logInView ;
+
+    public AuthenticationHandler(Context context, LogInViewInterface logInView, LifecycleOwner lifecycleOwner) {
+        this.context = context;
+        this.logInView = logInView;
+        this.lifecycleOwner = lifecycleOwner;
         mAuth = FirebaseAuth.getInstance();
-        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build() ;
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions);
         sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context);
     }
@@ -99,23 +108,23 @@ public class AuthenticationHandler {
      */
 
 
-    public void createUserWithEmailAndPassword(String email, String password , String userName ) {
+    public void createUserWithEmailAndPassword(String email, String password, String userName) {
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    signUpViewRef.setProgressbarGone();
-                    if (task.isSuccessful()) {
-                        signUpViewRef.makeToast("User Registered successfully");
-                    user = mAuth.getCurrentUser() ;
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                signUpViewRef.setProgressbarGone();
+                if (task.isSuccessful()) {
+                    signUpViewRef.makeToast("User Registered successfully");
+                    user = mAuth.getCurrentUser();
 
-                    if (user != null){
+                    if (user != null) {
 
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(userName).build();
-                        user.updateProfile(profileChangeRequest) ;
+                        user.updateProfile(profileChangeRequest);
                     }
-                    fireStoreUser = new User(userName , email);
+                    fireStoreUser = new User(userName, email);
                     fireStoreUser.setFirstName(userName);
                     fireStoreHandler = new FireStoreHandler();
                     fireStoreHandler.addUserToFireStore(fireStoreUser);
@@ -125,16 +134,16 @@ public class AuthenticationHandler {
                             signUpViewRef.makeToast("Verification is sent to your Email ");
                         }
                     });
-                        signUpViewRef.gotoLoginScreen();
+                    signUpViewRef.gotoLoginScreen();
+                } else {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        signUpViewRef.makeToast("This Email Is Already Registered");
                     } else {
-                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            signUpViewRef.makeToast("This Email Is Already Registered");
-                        } else {
-                            signUpViewRef.makeToast(task.getException().getMessage());
-                        }
+                        signUpViewRef.makeToast(task.getException().getMessage());
                     }
                 }
-            });
+            }
+        });
 
     }
 
@@ -142,38 +151,55 @@ public class AuthenticationHandler {
     public void signInWithEmailAndPassword(String email, String password) {
 
         //if (user.isEmailVerified()) {
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    logInView.setProgressbarGone();
-                    if (task.isSuccessful()) {
-                        // go to specific screen
-                        // shared preferences
-                        user = mAuth.getCurrentUser() ;
-                        //user.getDisplayName() ;
-                        logInView.makeToast("Login successfully");
-                        sharedPrefrencesModel.writeInSharedPreferences(email,password,user.getDisplayName());
-                        //to check if the user is in the room or not to add him
-                        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-                        User userByEmail = repoClass.findUserByEmail(email);
-                        if(userByEmail == null){
-                            ////////////here
-                            repoClass.insertUser(fireStoreUser);
-                        }
-                        logInView.gotoHomeScreen();
-                    } else {
-                        logInView.makeToast(task.getException().getMessage());
-                    }
-                }
-            });
-            /*
-        }else {
-            logInView.makeToast("please verify your email to log in ");
-        }
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                logInView.setProgressbarGone();
+                if (task.isSuccessful()) {
+                    // go to specific screen
+                    // shared preferences
+                    user = mAuth.getCurrentUser();
+                    //user.getDisplayName() ;
+                    logInView.makeToast("Login successfully");
+                    sharedPrefrencesModel.writeInSharedPreferences(email, password, user.getDisplayName());
+                    //to check if the user is in the room or not to add him
+                    RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                    LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                    RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+                    User userByEmail = repoClass.findUserByEmail(email);
+                    /*
+                    if (userByEmail == null) {
+                        ////////////here
+                        fireStoreHandler = new FireStoreHandler();
 
-             */
+                        LiveData<List<User>> usersLiveData = fireStoreHandler.getUserLiveData().observe(, new Observer<List<User>>() {
+                            @Override
+                            public void onChanged(List<User> userList) {
+                                for (int i = 0; i < userList.size(); i++) {
+                                    if (userList.get(i).getEmail() == email) {
+                                        fireStoreUser = userList.get(i);
+                                    }
+                                }
+                            }
+                        });
+
+
+                        //int size = usersLiveData.getValue().size();
+                        //Toast.makeText(context, "size = " + size, Toast.LENGTH_SHORT).show();
+//                        for (int i = 0; i < usersLiveData.getValue().size(); i++) {
+//                            if (usersLiveData.getValue().get(i).getEmail() == email) {
+//                                fireStoreUser = usersLiveData.getValue().get(i);
+//                            }
+//                        }
+                        repoClass.insertUser(fireStoreUser);
+                    }
+                    */
+                        logInView.gotoHomeScreen();
+                } else {
+                    logInView.makeToast(task.getException().getMessage());
+                }
+            }
+        });
     }
 
 
@@ -183,7 +209,7 @@ public class AuthenticationHandler {
     }
 
 
-    public void signInWithGoogle(int requestCode,Intent data) {
+    public void signInWithGoogle(int requestCode, Intent data) {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -193,14 +219,14 @@ public class AuthenticationHandler {
                 logInView.makeToast("Google Sign In was successful");
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 //GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(context) ;
-                Log.e(TAG, "googleOnActivityResult: "+ account.getDisplayName());
+                Log.e(TAG, "googleOnActivityResult: " + account.getDisplayName());
                 logInView.makeToast(account.getDisplayName());
                 sharedPrefrencesModel.writeInSharedPreferences(account.getEmail(), account.getDisplayName());
 
                 User user = new User(account.getDisplayName(), account.getEmail());
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
                 repoClass.insertUser(user);
                 logInView.gotoHomeScreen();
                 //firebaseAuthWithGoogle(account.getIdToken());
