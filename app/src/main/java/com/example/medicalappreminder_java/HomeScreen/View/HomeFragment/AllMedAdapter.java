@@ -26,6 +26,7 @@ import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
+import com.example.medicalappreminder_java.roomdb.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +40,14 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
     private final Context context;
     private ArrayList<Medicine> medList;
     OnMoviesClickListener onMoviesClickListener;
+    List<CustomTime> todayesTimesOfDoses;
     Dialog dialog ;
     public AllMedAdapter(Context context, ArrayList<Medicine> values, OnMoviesClickListener onMoviesClickListener) {
         this.context = context;
         this.medList = values;
         this.onMoviesClickListener = onMoviesClickListener;
         dialog = new Dialog(context);
+        todayesTimesOfDoses = UserData.getTodayesTimesOfDoses(medList);
     }
     public  void setList(List<Medicine> updateMeds){
         this.medList = (ArrayList)updateMeds;

@@ -42,7 +42,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HomeScreen extends AppCompatActivity {
     //AppDatabase db = AppDatabase.getDBInstance(getApplicationContext());
@@ -69,7 +71,25 @@ public class HomeScreen extends AppCompatActivity {
             addNewDependentToDrawer(listOfDependant.get(i).getFirstName() + " " + listOfDependant.get(i).getLastName());
         }
 
-
+        List<CustomTime> times = new ArrayList<>();
+        times.add (new CustomTime ( 12,  30));
+        times.add (new CustomTime ( 1,  30));
+        times.add (new CustomTime ( 2,  30));
+        times.add (new CustomTime ( 11,  30));
+        if (times.contains(new CustomTime ( 1,  30)))
+            Log.e("sorted", "onCreate: True****************");
+        Set<CustomTime> customTimes = new HashSet<>();
+        customTimes.add (new CustomTime ( 12,  30));
+        customTimes.add(new CustomTime (  1,  00));
+        customTimes.add (new CustomTime(  1,  10));
+        customTimes.add (new CustomTime ( 12,  30));
+        customTimes.add(new CustomTime (  1,  40));
+        customTimes.add(new CustomTime (  1,  00));
+        List<CustomTime> arr = new ArrayList<>(customTimes);
+        Collections.sort(arr);
+        for (CustomTime c :arr) {
+            Log.e("sorted", "onCreate: "+ c.getHour()+":"+c.getMinute() );
+        }
     }
 
     private void initComponents(){

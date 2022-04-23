@@ -1,5 +1,6 @@
 package com.example.medicalappreminder_java.HomeScreen.View.HomeFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,23 +19,16 @@ import android.widget.Toast;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
-
-import com.example.medicalappreminder_java.Repo.RepoClass;
-import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
-import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-
-import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
-
 import com.example.medicalappreminder_java.models.Medicine;
-import com.example.medicalappreminder_java.models.User;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-//import devs.mulham.horizontalcalendar.HorizontalCalendar;
-//import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 
@@ -42,12 +36,15 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     AllMedAdapter myAdapter;
     LinearLayoutManager layoutManager;
     AllMedPresenterInterface allPresenter;
+    Calendar selectedDate;
     public HomeFragment() {
         // Required empty public constructor
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        selectedDate = Calendar.getInstance();
     }
 
     @Override
@@ -72,7 +69,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
 
         View calView = view.findViewById(R.id.calendarView);
         // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
-     /*   HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
                 // on below line we are adding a range
                 // as start date and end date to our calendar.
                 .range(startDate, endDate)
@@ -85,11 +82,12 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
                 .build();
         // on below line we are setting calendar listener to our calendar view.
         horizontalCalendar.goToday(true);
+        selectedDate = horizontalCalendar.getSelectedDate();
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
 
             @Override
             public void onDateSelected(java.util.Calendar date, int position) {
-                Calendar selectedDate = horizontalCalendar.getSelectedDate();
+               selectedDate = horizontalCalendar.getSelectedDate();
 
                 Toast.makeText(getActivity(),getSelectedDate(selectedDate),Toast.LENGTH_SHORT).show();
             };
@@ -99,7 +97,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
                 horizontalCalendar.selectDate(date,false);
                 return super.onDateLongClicked(date, position);
             }
-        });*/
+        });
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
@@ -123,6 +121,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         return date1;
     }
 
+
     @Override
     public void showData(List<Medicine> medsList) {
         myAdapter.setList(medsList);
@@ -133,7 +132,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     public void onStart() {
         super.onStart();
         allPresenter = new AllMedPresenter(this,getContext());
-        allPresenter.getMeds();
+        allPresenter.getMeds(selectedDate.getTime());
     }
 
     @Override
