@@ -4,7 +4,9 @@ import static com.example.medicalappreminder_java.FireBaseModels.Authentication.
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
@@ -24,7 +27,7 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
     Button logInButton , googleButton  , gotoSignUpButton;
     LogInPresenterInterface logInPresenter ;
     ProgressBar progressBar ;
-    String email , password ;
+    String email , password , userName ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,18 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         setContentView(R.layout.activity_login);
 
         gettingIds();
+        getIncomingIntent() ;
+
+        Toast.makeText(LoginActivity.this, "username : " + userName, Toast.LENGTH_SHORT).show();
         logInPresenter = new LogInPresenter (this , this  ) ;
-        logInButton.setOnClickListener(vieww -> logInPresenter.logIn());
+        logInButton.setOnClickListener(vieww -> {
+            logInPresenter.logIn() ;
+            if (userName == null){
+                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                userName = preferences.getString("userNameKey" , "N/A") ;
+            }
+            Toast.makeText(LoginActivity.this, "username : " + userName, Toast.LENGTH_SHORT).show();
+        });
         /*
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +72,13 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
                 startActivity(new Intent(LoginActivity.this , SignUpActivity.class));
             }
         });
+    }
+
+    public String getIncomingIntent(){
+
+        Intent incomingIntent = getIntent() ;
+        userName = incomingIntent.getStringExtra(SignUpActivity.userNameKey) ;
+        return userName ;
     }
 
     @Override
@@ -131,6 +151,11 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
 
         Intent intent = new Intent(this, HomeScreen.class)  ;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) ;
+        intent.putExtra(SignUpActivity.userNameKey ,userName ) ;
+        //SharedPreferences preferences = getSharedPreferences(SharedPrefrencesModel.preferenceFile , Context.MODE_PRIVATE) ;
+        //emailFromPref = preferences.getString("emailKey","N/A");
+        //userNameFromPref = preferences.getString("userNameKey","N/A") ;
+
         startActivity(intent);
 
     }

@@ -1,5 +1,7 @@
 package com.example.medicalappreminder_java.HomeScreen.View.HomeFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +18,13 @@ import android.widget.Toast;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,12 +102,16 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
         myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),this);
         layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL );
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
 
         allPresenter = new AllMedPresenter(this,getContext());
         allPresenter.getMeds();
+
+
+
+
     }
     private  String getSelectedDate(Calendar selectedDate)
     {

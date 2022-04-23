@@ -2,16 +2,13 @@ package com.example.medicalappreminder_java.dependantInfo.view;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +23,18 @@ import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FirestoreManger;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
+import com.example.medicalappreminder_java.dependantInfo.PresenterInterface;
 import com.example.medicalappreminder_java.dependantInfo.ViewInterface;
 import com.example.medicalappreminder_java.dependantInfo.presenter.DepInfoPresenter;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -47,6 +47,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
     RadioButton male;
     View view;
     RadioGroup radioGroup;
+    String userEmail;
     final Calendar myCalendar= Calendar.getInstance();
     int selectedId;
     Button addDepBtn;
@@ -79,8 +80,10 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
          radioGroup = view.findViewById(R.id.radioGroup);
          addDepBtn = view.findViewById(R.id.addDepBtn);
          context = getActivity();
+        SharedPreferences preferences = getActivity().getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+        userEmail = preferences.getString("emailKey" , "user email") ;
 
-         remoteSourceInterface = new FirestoreManger();
+         remoteSourceInterface = new FireStoreHandler();
          localSourceInterface = new ConcreteLocalSource(context);
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -98,7 +101,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
         addDepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DepInfoPresenter depInfoPresenter = new DepInfoPresenter(RepoClass.getInstance(remoteSourceInterface , localSourceInterface , getContext()) , DependentInfoFragment.this);
+            PresenterInterface depInfoPresenter = new DepInfoPresenter(RepoClass.getInstance(remoteSourceInterface , localSourceInterface , getContext()) , DependentInfoFragment.this);
 
                 user.setFirstName(firstName.getText().toString());
                 user.setLastName(lastName.getText().toString());
@@ -107,9 +110,19 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 user.setGender(selectedGender);
                 user.setUuid(UUID.randomUUID());
                 depInfoPresenter.addDependant(user);
+                //------------------------------------- Presenter imp --------------------------------------
+                List<User> dependents = new ArrayList<>();
+                dependents.add(user);
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
+                User currentUser = repoClass.findUserByEmail(userEmail);
+                List<User> listOfDependant = currentUser.getListOfDependant();
+                currentUser.setListOfDependant(dependents);
+                repoClass.updateUser(currentUser);
+                List<User> listOfDependant2 = currentUser.getListOfDependant();
 
-               Navigation.findNavController(view).navigate(R.id.actionGoToHome);
-
+                Navigation.findNavController(view).navigate(R.id.actionGoToHome);
             }
         });
 

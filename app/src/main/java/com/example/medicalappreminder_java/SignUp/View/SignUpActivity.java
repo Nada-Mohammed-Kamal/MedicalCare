@@ -23,7 +23,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     Button signUpButton ;
     ProgressBar progressBar ;
     String email , password , userName ;
-    static String userNameKey = "userNameKey" ;
+    public static final String userNameKey = "userNameKey" ;
     SignUpPresenterInterafce signUpPresenter ;
 
     @Override
@@ -76,6 +76,12 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
     }
 
     @Override
+    public void setUserNameEditTextError(String error) {
+        userNameEditText.setError(error) ;
+        userNameEditText.requestFocus() ;
+    }
+
+    @Override
     public void makeToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -95,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpViewInter
 
         Intent intent = new Intent(this, LoginActivity.class) ;
         // ******* el user name aho ya Esraaaaaa *******
-        intent.putExtra(userNameKey ,userName ) ;
+        intent.putExtra(SignUpActivity.userNameKey ,userName ) ;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) ;
         startActivity(intent);
 

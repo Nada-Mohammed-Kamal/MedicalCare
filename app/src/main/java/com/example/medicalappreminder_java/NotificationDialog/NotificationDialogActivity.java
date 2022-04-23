@@ -1,9 +1,8 @@
 package com.example.medicalappreminder_java.NotificationDialog;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 
 
 import android.app.Dialog;
@@ -22,18 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Strength;
-import com.example.medicalappreminder_java.FireBaseModels.FireStore.FireStoreHandler;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +37,7 @@ import java.util.List;
 
 public class NotificationDialogActivity extends AppCompatActivity implements Serializable {
 
-    Button openDialogeButton  , notifyButton , storeButton ;
+    Button openDialogeButton  , notifyButton , storeButton , getButton , updateButton , deleteButton ;
     TextView userName , medName ;
     Dialog dialog ;
 
@@ -50,74 +45,44 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
     FireStoreHandler fireStoreHandler ;
 
     User user ;
-    List<User> usersList ;
-    List<Medicine> medicinesList ;
+    Medicine medicine ;
+    //List<User> usersList ;
+    //List<Medicine> medicinesList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_dialog);
 
-
-        notifyButton = findViewById(R.id.notifyButton) ;
-        openDialogeButton = findViewById(R.id.openDialogeButton) ;
-        storeButton = findViewById(R.id.storeButton) ;
-        userName = findViewById(R.id.userNameTextViewww) ;
-        medName = findViewById(R.id.medicineNameTextViewww) ;
-        dialog = new Dialog(this) ;
-        usersList = new ArrayList<>() ;
-        medicinesList = new ArrayList<>() ;
-        fireStoreHandler = new FireStoreHandler(this ) ;
-
-
-        user = new User();
-        user.setFirstName("ahmeddddd");
-        user.setLastName("mostafa");
-        user.setGender("male");
-
-        Medicine medicine = new Medicine() ;
-        medicine.setDose_howOften("every 2 days ");
-        medicine.setName("zzzzzzz");
-        medicine.setHowManyTimesWillItBeTakenInADay(2);
-        medicine.setCondition("headacheeeeeee");
-        medicine.setInstructions("instructions");
-        medicine.setState("state");
-        medicine.setRxNumber("20");
-        medicine.setNumberOfPillsLeft(4.0);
-        medicine.setStrength(Strength.g);
-        medicine.setForm(Form.Pill);
-        medicine.setHasRefillReminder(true);
-        medicine.setTotalNumOfPills(20);
-        medicine.setImage(R.drawable.inhaler);
-        medicine.setDose_howOften("twice daily");
-        medicine.setEveryday(true);
+        init();
+        settingUserDetails();
+        settingMedicineDetails();
+        setObservers();
+        
+        //fireStoreHandler.getUsersFromFireStore();
 
         storeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(NotificationDialogActivity.this, "stooooore", Toast.LENGTH_SHORT).show();
+                fireStoreHandler.addUserToFireStore(user);
+                fireStoreHandler.addMedicineToFireStore(medicine);
+            }
+        });
 
-                //fireStoreHandler.addUserToFireStore(user);
-                //fireStoreHandler.addMedicineToFireStore(medicine);
-
+        getButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "gettttt", Toast.LENGTH_SHORT).show();
                 fireStoreHandler.getUsersFromFireStore();
                 fireStoreHandler.getMedicinesFromFireStore() ;
+            }
+        });
 
-                usersList = fireStoreHandler.getUsersList() ;
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                if (usersList.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "users list is empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "user list is not empty", Toast.LENGTH_SHORT).show();
-                }
-
-                //usersList = fireStoreHandler.getUsersList() ;
-                //Toast.makeText(getApplicationContext(),userList.get(0).getFirstName(), Toast.LENGTH_SHORT).show();
-                //userName.setText(usersList.get(0).getFirstName());
-                //medName.setText(medicinesList.get(0).getName());
-
-                
-                
             }
         });
 
@@ -131,6 +96,74 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     }
 
+    public void setObservers(){
+        // in fragment only : getLifecycleOwner
+        // removeObservers and pass life cycle owner
+        fireStoreHandler.getUserLiveData().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> userList) {
+                // set ui
+                if (userList.size() > 0){
+                    userName.setText(userList.get(0).getFirstName());
+                }
+                //medName.setText(medicinesList.get(0).getName());
+            }
+        });
+
+        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
+            @Override
+            public void onChanged(List<Medicine> medicinesList) {
+                if (medicinesList.size() > 0){
+                    medName.setText(medicinesList.get(0).getName());
+                }
+            }
+        });
+    }
+
+    public void init(){
+        notifyButton = findViewById(R.id.notifyButton) ;
+        openDialogeButton = findViewById(R.id.openDialogeButton) ;
+        storeButton = findViewById(R.id.storeButton) ;
+        getButton = findViewById(R.id.getButton) ;
+        updateButton = findViewById(R.id.updateButton) ;
+        deleteButton = findViewById(R.id.deleteButton) ;
+        userName = findViewById(R.id.userNameTextViewww) ;
+        medName = findViewById(R.id.medicineNameTextViewww) ;
+        dialog = new Dialog(this) ;
+        fireStoreHandler = new FireStoreHandler(this ) ;
+    }
+
+    public void settingUserDetails(){
+        user = new User();
+        user.setFirstName("ahmeddddd");
+        user.setLastName("mostafa");
+        user.setGender("male");
+
+    }
+
+    public void settingMedicineDetails(){
+
+        //medicine = new Medicine() ;
+        //medicine.setDose_howOften("every 2 days ");
+
+        Medicine medicine = new Medicine() ;
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
+
+        medicine.setName("zzzzzzz");
+        medicine.setHowManyTimesWillItBeTakenInADay(2);
+        medicine.setCondition("headacheeeeeee");
+        medicine.setInstructions("instructions");
+        medicine.setState("state");
+        medicine.setRxNumber("20");
+        medicine.setNumberOfPillsLeft(4.0);
+        medicine.setStrength(Strength.g);
+        medicine.setForm(Form.Pill);
+        medicine.setHasRefillReminder(true);
+        medicine.setTotalNumOfPills(20);
+        medicine.setImage(R.drawable.inhaler);
+        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
+        medicine.setEveryday(true);
+    }
 
     private void openDialoge() {
 
@@ -154,7 +187,6 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
         dialog.show();
     }
-
 
     private void notifyMe() {
 

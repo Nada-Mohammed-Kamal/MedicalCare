@@ -3,6 +3,7 @@
     package="com.example.medicalappreminder_java" >
 
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,8 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava" >
         <activity
-            android:name=".MedModification.View.MedModifyActivity"
-            android:exported="false" />
+            android:name=".MedicationModification.View.MedicationModification"
+            android:exported="false"
+            android:label="Edit medicine"
+            android:parentActivityName=".HomeScreen.View.HomeScreen"/>
         <activity
             android:name=".AddMedicine.View.AddMedicine"
             android:label="@string/add_med"
@@ -28,7 +31,9 @@
 
 		 <activity
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
-            android:exported="true" android:screenOrientation="portrait"/>
+            android:exported="true" android:screenOrientation="portrait"
+             android:parentActivityName=".HomeScreen.View.HomeScreen"
+             android:label="Medicine Brief Details"/>
         <activity
             android:name=".NotificationDialog.NotificationDialogActivity"
             android:exported="true" />

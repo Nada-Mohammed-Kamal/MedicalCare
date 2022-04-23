@@ -1,26 +1,26 @@
 package com.example.medicalappreminder_java.models;
 
-import android.text.format.Time;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
-import com.example.medicalappreminder_java.CustomTime;
 import com.google.firebase.firestore.Exclude;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-public class Medicine {
+public class Medicine implements Serializable {
     @ColumnInfo(name = "id")
     @PrimaryKey
     @NonNull
@@ -52,8 +52,7 @@ public class Medicine {
     private String condition;
 
     @ColumnInfo(name = "Dose_howOften")
-    private String Dose_howOften;
-
+    private EveryHowManyDaysWilltheMedBeTaken Dose_howOften;
     @ColumnInfo(name = "startDate")
     private Date startDate;
 
@@ -61,9 +60,11 @@ public class Medicine {
     private Date endDate;
 
     @ColumnInfo(name = "fowHowManyDaysIsTheMedicineGoingToBeTaken")
+    //msh h3mlha
     private int fowHowManyDaysIsTheMedicineGoingToBeTaken;
 
     @ColumnInfo(name = "totalNumOfPills")
+    //not used
     private int totalNumOfPills;
 
     @ColumnInfo(name = "howManyTimesWillItBeTakenInADay")
@@ -76,8 +77,7 @@ public class Medicine {
     private String state;//active , inactive
 
     @ColumnInfo(name = "doseTimes")
-    private HashMap<List<CustomTime>, Status> doseTimes;
-
+    private List<CustomTime> doseTimes;
     @ColumnInfo(name = "hasRefillReminder")
     private boolean hasRefillReminder;
 
@@ -85,6 +85,7 @@ public class Medicine {
     private Date timeToShowTheReminderIn;
 
     @ColumnInfo(name = "rxNumber")
+    //not used
     private String rxNumber;
 
     @ColumnInfo(name = "remindMeWhenIHaveHowManyPillsLeft")
@@ -127,7 +128,7 @@ public class Medicine {
         this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
     }
 
-    public Medicine(@NonNull UUID uuid, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, String dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<CustomTime>, Status> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn, int numberOfPillsInOneTime) {
+    public Medicine(@NonNull UUID uuid, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn, int numberOfPillsInOneTime) {
         this.uuid = uuid;
         this.name = name;
         this.form = form;
@@ -170,7 +171,7 @@ public class Medicine {
         this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
     }
 
-    public Medicine(UUID uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, String dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, HashMap<List<CustomTime>, Status> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber ,List<Date> daysThatTheMedWillBeTakenIn , int numberOfPillsInOneTime) {
+    public Medicine(UUID uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber ,List<Date> daysThatTheMedWillBeTakenIn , int numberOfPillsInOneTime) {
         this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
         this.uuid = uuid;
         this.name = name;
@@ -205,7 +206,28 @@ public class Medicine {
         this.image = image;
     }
 
-
+    public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
+        super();
+        uuid = UUID.randomUUID();
+        this.name = name;
+        this.form = form;
+        this.strength = strength;
+        StrengthAmount = strengthAmount;
+        this.numberOfPillsLeft = numberOfPillsLeft;
+        this.image = image;
+        this.isEveryday = isEveryday;
+        Dose_howOften = dose_howOften;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.fowHowManyDaysIsTheMedicineGoingToBeTaken = fowHowManyDaysIsTheMedicineGoingToBeTaken;
+        this.howManyTimesWillItBeTakenInADay = howManyTimesWillItBeTakenInADay;
+        this.instructions = instructions;
+        this.state = state;
+        this.doseTimes = doseTimes;
+        this.hasRefillReminder = hasRefillReminder;
+        this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
+        this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
+    }
 
 
     public UUID getUuid() {
@@ -232,11 +254,11 @@ public class Medicine {
         this.condition = condition;
     }
 
-    public String getDose_howOften() {
+    public EveryHowManyDaysWilltheMedBeTaken getDose_howOften() {
         return Dose_howOften;
     }
 
-    public void setDose_howOften(String dose_howOften) {
+    public void setDose_howOften(EveryHowManyDaysWilltheMedBeTaken dose_howOften) {
         Dose_howOften = dose_howOften;
     }
 
@@ -288,11 +310,11 @@ public class Medicine {
         this.state = state;
     }
 
-    public HashMap<List<CustomTime>, Status> getDoseTimes() {
+    public List<CustomTime> getDoseTimes() {
         return doseTimes;
     }
 
-    public void setDoseTimes(HashMap<List<CustomTime>, Status> doseTimes) {
+    public void setDoseTimes(List<CustomTime> doseTimes) {
         this.doseTimes = doseTimes;
     }
 
@@ -367,4 +389,5 @@ public class Medicine {
     public void setNumberOfPillsLeft(double numberOfPillsLeft) {
         this.numberOfPillsLeft = numberOfPillsLeft;
     }
+
 }

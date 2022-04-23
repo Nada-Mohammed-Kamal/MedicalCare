@@ -7,7 +7,14 @@ import androidx.annotation.NonNull;
 
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.SignUp.View.SignUpViewInterface;
+import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,6 +26,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.ArrayList;
 
 public class AuthenticationHandler {
 
@@ -87,7 +97,7 @@ public class AuthenticationHandler {
      */
 
 
-    public void createUserWithEmailAndPassword(String email, String password) {
+    public void createUserWithEmailAndPassword(String email, String password , String userName ) {
 
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -96,6 +106,12 @@ public class AuthenticationHandler {
                     if (task.isSuccessful()) {
                         signUpViewRef.makeToast("User Registered successfully");
                     user = mAuth.getCurrentUser() ;
+                    if (user != null){
+
+                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(userName).build();
+                        user.updateProfile(profileChangeRequest) ;
+                    }
                     user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -126,8 +142,10 @@ public class AuthenticationHandler {
                     if (task.isSuccessful()) {
                         // go to specific screen
                         // shared preferences
+                        user = mAuth.getCurrentUser() ;
+                        //user.getDisplayName() ;
                         logInView.makeToast("Login successfully");
-                        sharedPrefrencesModel.writeInSharedPreferences(email,password);
+                        sharedPrefrencesModel.writeInSharedPreferences(email,password,user.getDisplayName());
                         logInView.gotoHomeScreen();
                     } else {
                         logInView.makeToast(task.getException().getMessage());
@@ -158,9 +176,15 @@ public class AuthenticationHandler {
                 Log.e(TAG, "onActivityResult: Google Sign In was successful");
                 logInView.makeToast("Google Sign In was successful");
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(context) ;
+                //GoogleSignInAccount account1 = GoogleSignIn.getLastSignedInAccount(context) ;
                 Log.e(TAG, "googleOnActivityResult: "+ account.getDisplayName());
                 logInView.makeToast(account.getDisplayName());
+                sharedPrefrencesModel.writeInSharedPreferences(account.getEmail(), account.getDisplayName());
+                User user = new User(account.getDisplayName(), account.getEmail());
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                repoClass.insertUser(user);
                 logInView.gotoHomeScreen();
                 //firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {

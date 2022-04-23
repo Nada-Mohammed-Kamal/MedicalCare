@@ -73,7 +73,6 @@ public class FirstAddMedScreen extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 radioButton = view.findViewById(checkedId);
                 formtxt = Form.valueOf(radioButton.getText().toString());
-                Toast.makeText(getActivity(),formtxt.toString(),Toast.LENGTH_SHORT).show();
             }
         });
         strength.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -81,7 +80,7 @@ public class FirstAddMedScreen extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 radioButton = view.findViewById(checkedId);
                 strengthtxt = Strength.valueOf(radioButton.getText().toString());
-                Toast.makeText(getActivity(),strengthtxt.toString(),Toast.LENGTH_SHORT).show();
+
             }
         });
         nextToSecondScreen.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +89,7 @@ public class FirstAddMedScreen extends Fragment {
                 addMedNametxt = addMedName.getText().toString();
                 if(addMedNametxt.isEmpty())
                     addMedName.setError("Field is required");
-                else if(strengthAmount.getText().toString().isEmpty())
+                if(strengthAmount.getText().toString().isEmpty())
                     strengthAmount.setError("Field is required");
                 else
                 {

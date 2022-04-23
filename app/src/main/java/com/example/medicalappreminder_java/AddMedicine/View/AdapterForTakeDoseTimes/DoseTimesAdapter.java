@@ -14,11 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicalappreminder_java.R;
-import com.example.medicalappreminder_java.models.DateTime;
+import com.example.medicalappreminder_java.models.CustomTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.ViewHolder> {
 
@@ -26,11 +25,11 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
     int numberOnDose;
     int count = 1;
     int timeSetsCorrectly = 1;
-    ArrayList<DateTime> dateTimes;
+    ArrayList<CustomTime> customTimes;
     public DoseTimesAdapter(Context context,int numberOnDose) {
         this.context = context;
         this.numberOnDose = numberOnDose;
-        dateTimes = new ArrayList<>();
+        customTimes = new ArrayList<>();
     }
 
     @Override
@@ -57,7 +56,7 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeSetsCorrectly++;
                         holder.openChooseTime.setText(selectedHour + ":" + selectedMinute);
-                        dateTimes.add(new DateTime(selectedHour,selectedMinute));
+                        customTimes.add(new CustomTime(selectedHour,selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -65,11 +64,11 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
             }
         });
     }
-    public ArrayList<DateTime> getTimes()
+    public ArrayList<CustomTime> getTimes()
     {
         if(count != timeSetsCorrectly)
-            return  new ArrayList<DateTime>();
-        return  dateTimes;
+            return  new ArrayList<CustomTime>();
+        return customTimes;
     }
     @Override
     public int getItemCount() {

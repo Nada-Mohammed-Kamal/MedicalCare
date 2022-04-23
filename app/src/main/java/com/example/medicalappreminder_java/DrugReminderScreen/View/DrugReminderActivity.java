@@ -4,22 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
+import com.example.medicalappreminder_java.Constants.Keys;
 import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenter;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenterInterface;
 
+import com.example.medicalappreminder_java.MedicationModification.View.MedicationModification;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.User;
 
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class DrugReminderActivity extends AppCompatActivity implements DrugReminderViewInterface {
@@ -31,11 +45,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
 
     RecyclerView drugReminderRecyclerView ;
     DrugReminderAdapter drugReminderAdapter ;
-    Medicine medicine = new Medicine() ;
-
-    List<Date> dates = new ArrayList<>();
-    Date StartDate = new Date(2022 , 4 , 12);
-    Date endDate = endDate = new Date(2022 , 4 , 20 );
+    Medicine medicine;
 
 
     DrugReminderPresenterInterface drugReminderPresenter ;
@@ -45,27 +55,85 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug_reminder);
 
+        Intent intent = getIntent();
+        medicine = (Medicine) intent.getSerializableExtra(Keys.USER_MED);
+
         settingIds();
         drugReminderPresenter = new DrugReminderPresenter(this , this) ;
         settingRecyclerView();
 
-        dates.add(StartDate) ;
-        dates.add(endDate) ;
-        setMedicineDetails();
+
         // replace number with remind me when i have
-        refillTextView.setText(medicine.getNumberOfPillsLeft()+" Pills left \nRX number: " + medicine.getRxNumber()
-        +"\nRefill Reminder: when i have " + "33" + " Pills Left"  );
+        refillTextView.setText(medicine.getNumberOfPillsLeft()+" Pills left \nRefill Reminder: when i have " + medicine.getRemindMeWhenIHaveHowManyPillsLeft() + " Pills Left"  );
+        drugIconImageView.setImageResource(medicine.getImage());
+        drugNameTextView.setText(medicine.getName());
+        drugStrengthTextView.setText(medicine.getStrengthAmount()+" "+ medicine.getStrength().toString());
+        howOftenTextView.setText(medicine.getDose_howOften().toString());
+        conditionTextView.setText(medicine.getCondition());
+        suspendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //***************************************** presenter code **************************
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
 
+                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                String userEmail = preferences.getString("emailKey" , "user email") ;
+                User currentUser = repoClass.findUserByEmail(userEmail);
+                List<Medicine> listOfMedications = currentUser.getListOfMedications();
+                for (Medicine med:listOfMedications) {
+                    if(med.getUuid().equals(medicine.getUuid())) {
+                        listOfMedications.remove(med);
+                        medicine.setState("Inactive");
+                        repoClass.updateMedicine(medicine);
+                    }
+                }
+                listOfMedications.add(medicine);
+                currentUser.setListOfMedications(listOfMedications);
+                repoClass.updateUser(currentUser);
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Go to edit screen
+               Intent intent = new Intent(DrugReminderActivity.this, MedicationModification.class);
+                intent.putExtra(Keys.USER_MED,medicine);
+               startActivity(intent);
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
+                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
 
+                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                String userEmail = preferences.getString("emailKey" , "user email") ;
+                User currentUser = repoClass.findUserByEmail(userEmail);
+                List<Medicine> listOfMedications = currentUser.getListOfMedications();
 
+                //ConcurrentModificationException while remove medicine
+                for(Iterator<Medicine> med = listOfMedications.iterator();med.hasNext();){
+                    Medicine removedMed = med.next();
+                    if(removedMed.getUuid().equals(medicine.getUuid())) {
+                        listOfMedications.remove(removedMed);
+                        repoClass.deleteMedicine(medicine);
+
+                    }
+                }
+                currentUser.setListOfMedications(listOfMedications);
+                repoClass.updateUser(currentUser);
+            }
+        });
     }
 
     public void settingIds (){
-        backButton = findViewById(R.id.backButton) ;
         deleteButton = findViewById(R.id.deleteDrugButton) ;
         editButton = findViewById(R.id.editDrugButton) ;
         suspendButton = findViewById(R.id.suspendButton) ;
-        refillButton = findViewById(R.id.refillButton) ;
         drugIconImageView = findViewById(R.id.reminderDrugIconImageView) ;
         drugNameTextView = findViewById(R.id.drugNameTextV) ;
         drugStrengthTextView = findViewById(R.id.drugStrenghtTextView) ;
@@ -75,32 +143,6 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
 
     }
 
-    public void setMedicineDetails(){
-
-        medicine.setDose_howOften("every 2 days ");
-        medicine.setName("panadol");
-        medicine.setHowManyTimesWillItBeTakenInADay(2);
-        medicine.setCondition("headache");
-        medicine.setInstructions("instructions");
-        medicine.setState("state");
-        medicine.setRxNumber("20");
-        medicine.setNumberOfPillsLeft(4.0);
-        medicine.setStrength(Strength.g);
-        medicine.setForm(Form.Pill);
-        medicine.setHasRefillReminder(true);
-        medicine.setTotalNumOfPills(20);
-        medicine.setImage(R.drawable.inhaler);
-      //  medicine.setDoseTimes(dates);
-        medicine.setDose_howOften("twice daily");
-        medicine.setEveryday(true);
-        if (medicine.isEveryday() == true) {
-//            howOftenTextView.setText("Every day ");
-        }else {
-            howOftenTextView.setText(medicine.getDose_howOften());
-            //howOftenTextView.append();
-        }
-
-    }
     public void settingRecyclerView(){
 
         //Log.e("list11", "settingRecyclerView: " + listOdMedicines.get(2).getName());
@@ -109,7 +151,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         LinearLayoutManager layoutManager = new LinearLayoutManager(DrugReminderActivity.this) ;
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         drugReminderRecyclerView.setLayoutManager(layoutManager);
-       // drugReminderAdapter = new DrugReminderAdapter(DrugReminderActivity.this , medicine) ;
+        drugReminderAdapter = new DrugReminderAdapter(DrugReminderActivity.this , medicine) ;
         drugReminderRecyclerView.setAdapter(drugReminderAdapter);
     }
 

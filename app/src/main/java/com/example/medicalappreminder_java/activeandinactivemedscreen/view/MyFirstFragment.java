@@ -1,7 +1,6 @@
 package com.example.medicalappreminder_java.activeandinactivemedscreen.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,25 +12,24 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.medicalappreminder_java.Constants.Form;
-import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.activeandinactivemedscreen.model.Section;
+import com.example.medicalappreminder_java.activeandinactivemedscreen.presenter.ActiveInactivePresenter;
+import com.example.medicalappreminder_java.activeandinactivemedscreen.PresenterInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MyFirstFragment extends Fragment {
     RecyclerView mRecyclerView;
     List<Section> sections;
     View view;
+    PresenterInterface activeInactivePresenter;
 
     public MyFirstFragment() {
         // Required empty public constructor
-        initData();
     }
 
 
@@ -39,8 +37,8 @@ public class MyFirstFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Your RecyclerView
-
-
+        activeInactivePresenter = new ActiveInactivePresenter(getContext());
+        initData();
     }
 
     @Override
@@ -51,8 +49,6 @@ public class MyFirstFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mainRecyclerAdapter);
-        //for the fragment navigation
-
     }
 
     @Override
@@ -69,23 +65,29 @@ public class MyFirstFragment extends Fragment {
     //hena b add bs shwayat data static
     private void initData(){
         String sectionOneName = "Active";
+        List<Medicine> activeMeds = new ArrayList<>();
+        List<Medicine> inactive = new ArrayList<>();
+        List<Medicine> currentUserMeds = activeInactivePresenter.getCurrentUserMeds();
+        for (Medicine med:currentUserMeds) {
+            String state = med.getState();
+            if(state.equals("Active")){
+                activeMeds.add(med);
+            } else if (state.equals("Inactive")){
+                inactive.add(med);
+            }
+        }
+        
         List<Medicine> sectionOneItems = new ArrayList<>();
-        sectionOneItems.add(new Medicine(UUID.randomUUID() ,"panadol" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
-        sectionOneItems.add(new Medicine(UUID.randomUUID() ,"panadrex" , Form.Pill , Strength.g , 3 , 10,R.drawable.pill));
-        sectionOneItems.add(new Medicine(UUID.randomUUID(), "drips" , Form.Drops , Strength.mcg_ml , 2 , 10,R.drawable.drops));
+        sectionOneItems = activeMeds;
 
         String sectionTwoName = "Inactive";
         List<Medicine> sectionTwoItems = new ArrayList<>();
-        sectionTwoItems.add(new Medicine(UUID.randomUUID() ,"catafast" , Form.Pill , Strength.g , 5 , 7,R.drawable.pill));
-        sectionTwoItems.add(new Medicine(UUID.randomUUID() ,"cataflam" , Form.Pill , Strength.g , 6 , 9,R.drawable.pill));
+        sectionTwoItems = inactive;
 
 
         sections = new ArrayList<>();
         sections.add(new Section(sectionOneName,sectionOneItems));
         sections.add(new Section(sectionTwoName,sectionTwoItems));
-
-        String TAG = "TAG";
-        Log.i(TAG, "initData: " + sections);
 
     }
 
