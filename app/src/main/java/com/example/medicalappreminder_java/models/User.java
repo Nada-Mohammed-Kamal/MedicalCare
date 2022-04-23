@@ -5,6 +5,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -139,5 +143,16 @@ public class User {
 
     public void setListOfMedications(List<Medicine> listOfMedications) {
         ListOfMedications = listOfMedications;
+    }
+
+    ///////////////////////////
+    public static List<User> convertUsersFromStringToList(String value) {
+        Type listType = new TypeToken<List<User>>() {}.getType();
+        return new Gson().fromJson(value, listType);
+    }
+    public static String convertUsersFromListToString(List<User> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
     }
 }

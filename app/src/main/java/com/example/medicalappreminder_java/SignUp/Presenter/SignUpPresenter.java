@@ -78,10 +78,6 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         //User user = new User(userName, email, new ArrayList<User>());
         User user = new User(userName, email);
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-
-
-
-
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
         repoClass.insertUser(user);

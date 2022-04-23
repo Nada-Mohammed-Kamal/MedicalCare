@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Patterns;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.FireBaseModels.Authentication.AuthenticationHandler;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
@@ -15,15 +17,17 @@ public class LogInPresenter implements LogInPresenterInterface{
     LogInViewInterface logInView ;
     Context context ;
     AuthenticationHandler authenticationHandler ;
+    LifecycleOwner lifecycleOwner ;
     //SharedPrefrencesModel sharedPrefrencesModel ;
 
 
 
-    public LogInPresenter(LogInViewInterface logInView , Context context ){
+    public LogInPresenter(LogInViewInterface logInView , Context context , LifecycleOwner lifecycleOwner){
 
+        this.lifecycleOwner = lifecycleOwner ;
         this.logInView = logInView ;
         this.context = context ;
-        authenticationHandler = new AuthenticationHandler(context , logInView) ;
+        authenticationHandler = new AuthenticationHandler(context , logInView , lifecycleOwner) ;
         //sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
     }
 

@@ -8,6 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,9 +39,19 @@ public class FireStoreHandler implements RemoteSourceInterface {
     MutableLiveData<List<User>> user_mutable_live_data;
     LiveData<List<Medicine>> medicineLiveData ;
     MutableLiveData<List<Medicine>> medicine_mutable_live_data ;
+    private FirebaseFirestore firebaseFirestore;
 
     public FireStoreHandler(){
+        fireStoreDb = FirebaseFirestore.getInstance();
 
+        convertedUserList = new ArrayList<>() ;
+        convertedMedicineList = new ArrayList<>() ;
+
+        user_mutable_live_data = new MutableLiveData<>() ;
+        userLiveData  = user_mutable_live_data;
+
+        medicine_mutable_live_data = new MutableLiveData<>() ;
+        medicineLiveData = medicine_mutable_live_data ;
     }
 
     public FireStoreHandler(Context context ) {
@@ -96,6 +110,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
         if (!validateInputs(name, brand, desc, price, qty)){call this method}
          */
 
+
         usersFirestoreDb = fireStoreDb.collection(userCollectionName);
         usersFirestoreDb.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -116,7 +131,6 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void addMedicineToFireStore(Medicine medicine) {
-
         // ***** add validation to presenter *****
         medicineFirestoreDb = fireStoreDb.collection(medicineCollectionName);
         medicineFirestoreDb.add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -146,6 +160,13 @@ public class FireStoreHandler implements RemoteSourceInterface {
                     for (DocumentSnapshot documentSnapshot : userDocumentSnapshotList) {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
+
+                        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                        User userByEmail = repoClass.findUserByEmail(user.getEmail());
+                        userByEmail.setFireStoreId(documentSnapshot.getId());
+                        repoClass.updateUser(userByEmail);
                         // there is bug every call to get will add to the arraylist again
                         // so there will be duplicate data
                         convertedUserList.add(user) ;

@@ -24,6 +24,10 @@ public class ConcreteLocalSource implements LocalSourceInterface {
     private static  ConcreteLocalSource localSource = null;
     //private LiveData<List<Movie>> storedMovies;
 
+
+    public ConcreteLocalSource() {
+    }
+
     public ConcreteLocalSource(Context context) {
         AppDatabase dataBase = AppDatabase.getDBInstance(context.getApplicationContext());
         userDao = dataBase.userDao();

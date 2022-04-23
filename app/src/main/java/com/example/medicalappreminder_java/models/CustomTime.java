@@ -17,7 +17,8 @@ public class CustomTime implements Serializable {
         this.status = Status.notItsTimeYet;
     }
 
-
+    public CustomTime() {
+    }
 
     public int getHour() {
         return hour;
