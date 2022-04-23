@@ -38,6 +38,7 @@ import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
 import com.example.medicalappreminder_java.models.CustomTime;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -241,13 +242,26 @@ public class SecondAddMedScreen extends Fragment {
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         startDate = myCalendar.getTime();
+
         startDateid.setText(dateFormat.format(myCalendar.getTime()));
+
+        try {
+            startDate = dateFormat.parse(dateFormat.format(myCalendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
     private void updateEndDateLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         endDate = myCalendar.getTime();
         endDateid.setText(dateFormat.format(myCalendar.getTime()));
+
+        try {
+            endDate = dateFormat.parse(dateFormat.format(myCalendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     void init(View view) {

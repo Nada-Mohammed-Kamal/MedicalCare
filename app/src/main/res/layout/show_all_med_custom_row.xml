@@ -9,11 +9,13 @@
         android:id="@+id/medIconRecylerViewHomeScreen"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:civ_border_color="#FF000000"
+
         app:civ_border_width="1dp"
-        app:layout_constraintStart_toStartOf="@+id/doseTimeRecylerViewHomeScreen"
-        app:layout_constraintTop_toBottomOf="@+id/doseTimeRecylerViewHomeScreen" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view2"
@@ -25,24 +27,12 @@
         app:layout_constraintTop_toTopOf="@+id/medIconRecylerViewHomeScreen" />
 
     <TextView
-        android:id="@+id/doseTimeRecylerViewHomeScreen"
-        android:layout_width="221dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="08:00"
-        android:textSize="@dimen/_25sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/medNameRecylerViewHomeScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="adol"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view2" />

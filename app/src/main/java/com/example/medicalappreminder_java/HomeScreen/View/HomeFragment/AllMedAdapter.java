@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
@@ -35,38 +37,49 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 //AllMoviesAdapter
-public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder> {
+public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.ViewHolder> {
 
     private final Context context;
     private ArrayList<Medicine> medList;
     OnMoviesClickListener onMoviesClickListener;
     List<CustomTime> todayesTimesOfDoses;
+    private List<Medicine> sectionMedicines;
+    private List<List<Medicine>> allSectionsMedicines;
     Dialog dialog ;
-    public AllMedAdapter(Context context, ArrayList<Medicine> values, OnMoviesClickListener onMoviesClickListener) {
+    public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener) {
         this.context = context;
         this.medList = values;
         this.onMoviesClickListener = onMoviesClickListener;
         dialog = new Dialog(context);
-        todayesTimesOfDoses = UserData.getTodayesTimesOfDoses(medList);
-    }
-    public  void setList(List<Medicine> updateMeds){
-        this.medList = (ArrayList)updateMeds;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup recyclerView, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.show_all_med_custom_row,recyclerView,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        Log.i("Adapter", "=====onCreateViewHolder========= ");
-        return viewHolder;
+        this.todayesTimesOfDoses =  todayesTimesOfDoses;
+        sectionMedicines = new ArrayList<>();
+        allSectionsMedicines = new ArrayList<>();
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Medicine medDTO = medList.get(position);
+    public int getSectionCount() {
+        return todayesTimesOfDoses.size();
+    }
+
+    @Override
+    public int getItemCount(int section) {
+        sectionMedicines = UserData.getSectionMedicines(medList, todayesTimesOfDoses.get(section));
+        allSectionsMedicines.add(sectionMedicines);
+        return sectionMedicines.size();
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(AllMedAdapter.ViewHolder holder, int section) {
+        holder.medTime.setText(todayesTimesOfDoses.get(section).getHour()+":"+todayesTimesOfDoses.get(section).getMinute());
+
+    }
+
+    @Override
+    public void onBindViewHolder(AllMedAdapter.ViewHolder holder, int section, int relativePosition, int absoultePosition) {
+        sectionMedicines = allSectionsMedicines.get(section);
+        Medicine medDTO = sectionMedicines.get(relativePosition);
         String decMed = ""+ medDTO.getStrengthAmount() + medDTO.getStrength() + ",take " +medDTO.getForm();
-       // holder.medTime.setText(medDTO.get);
+        //holder.medTime.setText(medDTO.get);
         holder.medDesc.setText(decMed);
         holder.medName.setText(medDTO.getName());
         holder.medIcon.setImageResource(medDTO.getImage());
@@ -77,18 +90,25 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 onMoviesClickListener.onClick(medDTO);
                 Toast.makeText(context,"Med clicked",Toast.LENGTH_SHORT).show();
                 //change with current time of this med
-                openDialoge(medDTO,new CustomTime(12,30));
+                openDialoge(medDTO,todayesTimesOfDoses.get(section));
 
             }
         });
     }
 
+    @NonNull
     @Override
-    public int getItemCount() {
-        return medList.size();
+    public AllMedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup recyclerView, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(viewType == VIEW_TYPE_HEADER?R.layout.home_screen_header:R.layout.show_all_med_custom_row,recyclerView,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        Log.i("Adapter", "=====onCreateViewHolder========= ");
+        return viewHolder;
     }
-
-
+    public  void setList(List<Medicine> updateMeds,List<CustomTime> customTimes){
+        todayesTimesOfDoses = customTimes;
+        this.medList = (ArrayList)updateMeds;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView medIcon;
         TextView medTime;
@@ -121,7 +141,9 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         drugNameTextView = dialog.findViewById(R.id.dialogDrugNameTextView) ;
         drugDescrTextView = dialog.findViewById(R.id.dialogDrugDescrTextView) ;
         drugIconImageView = dialog.findViewById(R.id.dialogDrugIconimageView) ;
-        
+
+        timeTextView.setText(currentTime.getHour()+":"+currentTime.getMinute());
+        drugIconImageView.setImageResource(medicine.getImage());
         String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + ",take " +medicine.getForm();
         drugNameTextView.setText(medicine.getName());
         drugDescrTextView.setText(decMed);

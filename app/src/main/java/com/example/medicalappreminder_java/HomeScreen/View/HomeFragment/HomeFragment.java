@@ -19,16 +19,21 @@ import android.widget.Toast;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+import java.util.Locale;
+
+//import devs.mulham.horizontalcalendar.HorizontalCalendar;
+//import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 
@@ -45,6 +50,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
 
         super.onCreate(savedInstanceState);
         selectedDate = Calendar.getInstance();
+
     }
 
     @Override
@@ -67,7 +73,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-        View calView = view.findViewById(R.id.calendarView);
+       /* View calView = view.findViewById(R.id.calendarView);
         // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
                 // on below line we are adding a range
@@ -82,13 +88,12 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
                 .build();
         // on below line we are setting calendar listener to our calendar view.
         horizontalCalendar.goToday(true);
-        selectedDate = horizontalCalendar.getSelectedDate();
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
 
             @Override
             public void onDateSelected(java.util.Calendar date, int position) {
-               selectedDate = horizontalCalendar.getSelectedDate();
-
+                selectedDate = horizontalCalendar.getSelectedDate();
+                Date time = selectedDate.getTime();
                 Toast.makeText(getActivity(),getSelectedDate(selectedDate),Toast.LENGTH_SHORT).show();
             };
 
@@ -97,20 +102,15 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
                 horizontalCalendar.selectDate(date,false);
                 return super.onDateLongClicked(date, position);
             }
-        });
+        });*/
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
-        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),this);
+        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),new ArrayList<>(),this);
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
-
-
-
-
-
 
     }
     private  String getSelectedDate(Calendar selectedDate)
@@ -123,8 +123,8 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
 
 
     @Override
-    public void showData(List<Medicine> medsList) {
-        myAdapter.setList(medsList);
+    public void showData(List<Medicine> medsList, List<CustomTime> customTimes) {
+        myAdapter.setList(medsList,customTimes);
         myAdapter.notifyDataSetChanged();
     }
 
@@ -132,7 +132,16 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     public void onStart() {
         super.onStart();
         allPresenter = new AllMedPresenter(this,getContext());
-        allPresenter.getMeds(selectedDate.getTime());
+
+        String myFormat="MM/dd/yy";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        Date time = selectedDate.getTime();
+        try {
+           time = dateFormat.parse(dateFormat.format(selectedDate.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        allPresenter.getMeds(time);
     }
 
     @Override

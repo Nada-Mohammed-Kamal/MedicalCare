@@ -17,13 +17,8 @@ public class UserData {
         List<Medicine> toDayMedicines = new ArrayList<>();
         for (Medicine currentUserMed:userMedicines) {
             List<Date> daysThatTheMedWillBeTakenIn = currentUserMed.getDaysThatTheMedWillBeTakenIn();
-            for (Date medicineDayes:daysThatTheMedWillBeTakenIn) {
-                if(medicineDayes.equals(todayDate)){
-                    Collections.sort(currentUserMed.getDoseTimes());
-                    toDayMedicines.add(currentUserMed);
-                    break;
-                }
-            }
+            if(daysThatTheMedWillBeTakenIn.contains(todayDate))
+                toDayMedicines.add(currentUserMed);
         }
         return toDayMedicines;
     }
@@ -38,5 +33,13 @@ public class UserData {
         List<CustomTime> arr = new ArrayList<>(todayesTimes);
         Collections.sort(arr);
         return arr;
+    }
+    public static List<Medicine> getSectionMedicines(List<Medicine> todayMedicines,CustomTime sectionTime) {
+        List<Medicine> sectionMedicines = new ArrayList<>();
+        for (Medicine current:todayMedicines) {
+            if(current.getDoseTimes().contains(sectionTime))
+                sectionMedicines.add(current);
+        }
+        return sectionMedicines;
     }
 }
