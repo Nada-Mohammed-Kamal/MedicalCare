@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava" >
         <activity
-            android:name=".MedicationModification.View.MedicationModification"
+            android:name=".MedModification.View.MedModifyActivity"
             android:exported="false"
             android:label="Edit medicine"
             android:parentActivityName=".HomeScreen.View.HomeScreen"/>

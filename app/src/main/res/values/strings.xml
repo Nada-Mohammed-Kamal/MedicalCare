@@ -61,7 +61,7 @@
     <string name="medName">Medication Name</string>
     <string name="reminders">Reminders</string>
     <string name="timesPerDay">X times per day</string>
-    <string name="medIcon">Medication Icon</string>
+    <string name="medType">Medication Type</string>
     <string name="medCondition">Condition</string>
     <string name="how_often_do_you_take_it">How often do you take it?</string>
     <string name="prescription">Prescription Refill</string>
@@ -89,5 +89,15 @@
         <item>Every four days</item>
         <item>Every five days</item>
         <item>Every six days</item>
+    </string-array>
+
+    <string-array name="MedTypes">
+        <item>Pill</item>
+        <item>Solution</item>
+        <item>Injection</item>
+        <item>Powder</item>
+        <item>Drops</item>
+        <item>Inhaler</item>
+        <item>Other</item>
     </string-array>
 </resources>

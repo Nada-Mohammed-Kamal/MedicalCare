@@ -5,7 +5,6 @@
     android:id="@+id/myScrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FDFDFF"
     android:fillViewport="true"
     tools:context=".MedModification.View.MedModifyActivity"
     tools:ignore="SpeakableTextPresentCheck">
@@ -23,18 +22,10 @@
             android:theme="@style/Theme.MyApplication.AppBarOverlay"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:collapseIcon="?android:attr/actionModeWebSearchDrawable"
-                app:popupTheme="@style/Theme.MyApplication.PopupOverlay"></androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -47,18 +38,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AppBarLayout">
+            app:layout_constraintTop_toBottomOf="@+id/AppBarLayout"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#F2F2F2">
-
-                <View
-                    android:id="@+id/mainCardBckGround"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#F2F2F2" />
 
                 <ImageView
                     android:id="@+id/medImg"
@@ -113,14 +99,16 @@
 
                         <TextView
                             android:id="@+id/textView4"
-                            android:layout_width="156dp"
-                            android:layout_height="33dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/helvetica_bold"
                             android:text="@string/medName"
                             android:textColor="#0a5087"
                             android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -150,45 +138,46 @@
 
                         <TextView
                             android:id="@+id/textView5"
-                            android:layout_width="104dp"
-                            android:layout_height="34dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="24dp"
                             android:fontFamily="@font/helvetica_bold"
                             android:text="@string/reminders"
                             android:textColor="#0a5087"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <Switch
-                            android:id="@+id/switch2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <EditText
+                            android:id="@+id/txtNoOfDoses"
+                            android:layout_width="70dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:minWidth="48dp"
+                            android:gravity="center"
+                            android:hint="1-6"
+                            android:inputType="number"
                             android:minHeight="48dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView5" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/doseTimesRV"
                             android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtNoOfDoses">
+
+                        </androidx.recyclerview.widget.RecyclerView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -197,17 +186,15 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/MedIcon"
                     android:layout_width="0dp"
-                    android:layout_height="79dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
 
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     app:cardCornerRadius="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Reminders"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintTop_toBottomOf="@+id/Reminders">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -217,18 +204,34 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/helvetica_bold"
-                            android:text="@string/medIcon"
+                            android:text="@string/medType"
                             android:textColor="#0a5087"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <Spinner
+                            android:id="@+id/medTypeSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/textView6"
+                            app:layout_constraintTop_toTopOf="@+id/textView6"
+                            app:layout_constraintVertical_bias="0.3"
+                            tools:ignore="SpeakableTextPresentCheck" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -261,8 +264,8 @@
 
                         <TextView
                             android:id="@+id/Condition"
-                            android:layout_width="104dp"
-                            android:layout_height="34dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/helvetica_bold"
@@ -280,7 +283,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:text="I take this medice cause ..."
+                            android:hint="I take this medice cause ..."
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -329,8 +332,8 @@
 
                         <TextView
                             android:id="@+id/Prescription"
-                            android:layout_width="156dp"
-                            android:layout_height="33dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/helvetica_bold"
@@ -381,8 +384,8 @@
 
                         <TextView
                             android:id="@+id/textView444"
-                            android:layout_width="156dp"
-                            android:layout_height="33dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/helvetica_bold"
@@ -391,6 +394,7 @@
                             android:textSize="18sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -405,11 +409,10 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     app:cardCornerRadius="30dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/mainCardBckGround"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Instructions"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintTop_toBottomOf="@+id/Instructions">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -438,8 +441,8 @@
 
                         <TextView
                             android:id="@+id/textView4444"
-                            android:layout_width="156dp"
-                            android:layout_height="33dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/helvetica_bold"
@@ -455,6 +458,29 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnCardView"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+            <Button
+                android:id="@+id/btnDone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/helvetica_bold"
+                android:text="Done"
+                android:textColor="#0a5087"
+                android:textSize="16sp" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
