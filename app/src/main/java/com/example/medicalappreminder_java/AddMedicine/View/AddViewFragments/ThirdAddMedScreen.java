@@ -190,6 +190,8 @@ public class ThirdAddMedScreen extends Fragment {
                
                 Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
                 getActivity().finish();
+
+
             }
         });
 
