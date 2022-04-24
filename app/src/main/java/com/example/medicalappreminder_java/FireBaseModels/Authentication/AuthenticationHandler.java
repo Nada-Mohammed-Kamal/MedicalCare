@@ -119,15 +119,20 @@ public class AuthenticationHandler {
                     user = mAuth.getCurrentUser();
 
                     if (user != null) {
-
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(userName).build();
                         user.updateProfile(profileChangeRequest);
                     }
+
                     fireStoreUser = new User(userName, email);
                     fireStoreUser.setFirstName(userName);
+                    //fireStoreUser.setFireStoreId(user.getUid()) ;
+                    String fireStoreUserUuid = fireStoreUser.getUuid();
+                    SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
+                    sharedPrefrencesModel.writeInSharedPreferences(fireStoreUserUuid);
                     fireStoreHandler = new FireStoreHandler();
-                    fireStoreHandler.addUserToFireStore(fireStoreUser);
+                    Log.e("****", "onComplete: "+user.getUid() );
+                    fireStoreHandler.addUserToFireStore(fireStoreUser );
                     user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -150,7 +155,6 @@ public class AuthenticationHandler {
 
     public void signInWithEmailAndPassword(String email, String password) {
 
-        //if (user.isEmailVerified()) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

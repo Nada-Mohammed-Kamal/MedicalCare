@@ -23,6 +23,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.AddMedicine.Presenter.AddMedicinePresenter;
+import com.example.medicalappreminder_java.AddMedicine.Presenter.AddMedicinePresenterInterface;
+import com.example.medicalappreminder_java.AddMedicine.View.AddMedicineViewInterface;
 import com.example.medicalappreminder_java.CalculateArrayOfDatesAndTimesOfTheMedication;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
@@ -45,9 +48,10 @@ import java.util.Date;
 import java.util.List;
 
 
-public class ThirdAddMedScreen extends Fragment {
+public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterface {
 
     ThirdAddMedScreenArgs thirdAddMedScreenArgs;
+    AddMedicinePresenterInterface addMedicinePresenterInterface;
 
     CardView cardView;
     CardView cardViewAddInstraction;
@@ -176,20 +180,9 @@ public class ThirdAddMedScreen extends Fragment {
                         data.getHowManyTimes(),moreInstraction,"Active", data.getCustomTimes(),
                         hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
-                repoClass.insertMedicine(medicine);
-                SharedPreferences preferences = getActivity().getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
-               
-                Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                addMedicinePresenterInterface = new AddMedicinePresenter(getContext(),ThirdAddMedScreen.this , ThirdAddMedScreen.this);
+                addMedicinePresenterInterface.addMedTOCurrentUser(medicine);
+
             }
         });
 
@@ -212,5 +205,11 @@ public class ThirdAddMedScreen extends Fragment {
 
         chooseEatingRadioGroup = view.findViewById(R.id.chooseEatingRadioGroup);
 
+    }
+
+    @Override
+    public void viewThatTheMedIsAddedSuccessfully() {
+        Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 }

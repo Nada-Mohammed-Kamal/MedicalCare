@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     protected void registerNetworkBroadCastReceiver(){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
             registerReceiver(broadcastReceiver , new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));

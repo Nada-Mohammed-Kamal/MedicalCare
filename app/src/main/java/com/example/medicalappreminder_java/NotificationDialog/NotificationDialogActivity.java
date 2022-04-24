@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class NotificationDialogActivity extends AppCompatActivity implements Serializable {
+public class NotificationDialogActivity extends AppCompatActivity implements Serializable /*, OnlineUsers*/ {
 
     Button openDialogeButton  , notifyButton , storeButton , getButton , updateButton , deleteButton ;
     TextView userName , medName ;
@@ -48,7 +48,7 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     User user ;
     Medicine medicine ;
-    //List<User> usersList ;
+    List<User> usersList ;
     //List<Medicine> medicinesList ;
 
     @Override
@@ -59,7 +59,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         init();
         settingUserDetails();
         settingMedicineDetails();
-        setObservers();
+
+        //setObservers();
+
         
         //fireStoreHandler.getUsersFromFireStore();
 
@@ -76,8 +78,11 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "gettttt", Toast.LENGTH_SHORT).show();
-                fireStoreHandler.getUsersFromFireStore();
-                fireStoreHandler.getMedicinesFromFireStore() ;
+//                fireStoreHandler.getUsersFromFireStore();
+//                fireStoreHandler.getMedicinesFromFireStore() ;
+                if (usersList.size() > 0){
+                    userName.setText(usersList.get(0).getFirstName());
+                }
             }
         });
 
@@ -98,29 +103,29 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     }
 
-    public void setObservers(){
-        // in fragment only : getLifecycleOwner
-        // removeObservers and pass life cycle owner
-        fireStoreHandler.getUserLiveData().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> userList) {
-                // set ui
-                if (userList.size() > 0){
-                    userName.setText(userList.get(0).getFirstName());
-                }
-                //medName.setText(medicinesList.get(0).getName());
-            }
-        });
-
-        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
-            @Override
-            public void onChanged(List<Medicine> medicinesList) {
-                if (medicinesList.size() > 0){
-                    medName.setText(medicinesList.get(0).getName());
-                }
-            }
-        });
-    }
+//    public void setObservers(){
+//        // in fragment only : getLifecycleOwner
+//        // removeObservers and pass life cycle owner
+//        fireStoreHandler.getUserLiveData().observe(this, new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(List<User> userList) {
+//                // set ui
+//                if (userList.size() > 0){
+//                    userName.setText(userList.get(0).getFirstName());
+//                }
+//                //medName.setText(medicinesList.get(0).getName());
+//            }
+//        });
+//
+//        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
+//            @Override
+//            public void onChanged(List<Medicine> medicinesList) {
+//                if (medicinesList.size() > 0){
+//                    medName.setText(medicinesList.get(0).getName());
+//                }
+//            }
+//        });
+//    }
 
     public void init(){
         notifyButton = findViewById(R.id.notifyButton) ;
@@ -228,5 +233,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         }
     }
 
+//    @Override
+//    public void setOnlineUserList(List<User> convertedUserList) {
+//        usersList = convertedUserList ;
+//    }
 }
 
