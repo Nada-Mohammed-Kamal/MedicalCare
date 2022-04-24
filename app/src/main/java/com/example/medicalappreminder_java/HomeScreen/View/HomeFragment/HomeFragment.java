@@ -18,11 +18,13 @@ import android.widget.Toast;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
+
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
+
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -31,10 +33,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 //import devs.mulham.horizontalcalendar.HorizontalCalendar;
 //import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
+public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
+
     RecyclerView recyclerView;
     AllMedAdapter myAdapter;
     LinearLayoutManager layoutManager;
@@ -67,9 +70,9 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-       /* View calView = view.findViewById(R.id.calendarView);
+        View calView = view.findViewById(R.id.calendarView);
         // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
-        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
+     /*   HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
                 // on below line we are adding a range
                 // as start date and end date to our calendar.
                 .range(startDate, endDate)
@@ -106,8 +109,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
 
-        allPresenter = new AllMedPresenter(this,getContext());
-        allPresenter.getMeds();
+
 
 
 
@@ -125,6 +127,13 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     public void showData(List<Medicine> medsList) {
         myAdapter.setList(medsList);
         myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        allPresenter = new AllMedPresenter(this,getContext());
+        allPresenter.getMeds();
     }
 
     @Override
