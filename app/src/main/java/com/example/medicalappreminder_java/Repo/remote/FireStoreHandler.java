@@ -130,17 +130,17 @@ public class FireStoreHandler implements RemoteSourceInterface {
     public void addMedicineToFireStore(Medicine medicine) {
         // ***** add validation to presenter *****
         medicineFirestoreDb = fireStoreDb.collection(medicineCollectionName);
-        medicineFirestoreDb.add(medicine).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        // medicineFirestoreDb.add(medicine)
+        //Log.e("fireDB", "onSuccess: medicne added");
+        //Log.e("fireDB", "onFailure: faild to add the medicine");
+        medicineFirestoreDb.document(medicine.getUuid()).set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                // ***** replace toast with func make toast from view *****
-                //Toast.makeText(context, "medicine added", Toast.LENGTH_SHORT).show();
+            public void onSuccess(Void unused) {
                 Log.e("fireDB", "onSuccess: medicne added");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(context, "fail in adding the medicine", Toast.LENGTH_SHORT).show();
                 Log.e("fireDB", "onFailure: faild to add the medicine");
             }
         });
