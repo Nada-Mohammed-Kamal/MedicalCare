@@ -2,6 +2,7 @@ package com.example.medicalappreminder_java.HomeScreen.Presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedViewInterface;
 import com.example.medicalappreminder_java.Repo.RepoClass;
@@ -10,10 +11,13 @@ import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.example.medicalappreminder_java.roomdb.AppDatabase;
+import com.example.medicalappreminder_java.roomdb.UserData;
 
+import java.util.Date;
 import java.util.List;
 
 public class AllMedPresenter implements AllMedPresenterInterface{
@@ -27,7 +31,7 @@ public class AllMedPresenter implements AllMedPresenterInterface{
         this._view = view;
     }
     @Override
-    public void getMeds() {
+    public void getMeds(Date date) {
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(_context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,_context);
@@ -35,6 +39,9 @@ public class AllMedPresenter implements AllMedPresenterInterface{
         String userEmail = preferences.getString("emailKey" , "user email") ;
         User currentUser = repoClass.findUserByEmail(userEmail);
         List<Medicine> listOfMedications = currentUser.getListOfMedications();
-        _view.showData(listOfMedications);
+        Log.d("date", "getMeds:********************** "+date.toString());
+        List<Medicine> listOfMed  = UserData.getTodayMedicineswithTimeSorted(listOfMedications,date);
+        List<CustomTime> customTimes = UserData.getTodayesTimesOfDoses(listOfMed);
+        _view.showData(listOfMed,customTimes);
     }
 }

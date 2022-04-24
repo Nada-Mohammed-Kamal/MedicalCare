@@ -7,7 +7,7 @@
     tools:context=".HomeScreen.View.HomeFragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-  <!-- <devs.mulham.horizontalcalendar.HorizontalCalendarView
+    <devs.mulham.horizontalcalendar.HorizontalCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:sizeTopText="@dimen/_10sdp"
         app:textColorNormal="#696C6C"
         app:textColorSelected="#3F51B5"
-        tools:ignore="SpeakableTextPresentCheck" />-->
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAllMed"

@@ -121,7 +121,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
                     if(removedMed.getUuid().equals(medicine.getUuid())) {
                         listOfMedications.remove(removedMed);
                         repoClass.deleteMedicine(medicine);
-
+                        break;
                     }
                 }
                 currentUser.setListOfMedications(listOfMedications);
