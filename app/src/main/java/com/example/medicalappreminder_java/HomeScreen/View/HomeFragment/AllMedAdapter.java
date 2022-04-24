@@ -46,6 +46,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
     private List<Medicine> sectionMedicines;
     private List<List<Medicine>> allSectionsMedicines;
     Dialog dialog ;
+    int count = 0;
     public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener) {
         this.context = context;
         this.medList = values;
@@ -63,8 +64,11 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
 
     @Override
     public int getItemCount(int section) {
-        sectionMedicines = UserData.getSectionMedicines(medList, todayesTimesOfDoses.get(section));
-        allSectionsMedicines.add(sectionMedicines);
+        if(count < todayesTimesOfDoses.size()) {
+            sectionMedicines = UserData.getSectionMedicines(medList, todayesTimesOfDoses.get(section));
+            allSectionsMedicines.add(sectionMedicines);
+            count++;
+        }
         return sectionMedicines.size();
     }
 
@@ -76,8 +80,8 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
 
     @Override
     public void onBindViewHolder(AllMedAdapter.ViewHolder holder, int section, int relativePosition, int absoultePosition) {
-        sectionMedicines = allSectionsMedicines.get(section);
-        Medicine medDTO = sectionMedicines.get(relativePosition);
+        List<Medicine> currentSectionMed = allSectionsMedicines.get(section);
+        Medicine medDTO = currentSectionMed.get(relativePosition);
         String decMed = ""+ medDTO.getStrengthAmount() + medDTO.getStrength() + ",take " +medDTO.getForm();
         //holder.medTime.setText(medDTO.get);
         holder.medDesc.setText(decMed);
@@ -108,6 +112,8 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
     public  void setList(List<Medicine> updateMeds,List<CustomTime> customTimes){
         todayesTimesOfDoses = customTimes;
         this.medList = (ArrayList)updateMeds;
+        count = 0;
+        allSectionsMedicines.clear();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView medIcon;
