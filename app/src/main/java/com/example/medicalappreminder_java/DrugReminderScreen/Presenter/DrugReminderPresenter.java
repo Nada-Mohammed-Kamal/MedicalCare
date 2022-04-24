@@ -48,13 +48,15 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
 
 
         List<Medicine> listOfMedications = currentUser.getListOfMedications();
-        for (Medicine med : listOfMedications) {
-            if (med.getUuid().equals(medicine.getUuid())) {
+        Iterator<Medicine> iterator = listOfMedications.iterator();
+        while (iterator.hasNext()) {
+            Medicine med = iterator.next();
+            if (med.getUuid().equals(medicine.getUuid()))
                 listOfMedications.remove(med);
                 medicine.setState("Inactive");
                 repoClass.updateMedicine(medicine);
-            }
         }
+
         listOfMedications.add(medicine);
         currentUser.setListOfMedications(listOfMedications);
         repoClass.updateUser(currentUser);
@@ -111,12 +113,12 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
                     oldFireStoreUser.setUuid(fireStoreUser.getUuid());
                     List<Medicine> listOfMedications = oldFireStoreUser.getListOfMedications();
                     for (Medicine med : listOfMedications) {
-                        if (med.getUuid() == medicine.getUuid()) {
+                        if (med.getUuid().equals(medicine.getUuid())) {
                             oldMedicine = med;
-                            oldMedicine.setUuid(medicine.getUuid().toString());
-                            oldMedicine.setState("Inactive");
+                            oldMedicine.setUuid(medicine.getUuid());
                             newMedicine = oldMedicine;
-                            newMedicine.setUuid(medicine.getUuid().toString());
+                            newMedicine.setState("Inactive");
+                            newMedicine.setUuid(medicine.getUuid());
                         }
                     }
                     listOfMedications.remove(oldMedicine);
@@ -125,8 +127,12 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
                     fireStoreCurrentUser = fireStoreUser;
                     fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
                     fireStoreCurrentUser.setListOfMedications(listOfMedications);
+                    repoClass.updateUserFromFireStore(oldFireStoreUser , fireStoreCurrentUser);
+
 
                     repoClass.updateMedicineFromFireStore(oldMedicine, newMedicine);
+                    //repoClass.deleteMedicineFromFireStore(oldMedicine);
+                    //repoClass.addMedicineToFireStore(newMedicine);
                 }
             }
 

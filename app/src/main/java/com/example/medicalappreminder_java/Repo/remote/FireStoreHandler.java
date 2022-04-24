@@ -173,15 +173,6 @@ public class FireStoreHandler implements RemoteSourceInterface {
 //                        user_mutable_live_data.setValue(convertedUserList);
                     }
                     onlineUsers.onResponse(convertedUserList);
-//                    fireStoreDb.collection(userCollectionName).addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                            // onlineUsers.setOnlineUserList(convertedUserList);
-//
-//                        }
-//                    });
-                    //Toast.makeText(context, convertedUserList.get(2).getFirstName(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(context, ""+convertedUserList.size(), Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -231,10 +222,10 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void updateMedicineFromFireStore(Medicine oldMedicine , Medicine newMedicine){
-        fireStoreDb.collection(medicineCollectionName).document(oldMedicine.getFireStoreId()).set(newMedicine).addOnSuccessListener(new OnSuccessListener<Void>() {
+        fireStoreDb.collection(medicineCollectionName).document(oldMedicine.getUuid()).set(newMedicine).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(context, "medicine updated", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "medicine updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -253,11 +244,11 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void deleteMedicineFromFireStore(Medicine medicine){
-        fireStoreDb.collection(medicineCollectionName).document(medicine.getFireStoreId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        fireStoreDb.collection(medicineCollectionName).document("b4db3104-0c83-4ce7-b241-15367aac6c7c"/*medicine.getUuid()*/).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(context, "medicine deleted", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "medicine deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         });
