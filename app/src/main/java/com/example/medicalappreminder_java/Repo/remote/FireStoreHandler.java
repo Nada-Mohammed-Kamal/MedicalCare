@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -148,7 +149,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void getUsersFromFireStore(OnlineUsers onlineUsers) {
+    public void getUsersFromFireStore(OnlineUsers onlineUsers , OnRespondToMethod method) {
         fireStoreDb.collection(userCollectionName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -172,7 +173,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 //                        onlineUsers.setOnlineUserList(convertedUserList);
 //                        user_mutable_live_data.setValue(convertedUserList);
                     }
-                    onlineUsers.onResponse(convertedUserList);
+                    onlineUsers.onResponse(convertedUserList , method);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -232,7 +233,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void deleteUserFromFireStore(User user){
-        fireStoreDb.collection(userCollectionName).document(user.getFireStoreId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        fireStoreDb.collection(userCollectionName).document(user.getUuid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
@@ -244,7 +245,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void deleteMedicineFromFireStore(Medicine medicine){
-        fireStoreDb.collection(medicineCollectionName).document("b4db3104-0c83-4ce7-b241-15367aac6c7c"/*medicine.getUuid()*/).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        fireStoreDb.collection(medicineCollectionName).document(medicine.getUuid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

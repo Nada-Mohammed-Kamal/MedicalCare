@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicineViewInterface;
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.RepoInterface;
@@ -64,7 +65,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface , Onl
         //for fireStore
         if (NetworkChangeReceiver.isThereInternetConnection == true){
             //////////////////// change to working method ////////////////////
-            repoClass.getUsersFromFireStore(this);
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.addMed);
             //////////////////// change to working method ////////////////////
         }
 
@@ -79,7 +80,7 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface , Onl
 
 
     @Override
-    public void onResponse(List<User> userList) {
+    public void onResponse(List<User> userList , OnRespondToMethod method) {
         User fireStoreCurrentUser = new User();
         User oldFireStoreUser = new User();
         Log.e("TAG", "onResponse: " +userEmail+ userList.size());

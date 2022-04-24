@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderActivity;
 import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderViewInterface;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
@@ -63,39 +64,72 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
 
         //for room
         if (NetworkChangeReceiver.isThereInternetConnection == true) {
-            //////////////////// change to working method ////////////////////
-            repoClass.getUsersFromFireStore(this);
-            //////////////////// change to working method ////////////////////
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.suspend);
         }
     }
+
+    /*
+    RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+        repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+
+        SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
+        userEmail = preferences.getString("emailKey", "user email");
+        User currentUser = repoClass.findUserByEmail(userEmail);
+        List<Medicine> listOfMedications = currentUser.getListOfMedications();
+
+        Iterator<Medicine> iterator = listOfMedications.iterator();
+        while (iterator.hasNext()) {
+            Medicine med = iterator.next();
+            if (med.getUuid().equals(medicine.getUuid()))
+                listOfMedications.remove(med);
+                medicine.setState("Inactive");
+                repoClass.updateMedicine(medicine);
+        }
+
+        listOfMedications.add(medicine);
+        currentUser.setListOfMedications(listOfMedications);
+        repoClass.updateUser(currentUser);
+
+        //for room
+        if (NetworkChangeReceiver.isThereInternetConnection == true) {
+            repoClass.getUsersFromFireStore(this);
+        }
+     */
 
 
     @Override
     public void deleteMedicine() {
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+        repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
 
         SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
-        String userEmail = preferences.getString("emailKey", "user email");
+        userEmail = preferences.getString("emailKey", "user email");
         User currentUser = repoClass.findUserByEmail(userEmail);
-        List<Medicine> listOfMedications = currentUser.getListOfMedications();
 
+
+        List<Medicine> listOfMedications = currentUser.getListOfMedications();
         //ConcurrentModificationException while remove medicine
         for (Iterator<Medicine> med = listOfMedications.iterator(); med.hasNext(); ) {
             Medicine removedMed = med.next();
             if (removedMed.getUuid().equals(medicine.getUuid())) {
                 listOfMedications.remove(removedMed);
                 repoClass.deleteMedicine(medicine);
-
+                break;
             }
         }
         currentUser.setListOfMedications(listOfMedications);
         repoClass.updateUser(currentUser);
+
+        if (NetworkChangeReceiver.isThereInternetConnection == true) {
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.delete);
+        }
+
     }
 
     @Override
-    public void onResponse(List<User> userList) {
+    public void onResponse(List<User> userList , OnRespondToMethod method) {
         User fireStoreCurrentUser = new User();
         User oldFireStoreUser = new User();
 
@@ -117,20 +151,28 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
                             oldMedicine = med;
                             oldMedicine.setUuid(medicine.getUuid());
                             newMedicine = oldMedicine;
-                            newMedicine.setState("Inactive");
+                            if (method == OnRespondToMethod.suspend) {
+                                newMedicine.setState("Inactive");
+                            }
                             newMedicine.setUuid(medicine.getUuid());
                         }
                     }
+
                     listOfMedications.remove(oldMedicine);
-                    listOfMedications.add(newMedicine);
+                    if (method == OnRespondToMethod.suspend) {
+                        listOfMedications.add(newMedicine);
+                    }
 
                     fireStoreCurrentUser = fireStoreUser;
                     fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
                     fireStoreCurrentUser.setListOfMedications(listOfMedications);
                     repoClass.updateUserFromFireStore(oldFireStoreUser , fireStoreCurrentUser);
-
-
-                    repoClass.updateMedicineFromFireStore(oldMedicine, newMedicine);
+                    if (method == OnRespondToMethod.delete){
+                        repoClass.deleteMedicineFromFireStore(oldMedicine);
+                    }
+                    else if (method == OnRespondToMethod.suspend) {
+                        repoClass.updateMedicineFromFireStore(oldMedicine, newMedicine);
+                    }
                     //repoClass.deleteMedicineFromFireStore(oldMedicine);
                     //repoClass.addMedicineToFireStore(newMedicine);
                 }

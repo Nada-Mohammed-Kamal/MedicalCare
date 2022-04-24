@@ -3,6 +3,7 @@ package com.example.medicalappreminder_java.dependantInfo.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.RepoInterface;
@@ -58,7 +59,7 @@ public class DepInfoPresenter implements PresenterInterface, OnlineUsers {
         //for fireStore
         if (NetworkChangeReceiver.isThereInternetConnection == true){
             //////////////////// change to working method ////////////////////
-            repoClass.getUsersFromFireStore(this);
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.addDep);
             //////////////////// change to working method ////////////////////
         }
     }
@@ -70,7 +71,7 @@ public class DepInfoPresenter implements PresenterInterface, OnlineUsers {
 
 
     @Override
-    public void onResponse(List<User> userList) {
+    public void onResponse(List<User> userList , OnRespondToMethod method) {
         User fireStoreCurrentUser = new User();
         User oldFireStoreUser = new User();
         Log.e("TAG", "onResponse: " +userEmail+ userList.size());
