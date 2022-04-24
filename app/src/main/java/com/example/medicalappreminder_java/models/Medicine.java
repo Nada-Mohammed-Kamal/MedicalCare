@@ -53,6 +53,7 @@ public class Medicine implements Serializable {
 
     @ColumnInfo(name = "Dose_howOften")
     private EveryHowManyDaysWilltheMedBeTaken Dose_howOften;
+
     @ColumnInfo(name = "startDate")
     private Date startDate;
 

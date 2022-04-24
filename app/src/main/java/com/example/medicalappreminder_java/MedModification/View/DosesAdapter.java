@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medicalappreminder_java.LoginTest;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
@@ -30,7 +31,6 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
     int numberOnDose;
     int count = 1;
     int timeSetsCorrectly = 1;
-
     ArrayList<CustomTime> dateTimes;
 
 
@@ -39,6 +39,8 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
         this.numberOnDose = numberOnDose;
         this.med = med;
         this.dateTimes = new ArrayList<>();
+
+        Log.i("M3lsh", "Adapter: dateTimes size: " + dateTimes.size());
     }
 
     @Override
@@ -54,15 +56,28 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull DosesAdapter.ViewHolder holder, int position) {
-
+        Log.i("M3lsh", "onBindViewHolder: ");
         List<CustomTime> doses = med.getDoseTimes();
+        int index = position;
 
-        if (position < doses.size())
-        {
-            String valueToBeAdded = String.valueOf(doses.get(position).getHour()) + ":" + String.valueOf(doses.get(position).getMinute());
+        Log.i("M3lsh","Before: Index: " + index + ", Doses.size(): " + doses.size() + ", dateTimes.size(): " + dateTimes.size());
+        if (index < doses.size()) {
+
+
+            CustomTime currentTime = doses.get(index);
+            String valueToBeAdded = String.valueOf(currentTime.getHour()) + ":" + String.valueOf(currentTime.getMinute());
             holder.openChooseTime.setText(valueToBeAdded);
-            dateTimes.add(new CustomTime(doses.get(position)));
+            if (index < dateTimes.size())
+            {
+                dateTimes.set(index, new CustomTime(currentTime.getHour(), currentTime.getMinute()));
+            }
+            else
+            {
+                Log.i("M3lsh","Added custom time successfully, from: If condition");
+                dateTimes.add(new CustomTime(currentTime));
+            }
         }
+
 
         holder.setDoseTime.setText("Dose #" + count++);
         holder.openChooseTime.setOnClickListener(new View.OnClickListener() {
@@ -79,15 +94,15 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timeSetsCorrectly++;
                         holder.openChooseTime.setText(selectedHour + ":" + selectedMinute);
-                        if (position < doses.size())
+                        if (index < dateTimes.size())
                         {
-                            dateTimes.set(position, new CustomTime(selectedHour,selectedMinute));
+                            dateTimes.set(index, new CustomTime(selectedHour,selectedMinute));
                         }
                         else
                         {
+                            Log.i("M3lsh","Added custom time successfully, from TimeSet");
                             dateTimes.add(new CustomTime(selectedHour,selectedMinute));
                         }
-
                     }
                 }, hour, minute, true);
 
@@ -97,13 +112,13 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
         });
 
 
+
     }
 
-    public ArrayList<CustomTime> getTimes()
-    {
+    public ArrayList<CustomTime> getTimes() {
         if(count != timeSetsCorrectly)
             return  new ArrayList<CustomTime>();
-        return  dateTimes;
+        return dateTimes;
     }
 
     @Override
@@ -120,18 +135,16 @@ public class DosesAdapter extends RecyclerView.Adapter<DosesAdapter.ViewHolder> 
             layout = itemView;
             setDoseTime = itemView.findViewById(R.id.setDoseTime);
             openChooseTime = itemView.findViewById(R.id.openChooseTime);
-
-
+            Log.i("M3lsh", "ViewHolder: ");
         }
     }
 
-    public void clearList()
-    {
-        dateTimes.clear();
+    public void configureList() {
+        dateTimes = new ArrayList<CustomTime>();
     }
 
-    public List<CustomTime> getNewDateList()
-    {
-        return dateTimes;
+    public ArrayList<CustomTime> getDateList() {
+        System.out.println("DateTimes returned from adapter size: " + this.dateTimes.size());
+        return this.dateTimes;
     }
 }

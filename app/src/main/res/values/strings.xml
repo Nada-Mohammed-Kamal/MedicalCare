@@ -54,7 +54,7 @@
     <string name="time_reminder">Time Reminder</string>
     <string name="start_date">Start date:</string>
     <string name="end_date">End date</string>
-    <string name="howa_many_times_in_a_day">Howa many times in a day</string>
+    <string name="howa_many_times_in_a_day">How many times in a day?</string>
     <string name="set_dosing_schedule">Set dosing schedule</string>
     <string name="finish">Finish</string>
 
@@ -81,6 +81,8 @@
     <string name="user_name">User name</string>
     <string name="add_dose">Add Dose</string>
     <string name="suspend">Suspend</string>
+    <string name="startDate">Start Date</string>
+    <string name="endDate">End Date</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>
@@ -100,4 +102,19 @@
         <item>Inhaler</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="MedStrength">
+        <item>g</item>
+        <item>mg</item>
+        <item>IU</item>
+        <item>mcg</item>
+        <item>mcg_ml</item>
+        <item>mEq</item>
+        <item>mL</item>
+        <item>mg_g</item>
+        <item>mg_cm2</item>
+        <item>mg_ml</item>
+        <item>mcg_hr</item>
+    </string-array>
+
 </resources>

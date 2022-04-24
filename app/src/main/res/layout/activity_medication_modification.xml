@@ -136,6 +136,108 @@
                         android:background="#FFFFFF">
 
 
+                        <Spinner
+                            android:id="@+id/howOftenSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="64dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="64dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView19"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <TextView
+
+                            android:id="@+id/textView19"
+                            android:layout_width="0dp"
+                            android:layout_height="33dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/helvetica_bold"
+                            android:text="@string/how_often_do_you_take_it"
+                            android:textColor="#0a5087"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtEndDate" />
+
+                        <TextView
+
+                            android:id="@+id/textView7"
+                            android:layout_width="0dp"
+                            android:layout_height="33dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/helvetica_bold"
+                            android:text="@string/howa_many_times_in_a_day"
+                            android:textColor="#0a5087"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/howOftenSpinner" />
+
+                        <EditText
+                            android:id="@+id/txtEndDate"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center"
+                            android:hint="DD-MM-YYYY"
+                            android:inputType="number"
+                            android:minHeight="48dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/textView11"
+                            app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+                        <EditText
+                            android:id="@+id/txtStartDate"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center"
+                            android:hint="DD-MM-YYYY"
+                            android:inputType="number"
+                            android:minHeight="48dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView11"
+                            app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:fontFamily="@font/helvetica_bold"
+                            android:text="@string/endDate"
+                            android:textColor="#0a5087"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="@+id/textView11"
+                            app:layout_constraintTop_toBottomOf="@+id/txtStartDate" />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:fontFamily="@font/helvetica_bold"
+                            android:text="@string/startDate"
+                            android:textColor="#0a5087"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="@+id/textView5"
+                            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
                         <TextView
                             android:id="@+id/textView5"
                             android:layout_width="wrap_content"
@@ -151,17 +253,20 @@
 
                         <EditText
                             android:id="@+id/txtNoOfDoses"
-                            android:layout_width="70dp"
+                            android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:layout_gravity="center"
+                            android:layout_marginStart="64dp"
                             android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="64dp"
                             android:gravity="center"
                             android:hint="1-6"
                             android:inputType="number"
                             android:minHeight="48dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/doseTimesRV"
@@ -220,7 +325,7 @@
                         <Spinner
                             android:id="@+id/medTypeSpinner"
                             android:layout_width="0dp"
-                            android:layout_height="46dp"
+                            android:layout_height="48dp"
                             android:layout_marginStart="32dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="16dp"
@@ -402,7 +507,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/Strengthh"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
 
                     android:layout_marginTop="8dp"
@@ -419,26 +524,6 @@
                         android:layout_height="match_parent"
                         android:background="#FFFFFF">
 
-                        <EditText
-                            android:id="@+id/txtStrength"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:ems="10"
-                            android:hint="@string/strengthValue"
-                            android:inputType="textPersonName"
-                            android:minHeight="48dp"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView4444"
-                            app:layout_constraintVertical_bias="0.0" />
-
                         <TextView
                             android:id="@+id/textView4444"
                             android:layout_width="wrap_content"
@@ -451,6 +536,33 @@
                             android:textSize="18sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <Spinner
+                            android:id="@+id/medStrengthSpinner"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:minHeight="48dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtEditStrength"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtEditStrength"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <EditText
+                            android:id="@+id/txtEditStrength"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/medStrengthSpinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4444"
+                            app:layout_constraintVertical_bias="0.0" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

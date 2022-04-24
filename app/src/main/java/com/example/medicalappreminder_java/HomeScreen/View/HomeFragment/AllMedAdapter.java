@@ -46,7 +46,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         this.onMoviesClickListener = onMoviesClickListener;
         dialog = new Dialog(context);
     }
-    public  void setList(List<Medicine> updateMeds){
+    public void setList(List<Medicine> updateMeds){
         this.medList = (ArrayList)updateMeds;
     }
 
