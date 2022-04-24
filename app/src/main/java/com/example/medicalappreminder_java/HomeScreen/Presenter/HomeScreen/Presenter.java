@@ -3,7 +3,7 @@ package com.example.medicalappreminder_java.HomeScreen.Presenter.HomeScreen;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeScreenInterfaceActivity;
+import com.example.medicalappreminder_java.HomeScreen.View.HomeScreenActivity.HomeScreenInterfaceActivity;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;

@@ -1,4 +1,4 @@
-package com.example.medicalappreminder_java.HomeScreen.View;
+package com.example.medicalappreminder_java.HomeScreen.View.HomeScreenActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +11,7 @@ import androidx.navigation.Navigation;
 
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +20,6 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -32,26 +29,11 @@ import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeScreen.Presenter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeScreen.PresenterInterface;
-import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeScreenInterfaceActivity;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.R;
 
-import com.example.medicalappreminder_java.Repo.RepoClass;
-import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
-import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
-import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
-import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
-
-import com.example.medicalappreminder_java.models.CustomTime;
-import com.example.medicalappreminder_java.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class HomeScreen extends AppCompatActivity implements HomeScreenInterfaceActivity {
     DrawerLayout drawerLayout;

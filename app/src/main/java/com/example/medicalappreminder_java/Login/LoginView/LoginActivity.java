@@ -14,8 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
-import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
+import com.example.medicalappreminder_java.HomeScreen.View.HomeScreenActivity.HomeScreen;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
 import com.example.medicalappreminder_java.R;

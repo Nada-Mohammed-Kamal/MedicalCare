@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
-import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenter;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
-        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),new ArrayList<>(),this);
+        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),new ArrayList<>(),this,allPresenter);
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

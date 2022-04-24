@@ -18,22 +18,22 @@
             android:name=".MedicationModification.View.MedicationModification"
             android:exported="false"
             android:label="Edit medicine"
-            android:parentActivityName=".HomeScreen.View.HomeScreen"/>
+            android:parentActivityName=".HomeScreen.View.HomeScreenActivity.HomeScreen"/>
         <activity
             android:name=".AddMedicine.View.AddMedicine"
             android:label="@string/add_med"
-            android:parentActivityName=".HomeScreen.View.HomeScreen"
+            android:parentActivityName=".HomeScreen.View.HomeScreenActivity.HomeScreen"
             android:exported="false"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".HomeScreen.View.HomeScreen"
+            android:name=".HomeScreen.View.HomeScreenActivity.HomeScreen"
             android:exported="false" android:theme="@style/MyMaterialTheme"  android:screenOrientation="portrait"/>
 
 		 <activity
             android:name=".DrugReminderScreen.View.DrugReminderActivity"
             android:exported="true" android:screenOrientation="portrait"
-             android:parentActivityName=".HomeScreen.View.HomeScreen"
+             android:parentActivityName=".HomeScreen.View.HomeScreenActivity.HomeScreen"
              android:label="Medicine Brief Details"/>
         <activity
             android:name=".NotificationDialog.NotificationDialogActivity"
