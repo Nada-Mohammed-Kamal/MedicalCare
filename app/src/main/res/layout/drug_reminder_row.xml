@@ -13,6 +13,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="08:00 am"
+        android:textSize="@dimen/_15sdp"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +25,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="take 1 pill"
+        android:textSize="@dimen/_15sdp"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/drugReminderTimeTextView"
         app:layout_constraintTop_toTopOf="parent" />

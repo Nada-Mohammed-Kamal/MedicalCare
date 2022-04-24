@@ -30,6 +30,9 @@ import android.widget.TextView;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeScreen.Presenter;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeScreen.PresenterInterface;
+import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeScreenInterfaceActivity;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import com.example.medicalappreminder_java.R;
 
@@ -50,31 +53,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HomeScreen extends AppCompatActivity {
-    //AppDatabase db = AppDatabase.getDBInstance(getApplicationContext());
-    //List<User> allUsers = db.userDao().getAllUsers();
+public class HomeScreen extends AppCompatActivity implements HomeScreenInterfaceActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem menuItem;
-    String userEmail;
-
+    String userName;
+    PresenterInterface presenterInterface;
+    boolean dataOfDependentChanged;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         initComponents();
-        //presenter code
-
-        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(this);
-        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,this);
-        User currentUser = repoClass.findUserByEmail(userEmail);
-        List<User> listOfDependant = currentUser.getListOfDependant();
-        for (int i = 0; i < listOfDependant.size(); i++) {
-            addNewDependentToDrawer(listOfDependant.get(i).getFirstName() + " " + listOfDependant.get(i).getLastName());
-        }
-
+        dataOfDependentChanged = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Intent intent = new Intent();
             String packageName = getPackageName();
@@ -89,9 +81,10 @@ public class HomeScreen extends AppCompatActivity {
 
     private void initComponents(){
 
-        SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-        String userName = preferences.getString("userNameKey" , "user name") ;
-        userEmail = preferences.getString("emailKey" , "user email") ;
+
+        presenterInterface = new Presenter(this,this);
+
+        userName = presenterInterface.getUserName();
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -118,8 +111,7 @@ public class HomeScreen extends AppCompatActivity {
         TextView t = getHeaderView.findViewById(R.id.namenav);
         t.setText(userName);
 
-
-
+        presenterInterface.getDependent();
     }
     private  void  setListeners(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -129,6 +121,7 @@ public class HomeScreen extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.add_dependent:
+                        dataOfDependentChanged = true;
                         NavController navController = Navigation.findNavController(HomeScreen.this, R.id.nav_host_fragment_activity_main);
                         navController.navigateUp();
                         navController.navigate(R.id.dependentInfoFragment2);
@@ -149,23 +142,33 @@ public class HomeScreen extends AppCompatActivity {
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                Log.e("HomeScreen", ": onDrawerSlide");
+                if(dataOfDependentChanged) {
+                    presenterInterface.getDependent();
+                }
 
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
+                Log.e("HomeScreen", ": onDrawerOpened");
+                dataOfDependentChanged = false;
             }
 
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
-
+                Log.e("HomeScreen", ": closed");
                 if(menuItem != null)
                     menuItem.setChecked(false);
+
             }
 
             @Override
             public void onDrawerStateChanged(int newState) {
+                Log.e("HomeScreen", ": onDrawerState");
+                if(dataOfDependentChanged) {
+                    presenterInterface.getDependent();
+                }
 
             }
         });
@@ -173,6 +176,7 @@ public class HomeScreen extends AppCompatActivity {
     private  void  setMenu(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+
     }
 
     @Override
@@ -190,12 +194,14 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void addNewDependentToDrawer(String dependentName) {
         // add new dependent to drawer
+
         Menu mMenu = navigationView.getMenu();
 
         MenuItem m = mMenu.findItem(R.id.Profiles);
         Menu menuSun = m.getSubMenu();
-
+        menuSun.removeItem(3);
         menuSun.add(R.id.G1,3,500,dependentName);
+
 
     }
 }

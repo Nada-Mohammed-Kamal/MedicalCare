@@ -10,13 +10,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
-import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Keys;
-import com.example.medicalappreminder_java.Constants.Strength;
+
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenter;
 import com.example.medicalappreminder_java.DrugReminderScreen.Presenter.DrugReminderPresenterInterface;
 
@@ -29,16 +28,13 @@ import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
-
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 public class DrugReminderActivity extends AppCompatActivity implements DrugReminderViewInterface {
 
-    Button backButton , deleteButton , editButton , suspendButton , refillButton ;
+    ImageButton deleteButton , editButton;
+    Button suspendButton;
     ImageView drugIconImageView ;
     TextView drugNameTextView , drugStrengthTextView , howOftenTextView
             , conditionTextView , refillTextView;

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,9 +137,9 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button skipButton , takeButton , snoozeButton ;
+        ImageButton skipButton , takeButton , snoozeButton ;
         TextView timeTextView , drugNameTextView  ,drugDescrTextView ;
-        ImageView drugIconImageView ;
+        CircleImageView drugIconImageView ;
 
         skipButton = dialog.findViewById(R.id.dialogSkipButton) ;
         takeButton = dialog.findViewById(R.id.dialogTakeButton);
@@ -150,7 +151,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
 
         timeTextView.setText(currentTime.getHour()+":"+currentTime.getMinute());
         drugIconImageView.setImageResource(medicine.getImage());
-        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + ",take " +medicine.getForm();
+        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + "\n\n " +medicine.getForm();
         drugNameTextView.setText(medicine.getName());
         drugDescrTextView.setText(decMed);
         skipButton.setOnClickListener(new View.OnClickListener() {
