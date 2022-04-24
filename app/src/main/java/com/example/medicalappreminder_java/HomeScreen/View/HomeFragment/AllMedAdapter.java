@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -26,20 +28,26 @@ import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
+import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 //AllMoviesAdapter
-public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder> {
+public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder> implements OnlineUsers {
 
     private final Context context;
     private ArrayList<Medicine> medList;
     OnMoviesClickListener onMoviesClickListener;
     Dialog dialog ;
+    RepoClass repoClass;
+    String userEmail;
+    Medicine medicine;
+    CustomTime currentTime;
     public AllMedAdapter(Context context, ArrayList<Medicine> values, OnMoviesClickListener onMoviesClickListener) {
         this.context = context;
         this.medList = values;
@@ -74,8 +82,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 onMoviesClickListener.onClick(medDTO);
                 Toast.makeText(context,"Med clicked",Toast.LENGTH_SHORT).show();
                 //change with current time of this med
-                openDialoge(medDTO,new CustomTime(12,30));
-
+                openDialoge(medDTO,new CustomTime(21,12));
             }
         });
     }
@@ -92,6 +99,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         TextView medName;
         TextView medDesc;
         public  View layout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
@@ -102,8 +110,8 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         }
     }
     private void openDialoge(Medicine medicine,CustomTime currentTime) {
-
-
+        this.medicine = medicine;
+        this.currentTime = currentTime;
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -135,10 +143,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 //presenter code
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
                 repoClass.updateMedicine(medicine);
                 SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
+                userEmail = preferences.getString("emailKey" , "user email") ;
                 User currentUser = repoClass.findUserByEmail(userEmail);
                 List<Medicine> listOfMedications = currentUser.getListOfMedications();
                 for (Medicine oldMed:listOfMedications) {
@@ -150,9 +158,22 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 listOfMedications.add(medicine);
                 currentUser.setListOfMedications(listOfMedications);
                 repoClass.updateUser(currentUser);
+
+
+                //fireStore
+                if (NetworkChangeReceiver.isThereInternetConnection == true) {
+                    repoClass.getUsersFromFireStore(AllMedAdapter.this , OnRespondToMethod.skip);
+                }
+
+
+
                 dialog.dismiss();
             }
         });
+
+
+
+
         takeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,10 +187,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 //presenter code
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
                 repoClass.updateMedicine(medicine);
                 SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
+                userEmail = preferences.getString("emailKey" , "user email") ;
                 User currentUser = repoClass.findUserByEmail(userEmail);
                 List<Medicine> listOfMedications = currentUser.getListOfMedications();
                 for (Medicine oldMed:listOfMedications) {
@@ -181,12 +202,33 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 listOfMedications.add(medicine);
                 currentUser.setListOfMedications(listOfMedications);
                 repoClass.updateUser(currentUser);
+
+
+                //fireStore
+                if (NetworkChangeReceiver.isThereInternetConnection == true) {
+                    repoClass.getUsersFromFireStore(AllMedAdapter.this , OnRespondToMethod.take);
+                }
+
                 dialog.dismiss();
             }
         });
+
+
+
+
         snoozeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+
+
+                SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                userEmail = preferences.getString("emailKey" , "user email") ;
+                User currentUser = repoClass.findUserByEmail(userEmail);
+
+
                 List<CustomTime> doseTimes = medicine.getDoseTimes();
                 for(int i=0;i<doseTimes.size();i++){
                     if(doseTimes.get(i).equals(currentTime)){
@@ -195,16 +237,13 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                         doseTimes.add(i+1,newCustomTime);
                     }
                 }
+
+
                 //remove it when status snooze from work manager
                 medicine.setDoseTimes(doseTimes);
-                //presenter code
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
                 repoClass.updateMedicine(medicine);
-                SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
+
+                //presenter code
                 List<Medicine> listOfMedications = currentUser.getListOfMedications();
                 for (Medicine oldMed:listOfMedications) {
                     if(oldMed.getUuid().equals(medicine.getUuid())){
@@ -215,11 +254,136 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 listOfMedications.add(medicine);
                 currentUser.setListOfMedications(listOfMedications);
                 repoClass.updateUser(currentUser);
+
+
+                //fireStore
+                if (NetworkChangeReceiver.isThereInternetConnection == true) {
+                    repoClass.getUsersFromFireStore(AllMedAdapter.this , OnRespondToMethod.snooze);
+                }
+
                 dialog.dismiss();
             }
 
         });
+
+        /*
+        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+        repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+
+        SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
+        userEmail = preferences.getString("emailKey", "user email");
+        User currentUser = repoClass.findUserByEmail(userEmail);
+
+
+        List<Medicine> listOfMedications = currentUser.getListOfMedications();
+        Iterator<Medicine> iterator = listOfMedications.iterator();
+        while (iterator.hasNext()) {
+            Medicine med = iterator.next();
+            if (med.getUuid().equals(medicine.getUuid()))
+                listOfMedications.remove(med);
+                medicine.setState("Inactive");
+                repoClass.updateMedicine(medicine);
+        }
+
+        listOfMedications.add(medicine);
+        currentUser.setListOfMedications(listOfMedications);
+        repoClass.updateUser(currentUser);
+
+        //for room
+        if (NetworkChangeReceiver.isThereInternetConnection == true) {
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.suspend);
+        }
+    }
+         */
         dialog.show();
     }
+
+
+
+    @Override
+    public void onResponse(List<User> userList, OnRespondToMethod method) {
+        User fireStoreCurrentUser = new User();
+        User oldFireStoreUser = new User();
+
+        Medicine oldMedicine = new Medicine();
+        Medicine newMedicine = new Medicine();
+
+
+        Log.e("TAG", "onResponse: " + userEmail + userList.size());
+        for (User fireStoreUser : userList) {
+            if (fireStoreUser.getEmail() == null) {
+
+            } else {
+                if (fireStoreUser.getEmail().equals(userEmail)) {
+                    oldFireStoreUser = fireStoreUser;
+                    oldFireStoreUser.setUuid(fireStoreUser.getUuid());
+                    List<Medicine> listOfMedications = oldFireStoreUser.getListOfMedications();
+                    for (Medicine med : listOfMedications) {
+                        if (med.getUuid().equals(medicine.getUuid())) {
+                            oldMedicine = med;
+                            oldMedicine.setUuid(medicine.getUuid());
+                            newMedicine = oldMedicine;
+                            if (method == OnRespondToMethod.skip) {
+                                //newMedicine.setState("Inactive");
+                                List<CustomTime> doseTimes = oldMedicine.getDoseTimes();
+                                for(int i=0;i<doseTimes.size();i++){
+                                    if(doseTimes.get(i).equals(currentTime)){
+                                        doseTimes.get(i).setStatus(Status.Skip);
+                                    }
+                                }
+                                newMedicine.setDoseTimes(doseTimes);
+                            } else if(method == OnRespondToMethod.take){
+                                List<CustomTime> doseTimes = oldMedicine.getDoseTimes();
+                                for(int i=0;i<doseTimes.size();i++){
+                                    if(doseTimes.get(i).equals(currentTime)){
+                                        doseTimes.get(i).setStatus(Status.Take);
+                                    }
+                                }
+                                newMedicine.setDoseTimes(doseTimes);
+
+                            } else if(method == OnRespondToMethod.snooze){
+                                List<CustomTime> doseTimes = oldMedicine.getDoseTimes();
+                                for(int i=0;i<doseTimes.size();i++){
+                                    if(doseTimes.get(i).equals(currentTime)){
+                                        doseTimes.get(i).setStatus(Status.Snooze);
+                                        CustomTime newCustomTime = new CustomTime(doseTimes.get(i).getHour(),doseTimes.get(i).getMinute()+10);
+                                        doseTimes.add(i+1,newCustomTime);
+                                    }
+                                }
+                                newMedicine.setDoseTimes(doseTimes);
+                            }
+                            newMedicine.setUuid(medicine.getUuid());
+                        }
+                    }
+
+                    listOfMedications.remove(oldMedicine);
+//                    if (method == OnRespondToMethod.snooze) {
+                        listOfMedications.add(newMedicine);
+//                    }
+
+                    fireStoreCurrentUser = fireStoreUser;
+                    fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
+                    fireStoreCurrentUser.setListOfMedications(listOfMedications);
+                    repoClass.updateUserFromFireStore(oldFireStoreUser , fireStoreCurrentUser);
+//                    if (method == OnRespondToMethod.delete){
+//                        repoClass.deleteMedicineFromFireStore(oldMedicine);
+//                    }
+                    //else if (method == OnRespondToMethod.suspend) {
+                        repoClass.updateMedicineFromFireStore(oldMedicine, newMedicine);
+                    //}
+                    //repoClass.deleteMedicineFromFireStore(oldMedicine);
+                    //repoClass.addMedicineToFireStore(newMedicine);
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void onFailure(String error) {
+
+    }
+
 }
 

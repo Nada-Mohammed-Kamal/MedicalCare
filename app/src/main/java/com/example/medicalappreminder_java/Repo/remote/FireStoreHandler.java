@@ -237,7 +237,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(context, "user deleted", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "user deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         });

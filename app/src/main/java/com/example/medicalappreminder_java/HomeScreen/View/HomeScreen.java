@@ -49,7 +49,6 @@ public class HomeScreen extends AppCompatActivity {
     Toolbar toolbar;
     MenuItem menuItem;
     String userEmail;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,6 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
     private void initComponents(){
-
         SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
         String userName = preferences.getString("userNameKey" , "user name") ;
         userEmail = preferences.getString("emailKey" , "user email") ;
@@ -80,12 +78,10 @@ public class HomeScreen extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);
-
         findViewById(R.id.ExtendedFloatingActionButtonAddMed).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeScreen.this , AddMedicine.class));
-
             }
         });
         Menu mMenu = navigationView.getMenu();
@@ -95,9 +91,6 @@ public class HomeScreen extends AppCompatActivity {
         View getHeaderView = navigationView.getHeaderView(0);
         TextView t = getHeaderView.findViewById(R.id.namenav);
         t.setText(userName);
-
-
-
     }
     private  void  setListeners(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
