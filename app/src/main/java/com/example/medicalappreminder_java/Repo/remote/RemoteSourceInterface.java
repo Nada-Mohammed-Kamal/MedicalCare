@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.NetworkDelegate;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
@@ -25,7 +26,7 @@ public interface RemoteSourceInterface {
 
     public void addMedicineToFireStore(Medicine medicine) ;
 
-    public void getUsersFromFireStore() ;
+    public void getUsersFromFireStore(OnlineUsers onlineUsers) ;
 
     public void getMedicinesFromFireStore() ;
 
@@ -37,7 +38,7 @@ public interface RemoteSourceInterface {
 
     public void deleteMedicineFromFireStore(Medicine medicine) ;
 
-    public List<User> getUsersList() ;
+//    public List<User> getUsersList() ;
     public List<Medicine> getMedicinesList();
 
     public LiveData<List<Medicine>> getMedicineLiveData();

@@ -41,7 +41,6 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
         String userEmail = preferences.getString("emailKey", "user email");
         User currentUser = repoClass.findUserByEmail(userEmail);
 
-
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         RepoInterface repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
@@ -75,17 +74,17 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
             User oldFireStoreUser = new User();
             List<Medicine> medicines = new ArrayList<>();
             repoClass.getUserLiveData();
-            List<User> usersList = repoClass.getUsersList();
-            for (User fireStoreUser : usersList) {
-                if (fireStoreUser.getEmail() == userEmail) {
-                    oldFireStoreUser = fireStoreUser;
-                    medicines = oldFireStoreUser.getListOfMedications();
-                    medicines.add(medicine);
-                    fireStoreCurrentUser = fireStoreUser;
-                    fireStoreCurrentUser.setListOfMedications(medicines);
-                }
-            }
-            repoClass.updateUserFromFireStore(oldFireStoreUser, fireStoreCurrentUser);
+//            List<User> usersList = repoClass.getUsersList();
+//            for (User fireStoreUser : usersList) {
+//                if (fireStoreUser.getEmail() == userEmail) {
+//                    oldFireStoreUser = fireStoreUser;
+//                    medicines = oldFireStoreUser.getListOfMedications();
+//                    medicines.add(medicine);
+//                    fireStoreCurrentUser = fireStoreUser;
+//                    fireStoreCurrentUser.setListOfMedications(medicines);
+//                }
+//            }
+//            repoClass.updateUserFromFireStore(oldFireStoreUser, fireStoreCurrentUser);
             //////////////////// change to working method ////////////////////
 
 

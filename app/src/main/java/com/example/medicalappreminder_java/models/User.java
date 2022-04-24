@@ -1,11 +1,14 @@
 package com.example.medicalappreminder_java.models;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.common.reflect.TypeToken;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@IgnoreExtraProperties
 public class User {
     @ColumnInfo(name = "first_name")
     String firstName;
@@ -23,9 +27,9 @@ public class User {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
-    UUID uuid;
+    String uuid;
     @ColumnInfo(name = "email")
-    String email;
+    String email = "";
     @ColumnInfo(name = "gender")
     String gender;
     @ColumnInfo(name = "birthdate")
@@ -35,6 +39,7 @@ public class User {
     List<User> listOfDependant;
     @ColumnInfo(name = "ListOfMedications")
     //String stringWithListOfMedicationIds;
+
     List<Medicine> ListOfMedications;
     @ColumnInfo(name = "fireStoreId")
     private String fireStoreId;
@@ -48,43 +53,26 @@ public class User {
         this.fireStoreId = fireStoreId;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-    public User(String firstName, String lastName, UUID uuid, @NonNull String email, String gender, Date birthdate, List<User> listOfDependant, List<Medicine> listOfMedications) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.uuid = uuid;
-        this.email = email;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.listOfDependant = listOfDependant;
-        ListOfMedications = listOfMedications;
-    }
 
-    public User(String firstName, String lastName, String email, String gender, Date birthdate, List<User> listOfDependant, List<Medicine> listOfMedications) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.listOfDependant = listOfDependant;
-        ListOfMedications = listOfMedications;
-    }
 
     public User(String firstName, String email) {
-        uuid = UUID.randomUUID();
+        uuid = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.email = email;
         this.ListOfMedications = new ArrayList<>();
         this.listOfDependant = new ArrayList<>();
+
     }
 
+    @Keep
     public User() {
     }
 

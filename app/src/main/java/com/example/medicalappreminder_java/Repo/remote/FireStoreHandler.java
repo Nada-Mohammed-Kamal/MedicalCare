@@ -5,13 +5,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.dependantInfo.PresenterInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -31,7 +36,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     Context context;
     private FirebaseFirestore fireStoreDb;
-    private CollectionReference usersFirestoreDb, medicineFirestoreDb;
+    private CollectionReference usersFirestoreDb, medicineFirestoreDb , userRef;
     private String userCollectionName = "usersFirestoreDb", medicineCollectionName = "medicineFirestoreDb";
     List<User> convertedUserList ;
     List<Medicine> convertedMedicineList;
@@ -39,7 +44,9 @@ public class FireStoreHandler implements RemoteSourceInterface {
     MutableLiveData<List<User>> user_mutable_live_data;
     LiveData<List<Medicine>> medicineLiveData ;
     MutableLiveData<List<Medicine>> medicine_mutable_live_data ;
+    PresenterInterface presenterInterface ;
     private FirebaseFirestore firebaseFirestore;
+    OnlineUsers onlineUsers ;
 
     public FireStoreHandler(){
         fireStoreDb = FirebaseFirestore.getInstance();
@@ -70,7 +77,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void addUserToFireStore(User user) {
+    public void addUserToFireStore(User user ) {
 
         // ***** add validation to presenter *****
         /*
@@ -110,20 +117,10 @@ public class FireStoreHandler implements RemoteSourceInterface {
         if (!validateInputs(name, brand, desc, price, qty)){call this method}
          */
 
-
-        usersFirestoreDb = fireStoreDb.collection(userCollectionName);
-        usersFirestoreDb.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        fireStoreDb.collection(userCollectionName).document(user.getUuid()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                // ***** replace toast with func make toast from view *****
-                //Toast.makeText(context, "user added", Toast.LENGTH_SHORT).show();
-                Log.e("fireDB", "onSuccess: added user");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(context, "fail in adding the user", Toast.LENGTH_SHORT).show();
-                Log.e("fireDB", "onFailure: failed to add the user");
+            public void onSuccess(Void unused) {
+                Log.e("TAG", "onSuccess: adding user");
             }
         });
 
@@ -151,7 +148,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void getUsersFromFireStore() {
+    public void getUsersFromFireStore(OnlineUsers onlineUsers) {
         fireStoreDb.collection(userCollectionName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -160,29 +157,38 @@ public class FireStoreHandler implements RemoteSourceInterface {
                     for (DocumentSnapshot documentSnapshot : userDocumentSnapshotList) {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
-
-
-                        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-                        User userByEmail = repoClass.findUserByEmail(user.getEmail());
-                        userByEmail.setFireStoreId(documentSnapshot.getId());
-                        repoClass.updateUser(userByEmail);
-
-
-                        // there is bug every call to get will add to the arraylist again
-                        // so there will be duplicate data
                         convertedUserList.add(user) ;
-                        user_mutable_live_data.setValue(convertedUserList);
+                        Log.e("TAG", "onSuccess: " + user.getFireStoreId());
+//                       RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+//                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+//                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+//                        User userByEmail = repoClass.findUserByEmail(user.getEmail());
+//                        userByEmail.setFireStoreId(documentSnapshot.getId());
+//                        repoClass.updateUser(userByEmail);
+
+//                        convertedUserList.add(user) ;
+                        // *****************************
+//                        presenterInterface.setUserListFromFireStore(convertedUserList);
+//                        onlineUsers.setOnlineUserList(convertedUserList);
+//                        user_mutable_live_data.setValue(convertedUserList);
                     }
+                    onlineUsers.onResponse(convertedUserList);
+//                    fireStoreDb.collection(userCollectionName).addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                            // onlineUsers.setOnlineUserList(convertedUserList);
+//
+//                        }
+//                    });
                     //Toast.makeText(context, convertedUserList.get(2).getFirstName(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(context, ""+convertedUserList.size(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, ""+convertedUserList.size(), Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e("fireDB", "onFailure: fail to get users list from FS");
+                onlineUsers.onFailure(e.getMessage());
             }
         });
 
@@ -215,10 +221,10 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void updateUserFromFireStore(User oldUser , User newUser){
-        fireStoreDb.collection(userCollectionName).document(oldUser.getFireStoreId()).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+        fireStoreDb.collection(userCollectionName).document(oldUser.getUuid()).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(context, "user updated", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "user updated", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -257,10 +263,10 @@ public class FireStoreHandler implements RemoteSourceInterface {
         });
     }
 
-    @Override
-    public List<User> getUsersList(){
-        return convertedUserList ;
-    }
+//    @Override
+//    public List<User> getUsersList(){
+//        return convertedUserList ;
+//    }
 
     @Override
     public List<Medicine> getMedicinesList(){

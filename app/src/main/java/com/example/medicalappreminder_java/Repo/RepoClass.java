@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
@@ -114,8 +115,8 @@ public class RepoClass implements RepoInterface {
     }
 
     @Override
-    public void getUsersFromFireStore() {
-        remoteSourceInterface.getUsersFromFireStore();
+    public void getUsersFromFireStore(OnlineUsers onlineUsers) {
+        remoteSourceInterface.getUsersFromFireStore(onlineUsers);
     }
 
     @Override
@@ -143,11 +144,11 @@ public class RepoClass implements RepoInterface {
         remoteSourceInterface.deleteMedicineFromFireStore(medicine);
     }
 
-    @Override
-    public List<User> getUsersList() {
-        return remoteSourceInterface.getUsersList() ;
-
-    }
+//    @Override
+//    public List<User> getUsersList() {
+//        return remoteSourceInterface.getUsersList() ;
+//
+//    }
 
     @Override
     public List<Medicine> getMedicinesList() {
