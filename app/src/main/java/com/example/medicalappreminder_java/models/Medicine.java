@@ -34,7 +34,7 @@ public class Medicine implements Serializable {
     @PrimaryKey
     @NonNull
     @Exclude
-    private UUID uuid;
+    private String uuid;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "form")
@@ -117,7 +117,7 @@ public class Medicine implements Serializable {
         this.remindMeWhenIHaveHowManyPillsLeft = remindMeWhenIHaveHowManyPillsLeft;
     }
 
-    public Medicine(@NonNull UUID uuid, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn, int numberOfPillsInOneTime) {
+    public Medicine(@NonNull String uuid, String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn, int numberOfPillsInOneTime) {
         this.uuid = uuid;
         this.name = name;
         this.form = form;
@@ -160,7 +160,7 @@ public class Medicine implements Serializable {
         this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
     }
 
-    public Medicine(UUID uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber ,List<Date> daysThatTheMedWillBeTakenIn , int numberOfPillsInOneTime) {
+    public Medicine(String uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, String condition, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int totalNumOfPills, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, Date timeToShowTheReminderIn, String rxNumber ,List<Date> daysThatTheMedWillBeTakenIn , int numberOfPillsInOneTime) {
         this.daysThatTheMedWillBeTakenIn = daysThatTheMedWillBeTakenIn;
         this.uuid = uuid;
         this.name = name;
@@ -185,7 +185,7 @@ public class Medicine implements Serializable {
         this.rxNumber = rxNumber;
     }
 
-    public Medicine(UUID uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft , int image) {
+    public Medicine(String uuid , String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft , int image) {
         this.uuid = uuid;
         this.name = name;
         this.form = form;
@@ -197,7 +197,7 @@ public class Medicine implements Serializable {
 
     public Medicine(String name, Form form, Strength strength, int strengthAmount, double numberOfPillsLeft, int image, boolean isEveryday, EveryHowManyDaysWilltheMedBeTaken dose_howOften, Date startDate, Date endDate, int fowHowManyDaysIsTheMedicineGoingToBeTaken, int howManyTimesWillItBeTakenInADay, String instructions, String state, List<CustomTime> doseTimes, boolean hasRefillReminder, double remindMeWhenIHaveHowManyPillsLeft, List<Date> daysThatTheMedWillBeTakenIn) {
         super();
-        uuid = UUID.randomUUID();
+        uuid = UUID.randomUUID().toString();
         this.name = name;
         this.form = form;
         this.strength = strength;
@@ -219,11 +219,11 @@ public class Medicine implements Serializable {
     }
 
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

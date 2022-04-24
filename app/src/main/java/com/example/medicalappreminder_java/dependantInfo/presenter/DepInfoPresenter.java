@@ -75,22 +75,30 @@ public class DepInfoPresenter implements PresenterInterface, OnlineUsers {
         User oldFireStoreUser = new User();
         Log.e("TAG", "onResponse: " +userEmail+ userList.size());
         for (User fireStoreUser : userList){
-            if(fireStoreUser.getEmail().equals(userEmail)){
-                oldFireStoreUser = fireStoreUser;
-                oldFireStoreUser.setUuid(fireStoreUser.getUuid());
-                fireStoreCurrentUser = fireStoreUser;
-                fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
+            if(fireStoreUser.getEmail() == null){
+
+            }else {
+                if(fireStoreUser.getEmail().equals(userEmail)){
+                    oldFireStoreUser = fireStoreUser;
+                    oldFireStoreUser.setUuid(fireStoreUser.getUuid());
+                    fireStoreCurrentUser = fireStoreUser;
+                    fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
+                }
             }
+
         }
 
         fireStoreCurrentUser.setListOfDependant(dependents);
         repoClass.updateUserFromFireStore(oldFireStoreUser , fireStoreCurrentUser);
 
         viewInterface.setUsers(userList);
+
+        viewInterface.viewToastAddedDependantSuccessfully();
     }
 
     @Override
     public void onFailure(String error) {
         viewInterface.responseError(error);
+
     }
 }

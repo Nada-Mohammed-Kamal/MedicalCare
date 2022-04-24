@@ -113,7 +113,7 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
 
                 depInfoPresenter.addDependant(user);
                 depInfoPresenter.addDependantToTheCurrentUser(user , context , userEmail);
-//                Navigation.findNavController(view).navigate(R.id.actionGoToHome);
+                Navigation.findNavController(view).navigate(R.id.actionGoToHome);
             }
         });
 
