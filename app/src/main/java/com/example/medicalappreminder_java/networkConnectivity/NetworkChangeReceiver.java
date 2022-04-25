@@ -72,27 +72,29 @@ public static boolean isThereInternetConnection = false;
     @Override
     public void onResponse(List<User> userList, OnRespondToMethod method) {
 
-        for(User firestoreUser : userList){
-            List<Medicine> listOfMedications = firestoreUser.getListOfMedications();
-            for(Medicine firestoreMed : listOfMedications){
-                repoClass.deleteMedicineFromFireStore(firestoreMed);
-            }
-            repoClass.deleteUserFromFireStore(firestoreUser);
-        }
-
-        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-        List<User> allUsers = repoClass.getAllUsers();
-        if(allUsers != null){
-            for (User roomUser: allUsers){
-                List<Medicine> listOfMedications = roomUser.getListOfMedications();
-                for(Medicine firestoreMed : listOfMedications){
-                    repoClass.addMedicineToFireStore(firestoreMed);
-                }
-                repoClass.addUserToFireStore(roomUser);
-            }
-        }
+//        for(User firestoreUser : userList){
+//            List<Medicine> listOfMedications = firestoreUser.getListOfMedications();
+//            for(Medicine firestoreMed : listOfMedications){
+//                repoClass.deleteMedicineFromFireStore(firestoreMed);
+//            }
+//            repoClass.deleteUserFromFireStore(firestoreUser);
+//        }
+//
+//        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+//        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+//        repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+//
+//        //a3ml al method al btraga3 live data
+//        List<User> allUsers = repoClass.getAllUsers();
+//        if(allUsers != null){
+//            for (User roomUser: allUsers){
+//                List<Medicine> listOfMedications = roomUser.getListOfMedications();
+//                for(Medicine firestoreMed : listOfMedications){
+//                    repoClass.addMedicineToFireStore(firestoreMed);
+//                }
+//                repoClass.addUserToFireStore(roomUser);
+//            }
+//        }
 
     }
 

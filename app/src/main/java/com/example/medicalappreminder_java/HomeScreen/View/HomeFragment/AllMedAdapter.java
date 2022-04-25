@@ -266,36 +266,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
 
         });
 
-        /*
-        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
 
-        SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
-        userEmail = preferences.getString("emailKey", "user email");
-        User currentUser = repoClass.findUserByEmail(userEmail);
-
-
-        List<Medicine> listOfMedications = currentUser.getListOfMedications();
-        Iterator<Medicine> iterator = listOfMedications.iterator();
-        while (iterator.hasNext()) {
-            Medicine med = iterator.next();
-            if (med.getUuid().equals(medicine.getUuid()))
-                listOfMedications.remove(med);
-                medicine.setState("Inactive");
-                repoClass.updateMedicine(medicine);
-        }
-
-        listOfMedications.add(medicine);
-        currentUser.setListOfMedications(listOfMedications);
-        repoClass.updateUser(currentUser);
-
-        //for room
-        if (NetworkChangeReceiver.isThereInternetConnection == true) {
-            repoClass.getUsersFromFireStore(this , OnRespondToMethod.suspend);
-        }
-    }
-         */
         dialog.show();
     }
 
