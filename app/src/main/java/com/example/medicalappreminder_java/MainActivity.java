@@ -22,7 +22,7 @@ import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
 import android.view.View;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
-import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
+
 import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

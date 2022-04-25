@@ -19,10 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppReminderJava">
-        <receiver
-            android:name=".NetworkConnection.NetworkChangeListener"
-            android:enabled="true"
-            android:exported="true"></receiver>
 
         <activity
             android:name=".MedicationModification.View.MedicationModification"
@@ -34,7 +30,6 @@
             android:exported="false"
             android:label="@string/add_med"
             android:parentActivityName=".HomeScreen.View.HomeScreenActivity.HomeScreen"
-            android:exported="false"
             android:screenOrientation="portrait"
             />
         <activity

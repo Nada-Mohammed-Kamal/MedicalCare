@@ -23,11 +23,11 @@ import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 
-import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
 
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.RepoInterface;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
@@ -44,12 +44,12 @@ import com.example.medicalappreminder_java.roomdb.UserData;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 //AllMoviesAdapter
-public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder> implements OnlineUsers {
+public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.ViewHolder> implements OnlineUsers {
 
     private final Context context;
     private ArrayList<Medicine> medList;
@@ -60,6 +60,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
     AllMedPresenterInterface allMedViewPresenter;
     Dialog dialog ;
     int count = 0;
+    String userEmail;
+    Medicine medicine;
+    CustomTime currentTime;
+    RepoInterface repoClass;
     public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener, AllMedPresenterInterface allMedViewPresenter) {
         this.context = context;
         this.medList = values;
