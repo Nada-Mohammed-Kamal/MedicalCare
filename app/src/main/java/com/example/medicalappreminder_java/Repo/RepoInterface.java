@@ -28,6 +28,8 @@ public interface RepoInterface {
     void deleteMedicine(Medicine medicine);
     void updateMedicine(Medicine medicine);
 
+    public void listenToInvitation(User user);
+
     //User
     List<User> getAllUsers();
     List<User> loadAllByEmails(String[] email);

@@ -49,4 +49,7 @@ public interface RemoteSourceInterface {
     public LiveData<List<User>> getUserLiveData() ;
 
     public void setUserLiveData(LiveData<List<User>> userLiveData);
+
+
+    public void listenToInvitation(User user);
 }

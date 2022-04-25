@@ -36,6 +36,8 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         gettingIds();
         getIncomingIntent() ;
 
+
+
         Toast.makeText(LoginActivity.this, "username : " + userName, Toast.LENGTH_SHORT).show();
         logInPresenter = new LogInPresenter (this , this ,this ) ;
         logInButton.setOnClickListener(vieww -> {

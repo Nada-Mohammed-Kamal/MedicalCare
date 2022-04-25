@@ -71,6 +71,11 @@ public class RepoClass implements RepoInterface {
     }
 
     @Override
+    public void listenToInvitation(User user) {
+        remoteSourceInterface.listenToInvitation(user);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return localSourceInterface.getAllUsers();
     }

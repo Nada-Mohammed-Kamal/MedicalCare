@@ -23,6 +23,11 @@ import android.view.View;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
 
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -62,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }else {
                 startActivity(new Intent(MainActivity.this, HomeScreen.class));
+//                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler(context);
+//                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+//                repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+//
+//                getCurrentUserFromFireStore();
+//                if(!(userEmail.equals("user email"))){
+//                    repoClass.listenToInvitation(user);
+//                }
             }
 
 
