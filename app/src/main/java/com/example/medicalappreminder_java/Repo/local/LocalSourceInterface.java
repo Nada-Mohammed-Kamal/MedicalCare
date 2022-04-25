@@ -13,6 +13,8 @@ import com.example.medicalappreminder_java.models.User;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public interface LocalSourceInterface {
 //    void insertMovie(Movie movie);
 //    void deleteMovie(Movie movie);
@@ -29,6 +31,7 @@ public interface LocalSourceInterface {
 
     //User
     List<User> getAllUsers();
+    Single<List<User>> getAllUserSingleList();
     List<User> loadAllByEmails(String[] email);
     User findUserByEmail(String email);
     void insertAllUsers(User... users);

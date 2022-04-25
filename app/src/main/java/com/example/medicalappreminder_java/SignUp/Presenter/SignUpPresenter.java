@@ -81,10 +81,10 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
         SharedPreferences preferences = context.getSharedPreferences(SharedPrefrencesModel.preferenceFile , Context.MODE_PRIVATE) ;
         String UUIDFromPref = preferences.getString("UUID_Key","N/A") ;
         user.setUuid(UUIDFromPref);
-        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-        repoClass.insertUser(user);
+//        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+//        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+//        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+//        repoClass.insertUser(user);
     }
 
 }

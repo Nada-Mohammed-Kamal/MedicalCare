@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            broadcastReceiver = new NetworkChangeReceiver();
-            registerNetworkBroadCastReceiver();
+
 
             //startActivity(new Intent(MainActivity.this  , LoginActivity.class));
 
@@ -69,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+
     //        getSupportActionBar().hide();
     //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
     //        setSupportActionBar(myToolbar);
+
 
 
            /*  BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);

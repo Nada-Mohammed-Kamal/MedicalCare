@@ -128,17 +128,26 @@ public class AuthenticationHandler implements OnlineUsers {
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(userName).build();
                         user.updateProfile(profileChangeRequest);
+
+
+                        fireStoreUser = new User(userName, email);
+                        //fireStoreUser.setFirstName(userName);
+                        //fireStoreUser.setFireStoreId(user.getUid()) ;
+                        String fireStoreUserUuid = fireStoreUser.getUuid();
+                        SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
+                        Log.e("**TAG", "onComplete " + fireStoreUserUuid );
+                        sharedPrefrencesModel.writeInSharedPreferences(fireStoreUserUuid);
+                        fireStoreHandler = new FireStoreHandler();
+                        Log.e("****", "onComplete: "+user.getUid() );
+                        fireStoreHandler.addUserToFireStore(fireStoreUser );
+                        RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
+                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+                        repoClass.insertUser(fireStoreUser);
+
                     }
 
-                    fireStoreUser = new User(userName, email);
-                    fireStoreUser.setFirstName(userName);
-                    //fireStoreUser.setFireStoreId(user.getUid()) ;
-                    String fireStoreUserUuid = fireStoreUser.getUuid();
-                    SharedPrefrencesModel sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
-                    sharedPrefrencesModel.writeInSharedPreferences(fireStoreUserUuid);
-                    fireStoreHandler = new FireStoreHandler();
-                    Log.e("****", "onComplete: "+user.getUid() );
-                    fireStoreHandler.addUserToFireStore(fireStoreUser );
+
                     user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
