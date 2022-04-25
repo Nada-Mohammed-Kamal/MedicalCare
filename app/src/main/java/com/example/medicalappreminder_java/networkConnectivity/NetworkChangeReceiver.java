@@ -63,7 +63,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
                 isThereInternetConnection =false;
             } else {
                 isThereInternetConnection = true;
-                sync();
+
+                //sync();
                 Log.e("mando", "network back");
             }
         }
@@ -114,6 +115,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
                 }
             }
             repo.deleteUserFromFireStore(firestoreUser);
+
+            sync();
         }
 
         

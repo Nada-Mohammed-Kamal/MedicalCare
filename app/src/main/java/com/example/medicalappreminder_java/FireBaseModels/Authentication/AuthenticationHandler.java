@@ -290,6 +290,7 @@ public class AuthenticationHandler implements OnlineUsers {
 
     @Override
     public void onResponse(List<User> userList, OnRespondToMethod method) {
+        Log.e(TAG, "onResponseeeeeeeeeeeeeeeeeeeeee eeeee 7asbaya allah wane3ma al wakeeeeeeel: " );
         retrivedUsers = userList;
         for(User user : retrivedUsers){
             if(user.getEmail().equals(emailFromPref)){

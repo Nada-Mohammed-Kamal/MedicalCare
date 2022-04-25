@@ -81,51 +81,12 @@ public class FireStoreHandler implements RemoteSourceInterface {
     @Override
     public void addUserToFireStore(User user ) {
 
-        // ***** add validation to presenter *****
-        /*
-        private boolean validateInputs(String name, String brand, String desc, String price, String qty) {
-         if (name.isEmpty()) {
-             editTextName.setError("Name required");
-             editTextName.requestFocus();
-             return true;
-         }
-
-         if (brand.isEmpty()) {
-             editTextBrand.setError("Brand required");
-             editTextBrand.requestFocus();
-             return true;
-         }
-
-         if (desc.isEmpty()) {
-             editTextDesc.setError("Description required");
-             editTextDesc.requestFocus();
-             return true;
-         }
-
-         if (price.isEmpty()) {
-             editTextPrice.setError("Price required");
-             editTextPrice.requestFocus();
-             return true;
-         }
-
-         if (qty.isEmpty()) {
-             editTextQty.setError("Quantity required");
-             editTextQty.requestFocus();
-             return true;
-         }
-         return false;
-     }
-
-        if (!validateInputs(name, brand, desc, price, qty)){call this method}
-         */
-
         fireStoreDb.collection(userCollectionName).document(user.getUuid()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.e("TAG", "onSuccess: adding user");
             }
         });
-
     }
 
     @Override
@@ -138,12 +99,12 @@ public class FireStoreHandler implements RemoteSourceInterface {
         medicineFirestoreDb.document(medicine.getUuid()).set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Log.e("fireDB", "onSuccess: medicne added");
+                Log.e("fireDB", "addMedicineToFireStore : medicne added");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("fireDB", "onFailure: faild to add the medicine");
+                Log.e("fireDB", "addMedicineToFireStore onFailure: faild to add the medicine");
             }
         });
 
@@ -154,25 +115,19 @@ public class FireStoreHandler implements RemoteSourceInterface {
         fireStoreDb.collection(userCollectionName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.e("Mando", "onSuccess: in get users from fire store /////////////////////////////////");
                 if (!queryDocumentSnapshots.isEmpty()) {
+
                     List<DocumentSnapshot> userDocumentSnapshotList = queryDocumentSnapshots.getDocuments();
+                    Log.e("Mando", "onSuccess: DocumentSnapshot : outside for loop ///////////////////////////////// : size" + userDocumentSnapshotList.size());
+
                     for (DocumentSnapshot documentSnapshot : userDocumentSnapshotList) {
+                        Log.e("Mando", "onSuccess: DocumentSnapshot : inside for loop ///////////////////////////////// : size" + userDocumentSnapshotList.size());
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
                         convertedUserList.add(user) ;
-                        Log.e("TAG", "onSuccess:get users from firestore " + user.getFireStoreId());
-//                       RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-//                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-//                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-//                        User userByEmail = repoClass.findUserByEmail(user.getEmail());
-//                        userByEmail.setFireStoreId(documentSnapshot.getId());
-//                        repoClass.updateUser(userByEmail);
-
-//                        convertedUserList.add(user) ;
-                        // *****************************
-//                        presenterInterface.setUserListFromFireStore(convertedUserList);
-//                        onlineUsers.setOnlineUserList(convertedUserList);
-//                        user_mutable_live_data.setValue(convertedUserList);
+                        Log.e("Mando", "onSuccess:get users from firestore " + user.getFireStoreId());
+                        Log.e("Mando", "the size of current user list is : "+ convertedUserList.size() );
                     }
                     onlineUsers.onResponse(convertedUserList , method);
                 }
@@ -180,6 +135,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.e("TAG", "onfaliure: in get users from fire store /////////////////////////////////"+ e.getLocalizedMessage().toString());
                 Log.e("fireDB", "onFailure: fail to get users list from FS");
                 onlineUsers.onFailure(e.getMessage());
             }
@@ -258,6 +214,8 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     @Override
     public void listenToDataChangeInFireStore(User user){
+        Log.d("TAG", "New city: //////////////////////////////////////////////////////////////////////////////");
+
         fireStoreDb.collection(userCollectionName)
                 .whereEqualTo("uuid", user.getUuid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -268,13 +226,24 @@ public class FireStoreHandler implements RemoteSourceInterface {
                         for (DocumentChange dc : snapshots.getDocumentChanges()) {
                             switch (dc.getType()) {
                                 case ADDED:
-                                    Log.d("TAG", "New city: " + dc.getDocument().getData());
+                                    Log.e("TAG", "New city: " + dc.getDocument().getData());
+                                    User user = dc.getDocument().toObject(User.class);
+                                    List<Medicine> listOfInvitations = user.getListOfInvitations();
+                                    if (listOfInvitations.size() > 0 ){
+                                        Log.e("Mandoo", "onEvent: the size in modifiy issssssssssssssssssssss" + listOfInvitations.size() );
+                                    }
                                     break;
                                 case MODIFIED:
-                                    Log.d("TAG", "Modified city: " + dc.getDocument().getData());
+                                    Log.e("TAG", "Modified city: " + dc.getDocument().getData());
+                                    User user2 = dc.getDocument().toObject(User.class);
+                                    List<Medicine> listOfInvitations2 = user2.getListOfInvitations();
+                                    if (listOfInvitations2.size() > 0 ){
+                                        Log.e("Mandoo", "onEvent: the size in modifiy issssssssssssssssssssss" + listOfInvitations2.size() );
+                                        //hanab3at list of midications l esraa
+                                    }
                                     break;
                                 case REMOVED:
-                                    Log.d("TAG", "Removed city: " + dc.getDocument().getData());
+                                    Log.e("TAG", "Removed city: " + dc.getDocument().getData());
                                     break;
                             }
                         }
