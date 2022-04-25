@@ -228,7 +228,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
                                 case ADDED:
                                     Log.e("TAG", "New city: " + dc.getDocument().getData());
                                     User user = dc.getDocument().toObject(User.class);
-                                    List<Medicine> listOfInvitations = user.getListOfInvitations();
+                                    List<User> listOfInvitations = user.getListOfInvitations();
                                     if (listOfInvitations.size() > 0 ){
                                         Log.e("Mandoo", "onEvent: the size in modifiy issssssssssssssssssssss" + listOfInvitations.size() );
                                     }
@@ -236,7 +236,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
                                 case MODIFIED:
                                     Log.e("TAG", "Modified city: " + dc.getDocument().getData());
                                     User user2 = dc.getDocument().toObject(User.class);
-                                    List<Medicine> listOfInvitations2 = user2.getListOfInvitations();
+                                    List<User> listOfInvitations2 = user2.getListOfInvitations();
                                     if (listOfInvitations2.size() > 0 ){
                                         Log.e("Mandoo", "onEvent: the size in modifiy issssssssssssssssssssss" + listOfInvitations2.size() );
                                         //hanab3at list of midications l esraa

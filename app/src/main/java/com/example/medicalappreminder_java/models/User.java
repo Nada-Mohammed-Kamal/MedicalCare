@@ -44,7 +44,7 @@ public class User {
     @ColumnInfo(name = "ListOfMedFriends")
     List<Medicine> listOfMedFriends;
     @ColumnInfo(name = "ListOfInvitations")
-    List<Medicine> listOfInvitations;
+    List<User> listOfInvitations;
 
 
     public String getFireStoreId() {
@@ -72,11 +72,11 @@ public class User {
         this.listOfMedFriends = listOfMedFriends;
     }
 
-    public List<Medicine> getListOfInvitations() {
+    public List<User> getListOfInvitations() {
         return listOfInvitations;
     }
 
-    public void setListOfInvitations(List<Medicine> listOfInvitations) {
+    public void setListOfInvitations(List<User> listOfInvitations) {
         this.listOfInvitations = listOfInvitations;
     }
 
