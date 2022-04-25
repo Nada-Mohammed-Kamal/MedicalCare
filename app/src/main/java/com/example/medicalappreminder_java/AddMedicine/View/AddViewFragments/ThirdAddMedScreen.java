@@ -9,6 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
 
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -27,6 +31,7 @@ import com.example.medicalappreminder_java.CalculateArrayOfDatesAndTimesOfTheMed
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.Constants.WorkerUtils;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedViewInterface;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.HomeFragment;
 import com.example.medicalappreminder_java.R;
@@ -39,10 +44,14 @@ import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.DataFromSecondAddMedScreen;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.MedicineWorker;
 import com.example.medicalappreminder_java.models.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class ThirdAddMedScreen extends Fragment {
@@ -189,7 +198,13 @@ public class ThirdAddMedScreen extends Fragment {
                 repoClass.updateUser(currentUser);
                
                 Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+
+
+                WorkerUtils.addRequestsToWorkManager(medicine);
+
+                Toast.makeText(getActivity().getApplicationContext(), "WorkManager Request Added !!", Toast.LENGTH_LONG).show();
                 getActivity().finish();
+
 
 
             }

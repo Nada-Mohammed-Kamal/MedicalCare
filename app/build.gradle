@@ -120,6 +120,10 @@ dependencies {
         implementation "androidx.room:room-paging:2.5.0-alpha01"
     }
 
+    def core_version = "1.6.0"
+    dependencies {
+        implementation "androidx.core:core:$core_version"
+    }
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'

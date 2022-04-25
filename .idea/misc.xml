@@ -7,13 +7,10 @@
         <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/activity_add_medicine.xml" value="0.3374094202898551" />
         <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/activity_home_screen.xml" value="0.20520833333333333" />
         <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/activity_medication_modification.xml" value="0.33" />
+        <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/fragment_home.xml" value="0.20520833333333333" />
         <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/fragment_second_add_med_screen.xml" value="0.3374094202898551" />
+        <entry key="..\:/ITI/Fundamentals/Android/MedicalCare/app/src/main/res/layout/fragment_third_add_med_screen.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/activity_drug_reminder.xml" value="0.264" />
-        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_third_add_med_screen.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/home_screen_header.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/section_row.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Esraa/Documents/GitHub/MedicalCare/app/src/main/res/layout/show_all_med_custom_row.xml" value="0.25" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/custom_row.xml" value="0.23233695652173914" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_dependent_info.xml" value="0.12907608695652173" />
         <entry key="..\:/Users/nados/OneDrive/Documents/GitHub/MedicalCare/app/src/main/res/layout/fragment_first_add_med_screen.xml" value="0.15833333333333333" />
