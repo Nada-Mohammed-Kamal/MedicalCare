@@ -73,7 +73,7 @@ public class MedicineWorker extends Worker {
                     .setInputData(getInputData())
                     .build();
 
-            WorkerUtils.pushNewRequestID(request.getId(), UUID.fromString(medId), doseTime);
+            WorkerUtils.pushNewRequestID(request.getId(), String.valueOf(UUID.fromString(medId)), doseTime);
             WorkManager.getInstance().enqueue(request);
         }
 
