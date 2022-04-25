@@ -11,10 +11,4 @@
         android:icon="@drawable/ic_baseline_medical_services_24"
         android:title="@string/medications"
         />
-
-    <item
-        android:id="@+id/Refills"
-        android:icon="@drawable/refill_icon"
-        android:title="@string/Refills"
-        />
 </menu>

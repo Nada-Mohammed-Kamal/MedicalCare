@@ -8,6 +8,7 @@ public class SharedPrefrencesModel {
 
     String emailFromPref , passwordFromPref  , userNameFromPref , UUIDFromPref;
     public static final String preferenceFile = "preferencesFile";
+    public static final String listOfMedFriends = "listOfMedFriends";
     Context context ;
     public static  SharedPrefrencesModel sharedPrefrencesModel = null ;
 
@@ -44,8 +45,19 @@ public class SharedPrefrencesModel {
         editor.putString("UUID_Key" , UUID) ;
         editor.commit() ;
     }
-
-
+    public void writeInlistOfMedFriends(String friendEmail , String friendName){
+        SharedPreferences preferences = context.getSharedPreferences(listOfMedFriends , Context.MODE_PRIVATE) ;
+        SharedPreferences.Editor editor = preferences.edit() ;
+        editor.putString("friendEmail" , friendEmail) ;
+        editor.putString("friendName" , friendName) ;
+        editor.commit() ;
+    }
+    public String getMedFriendEmail(String friendName){
+        String friendEmail = "";
+        SharedPreferences preferences = context.getSharedPreferences(listOfMedFriends , Context.MODE_PRIVATE) ;
+        friendEmail = preferences.getString("friendEmail","N/A");
+        return friendEmail;
+    }
 
     public void readFromSharedPreferences(){
         SharedPreferences preferences = context.getSharedPreferences(preferenceFile , Context.MODE_PRIVATE) ;

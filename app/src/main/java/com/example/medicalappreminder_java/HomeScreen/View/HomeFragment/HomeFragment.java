@@ -29,8 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+//import devs.mulham.horizontalcalendar.HorizontalCalendar;
+//import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 

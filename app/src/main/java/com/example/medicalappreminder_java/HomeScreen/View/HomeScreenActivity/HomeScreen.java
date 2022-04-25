@@ -95,6 +95,7 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
         t.setText(userName);
 
         presenterInterface.getDependent();
+        presenterInterface.getMedFriend();
     }
     private  void  setListeners(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -128,6 +129,7 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
                 Log.e("HomeScreen", ": onDrawerSlide");
                 if(dataOfDependentChanged) {
                     presenterInterface.getDependent();
+                    presenterInterface.getMedFriend();
                 }
 
             }
@@ -151,7 +153,9 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
                 Log.e("HomeScreen", ": onDrawerState");
                 if(dataOfDependentChanged) {
                     presenterInterface.getDependent();
+                    presenterInterface.getMedFriend();
                 }
+
 
             }
         });

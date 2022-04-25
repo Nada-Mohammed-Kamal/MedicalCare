@@ -10,5 +10,6 @@ public interface AllMedPresenterInterface {
      User getCurrentUser();
      void updateMedicine(Medicine medicine);
      void updateUserWithNewMedData(Medicine medicine);
+     User getFriend(String name);
 
 }

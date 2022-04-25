@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedViewInterface;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -26,6 +27,7 @@ public class AllMedPresenter implements AllMedPresenterInterface {
     RemoteSourceInterface remoteSourceInterface;
     LocalSourceInterface localSourceInterface;
     RepoClass repoClass;
+    SharedPrefrencesModel sharedPrefrencesModel;
     // (AllMoviesViewInterface  view, Repository repo)
     //instance from data base app database
     public  AllMedPresenter(AllMedViewInterface  view,Context context){
@@ -34,6 +36,7 @@ public class AllMedPresenter implements AllMedPresenterInterface {
         remoteSourceInterface = new FireStoreHandler();
         localSourceInterface = new ConcreteLocalSource(_context);
         repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,_context);
+        sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context);
     }
     @Override
     public void getMeds(Date date) {
@@ -76,5 +79,12 @@ public class AllMedPresenter implements AllMedPresenterInterface {
         listOfMedications.add(medicine);
         currentUser.setListOfMedications(listOfMedications);
         repoClass.updateUser(currentUser);
+    }
+
+    @Override
+    public User getFriend(String name) {
+        String medFriendEmail = sharedPrefrencesModel.getMedFriendEmail(name);
+        User currentUser = repoClass.findUserByEmail(medFriendEmail);
+        return currentUser;
     }
 }
