@@ -10,15 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
+
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
+
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -28,7 +35,11 @@ import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
+
 import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
+
+import com.example.medicalappreminder_java.roomdb.UserData;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,35 +54,50 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
     private final Context context;
     private ArrayList<Medicine> medList;
     OnMoviesClickListener onMoviesClickListener;
+    List<CustomTime> todayesTimesOfDoses;
+    private List<Medicine> sectionMedicines;
+    private List<List<Medicine>> allSectionsMedicines;
+    AllMedPresenterInterface allMedViewPresenter;
     Dialog dialog ;
-    RepoClass repoClass;
-    String userEmail;
-    Medicine medicine;
-    CustomTime currentTime;
-    public AllMedAdapter(Context context, ArrayList<Medicine> values, OnMoviesClickListener onMoviesClickListener) {
+    int count = 0;
+    public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener, AllMedPresenterInterface allMedViewPresenter) {
         this.context = context;
         this.medList = values;
         this.onMoviesClickListener = onMoviesClickListener;
         dialog = new Dialog(context);
-    }
-    public  void setList(List<Medicine> updateMeds){
-        this.medList = (ArrayList)updateMeds;
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup recyclerView, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.show_all_med_custom_row,recyclerView,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        Log.i("Adapter", "=====onCreateViewHolder========= ");
-        return viewHolder;
+        this.todayesTimesOfDoses =  todayesTimesOfDoses;
+        sectionMedicines = new ArrayList<>();
+        allSectionsMedicines = new ArrayList<>();
+        this.allMedViewPresenter = allMedViewPresenter;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Medicine medDTO = medList.get(position);
+    public int getSectionCount() {
+        return todayesTimesOfDoses.size();
+    }
+
+    @Override
+    public int getItemCount(int section) {
+        if(count < todayesTimesOfDoses.size()) {
+            sectionMedicines = UserData.getSectionMedicines(medList, todayesTimesOfDoses.get(section));
+            allSectionsMedicines.add(sectionMedicines);
+            count++;
+        }
+        return sectionMedicines.size();
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(AllMedAdapter.ViewHolder holder, int section) {
+        holder.medTime.setText(todayesTimesOfDoses.get(section).getHour()+":"+todayesTimesOfDoses.get(section).getMinute());
+
+    }
+
+    @Override
+    public void onBindViewHolder(AllMedAdapter.ViewHolder holder, int section, int relativePosition, int absoultePosition) {
+        List<Medicine> currentSectionMed = allSectionsMedicines.get(section);
+        Medicine medDTO = currentSectionMed.get(relativePosition);
         String decMed = ""+ medDTO.getStrengthAmount() + medDTO.getStrength() + ",take " +medDTO.getForm();
-       // holder.medTime.setText(medDTO.get);
+        //holder.medTime.setText(medDTO.get);
         holder.medDesc.setText(decMed);
         holder.medName.setText(medDTO.getName());
         holder.medIcon.setImageResource(medDTO.getImage());
@@ -82,17 +108,27 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 onMoviesClickListener.onClick(medDTO);
                 Toast.makeText(context,"Med clicked",Toast.LENGTH_SHORT).show();
                 //change with current time of this med
-                openDialoge(medDTO,new CustomTime(21,12));
+                openDialoge(medDTO,todayesTimesOfDoses.get(section));
+
             }
         });
     }
 
+    @NonNull
     @Override
-    public int getItemCount() {
-        return medList.size();
+    public AllMedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup recyclerView, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(viewType == VIEW_TYPE_HEADER?R.layout.home_screen_header:R.layout.show_all_med_custom_row,recyclerView,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        Log.i("Adapter", "=====onCreateViewHolder========= ");
+        return viewHolder;
     }
-
-
+    public  void setList(List<Medicine> updateMeds,List<CustomTime> customTimes){
+        todayesTimesOfDoses = customTimes;
+        this.medList = (ArrayList)updateMeds;
+        count = 0;
+        allSectionsMedicines.clear();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView medIcon;
         TextView medTime;
@@ -115,9 +151,9 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button skipButton , takeButton , snoozeButton ;
+        ImageButton skipButton , takeButton , snoozeButton ;
         TextView timeTextView , drugNameTextView  ,drugDescrTextView ;
-        ImageView drugIconImageView ;
+        CircleImageView drugIconImageView ;
 
         skipButton = dialog.findViewById(R.id.dialogSkipButton) ;
         takeButton = dialog.findViewById(R.id.dialogTakeButton);
@@ -126,8 +162,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
         drugNameTextView = dialog.findViewById(R.id.dialogDrugNameTextView) ;
         drugDescrTextView = dialog.findViewById(R.id.dialogDrugDescrTextView) ;
         drugIconImageView = dialog.findViewById(R.id.dialogDrugIconimageView) ;
-        
-        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + ",take " +medicine.getForm();
+
+        timeTextView.setText(currentTime.getHour()+":"+currentTime.getMinute());
+        drugIconImageView.setImageResource(medicine.getImage());
+        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + "\n\n " +medicine.getForm();
         drugNameTextView.setText(medicine.getName());
         drugDescrTextView.setText(decMed);
         skipButton.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +179,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 }
                 medicine.setDoseTimes(doseTimes);
                 //presenter code
+
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
                 repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
@@ -167,6 +206,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
 
 
 
+
+                //allMedViewPresenter.updateMedicine(medicine);
+                //allMedViewPresenter.updateUserWithNewMedData(medicine);
+
                 dialog.dismiss();
             }
         });
@@ -185,6 +228,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 }
                 medicine.setDoseTimes(doseTimes);
                 //presenter code
+
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
                 repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
@@ -208,6 +252,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                 if (NetworkChangeReceiver.isThereInternetConnection == true) {
                     repoClass.getUsersFromFireStore(AllMedAdapter.this , OnRespondToMethod.take);
                 }
+
+
+                //allMedViewPresenter.updateMedicine(medicine);
+                //allMedViewPresenter.updateUserWithNewMedData(medicine);
 
                 dialog.dismiss();
             }
@@ -241,6 +289,7 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
 
                 //remove it when status snooze from work manager
                 medicine.setDoseTimes(doseTimes);
+
                 repoClass.updateMedicine(medicine);
 
                 //presenter code
@@ -261,6 +310,10 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
                     repoClass.getUsersFromFireStore(AllMedAdapter.this , OnRespondToMethod.snooze);
                 }
 
+
+                //presenter code
+                //allMedViewPresenter.updateMedicine(medicine);
+                //allMedViewPresenter.updateUserWithNewMedData(medicine);
                 dialog.dismiss();
             }
 
@@ -357,4 +410,3 @@ public class AllMedAdapter extends RecyclerView.Adapter<AllMedAdapter.ViewHolder
     }
 
 }
-
