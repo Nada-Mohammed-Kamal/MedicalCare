@@ -159,7 +159,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
                         convertedUserList.add(user) ;
-                        Log.e("TAG", "onSuccess: " + user.getFireStoreId());
+                        Log.e("TAG", "onSuccess:get users from firestore " + user.getFireStoreId());
 //                       RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
 //                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
 //                        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
