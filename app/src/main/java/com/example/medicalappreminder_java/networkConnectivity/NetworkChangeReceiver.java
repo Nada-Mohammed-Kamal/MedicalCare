@@ -45,7 +45,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         repo = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
 
-        repo.getUsersFromFireStore(this , OnRespondToMethod.skip);
+        //repo.getUsersFromFireStore(this , OnRespondToMethod.skip);
     }
 
     @Override
@@ -110,10 +110,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
             listOfMedications = firestoreUser.getListOfMedications();
             if (listOfMedications != null) {
                 for (Medicine firestoreMed : listOfMedications) {
-                    repo.deleteMedicineFromFireStore(firestoreMed);
+                    //repo.deleteMedicineFromFireStore(firestoreMed);
                 }
             }
-            repo.deleteUserFromFireStore(firestoreUser);
+            //repo.deleteUserFromFireStore(firestoreUser);
         }
 
         
