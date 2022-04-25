@@ -1,8 +1,6 @@
 package com.example.medicalappreminder_java.Constants;
 
-import android.content.Context;
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
@@ -92,7 +90,7 @@ public class WorkerUtils {
         return hour + ":" + minute + ":00";
     }
 
-    public static void pushNewRequestID(UUID reqID, UUID medID, String time) {
+    public static void pushNewRequestID(UUID reqID, String medID, String time) {
         wmRequestIds.add(reqID.toString() + "_" + medID.toString() + "_" + time);
     }
 
