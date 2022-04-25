@@ -49,4 +49,7 @@ public interface RemoteSourceInterface {
     public LiveData<List<User>> getUserLiveData() ;
 
     public void setUserLiveData(LiveData<List<User>> userLiveData);
+
+    //for med friends listener
+    public void listenToDataChangeInFireStore(User user);
 }

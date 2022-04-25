@@ -2,6 +2,7 @@ package com.example.medicalappreminder_java.FireBaseModels.Authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,9 +11,11 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
@@ -37,16 +40,19 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthenticationHandler {
+public class AuthenticationHandler implements OnlineUsers {
 
     public static AuthenticationHandler authenticationHandler = null;
+    String emailFromPref;
     SignUpViewInterface signUpViewRef;
+    RepoClass repoClass;
     LogInViewInterface logInView;
     private Context context;
     SharedPrefrencesModel sharedPrefrencesModel;
     User fireStoreUser;
     FireStoreHandler fireStoreHandler;
     LifecycleOwner lifecycleOwner;
+    List<User> retrivedUsers = new ArrayList<>();
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -169,7 +175,13 @@ public class AuthenticationHandler {
                     //to check if the user is in the room or not to add him
                     RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                     LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                    RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+                     repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+
+                    SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                    emailFromPref = preferences.getString("emailKey","N/A");
+
+
+                    repoClass.getUsersFromFireStore(AuthenticationHandler.this , OnRespondToMethod.skip);
                     User userByEmail = repoClass.findUserByEmail(email);
                     /*
                     if (userByEmail == null) {
@@ -265,6 +277,21 @@ public class AuthenticationHandler {
 
     public GoogleSignInClient getGoogleSignInClient() {
         return googleSignInClient;
+    }
+
+    @Override
+    public void onResponse(List<User> userList, OnRespondToMethod method) {
+        retrivedUsers = userList;
+        for(User user : retrivedUsers){
+            if(user.getEmail().equals(emailFromPref)){
+                repoClass.listenToDataChangeInFireStore(user);
+            }
+        }
+    }
+
+    @Override
+    public void onFailure(String error) {
+        Log.e(TAG, "onFailure: Failed to fetch data from signUp in Authentication handler" );
     }
 
     /*

@@ -176,6 +176,11 @@ public class RepoClass implements RepoInterface {
         remoteSourceInterface.setUserLiveData(userLiveData);
     }
 
+    @Override
+    public void listenToDataChangeInFireStore(User user) {
+        remoteSourceInterface.listenToDataChangeInFireStore(user);
+    }
+
     //end of local part
 
     //remote

@@ -54,6 +54,8 @@ public interface RepoInterface {
     public void setMedicineLiveData(LiveData<List<Medicine>> medicineLiveData);
     public LiveData<List<User>> getUserLiveData() ;
     public void setUserLiveData(LiveData<List<User>> userLiveData);
+    //for med friends
+    public void listenToDataChangeInFireStore(User user);
 
 
 }

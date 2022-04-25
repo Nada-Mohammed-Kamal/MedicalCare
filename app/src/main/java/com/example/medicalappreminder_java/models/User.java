@@ -7,7 +7,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.common.reflect.TypeToken;
-import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.IgnoreExtraProperties;
 import com.google.gson.Gson;
 
@@ -39,10 +38,13 @@ public class User {
     List<User> listOfDependant;
     @ColumnInfo(name = "ListOfMedications")
     //String stringWithListOfMedicationIds;
-
     List<Medicine> ListOfMedications;
     @ColumnInfo(name = "fireStoreId")
     private String fireStoreId;
+    @ColumnInfo(name = "ListOfMedFriends")
+    List<Medicine> listOfMedFriends;
+    @ColumnInfo(name = "ListOfInvitations")
+    List<Medicine> listOfInvitations;
 
 
     public String getFireStoreId() {
@@ -62,6 +64,21 @@ public class User {
     }
 
 
+    public List<Medicine> getListOfMedFriends() {
+        return listOfMedFriends;
+    }
+
+    public void setListOfMedFriends(List<Medicine> listOfMedFriends) {
+        this.listOfMedFriends = listOfMedFriends;
+    }
+
+    public List<Medicine> getListOfInvitations() {
+        return listOfInvitations;
+    }
+
+    public void setListOfInvitations(List<Medicine> listOfInvitations) {
+        this.listOfInvitations = listOfInvitations;
+    }
 
     public User(String firstName, String email) {
         uuid = UUID.randomUUID().toString();
@@ -69,8 +86,10 @@ public class User {
         this.email = email;
         this.ListOfMedications = new ArrayList<>();
         this.listOfDependant = new ArrayList<>();
-
+        this.listOfMedFriends = new ArrayList<>();
+        this.listOfInvitations = new ArrayList<>();
     }
+
 
     @Keep
     public User() {

@@ -9,6 +9,11 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
 import com.example.medicalappreminder_java.FireBaseModels.Authentication.AuthenticationHandler;
 import com.example.medicalappreminder_java.Login.LoginView.LogInViewInterface;
+import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
+import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
+import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
+import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 public class LogInPresenter implements LogInPresenterInterface{
@@ -29,6 +34,7 @@ public class LogInPresenter implements LogInPresenterInterface{
         this.context = context ;
         authenticationHandler = new AuthenticationHandler(context , logInView , lifecycleOwner) ;
         //sharedPrefrencesModel = SharedPrefrencesModel.getInstance(context) ;
+
     }
 
     public void getEmailAndPassword(){
