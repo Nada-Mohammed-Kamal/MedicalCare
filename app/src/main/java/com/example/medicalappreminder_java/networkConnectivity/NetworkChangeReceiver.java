@@ -116,6 +116,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
             repo.deleteUserFromFireStore(firestoreUser);
         }
 
+        
     }
 
     @Override
