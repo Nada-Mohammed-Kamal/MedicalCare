@@ -2,6 +2,7 @@ package com.example.medicalappreminder_java.AddMedicine.Presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -9,6 +10,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicineViewInterface;
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.RepoInterface;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -22,11 +25,14 @@ import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeRece
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMedicinePresenter implements AddMedicinePresenterInterface {
+public class AddMedicinePresenter implements AddMedicinePresenterInterface , OnlineUsers {
     RepoInterface repoClass;
     Context context;
     AddMedicineViewInterface addMedicineViewInterface;
     LifecycleOwner lifecycleOwner;
+    String userEmail;
+    List<Medicine> medicines;
+    Medicine medicine;
 
 
     public AddMedicinePresenter(Context context, AddMedicineViewInterface addMedicineViewInterface, LifecycleOwner lifecycleOwner) {
@@ -37,56 +43,31 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
 
     @Override
     public void addMedTOCurrentUser(Medicine medicine) {
-        SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
-        String userEmail = preferences.getString("emailKey", "user email");
-        User currentUser = repoClass.findUserByEmail(userEmail);
+        this.medicine = medicine;
 
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        RepoInterface repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+        repoClass = RepoClass.getInstance(remoteSourceInterface, localSourceInterface, context);
+
+        SharedPreferences preferences = context.getSharedPreferences("preferencesFile", Context.MODE_PRIVATE);
+        userEmail = preferences.getString("emailKey", "user email");
+        User currentUser = repoClass.findUserByEmail(userEmail);
+
+
         repoClass.insertMedicine(medicine);
-        addMedicineToFireStore(medicine);
+        if (NetworkChangeReceiver.isThereInternetConnection == true){
+            FireStoreHandler fireStoreHandler = new FireStoreHandler();
+            fireStoreHandler.addMedicineToFireStore(medicine);
+        }
 
+        medicines = new ArrayList<>();
 
-        if (NetworkChangeReceiver.isThereInternetConnection == true) {
+        //for fireStore
+        if (NetworkChangeReceiver.isThereInternetConnection == true){
             //////////////////// change to working method ////////////////////
-//            LiveData<List<User>> userLiveData = repoClass.getUserLiveData().observe(lifecycleOwner, new Observer<List<User>>() {
-//                @Override
-//                public void onChanged(List<User> users) {
-//                    User fireStoreCurrentUser = new User();
-//                    User oldFireStoreUser = new User();
-//                    List<Medicine> medicines = new ArrayList<>();
-//                    for (User fireStoreUser : users) {
-//                        if (fireStoreUser.getEmail() == userEmail) {
-//                            oldFireStoreUser = fireStoreUser;
-//                            medicines = oldFireStoreUser.getListOfMedications();
-//                            medicines.add(medicine);
-//                            fireStoreCurrentUser = fireStoreUser;
-//                            fireStoreCurrentUser.setListOfMedications(medicines);
-//                        }
-//                    }
-//                    repoClass.updateUserFromFireStore(oldFireStoreUser, fireStoreCurrentUser);
-//                }
-//            });
-
-
-            User fireStoreCurrentUser = new User();
-            User oldFireStoreUser = new User();
-            List<Medicine> medicines = new ArrayList<>();
-            repoClass.getUserLiveData();
-//            List<User> usersList = repoClass.getUsersList();
-//            for (User fireStoreUser : usersList) {
-//                if (fireStoreUser.getEmail() == userEmail) {
-//                    oldFireStoreUser = fireStoreUser;
-//                    medicines = oldFireStoreUser.getListOfMedications();
-//                    medicines.add(medicine);
-//                    fireStoreCurrentUser = fireStoreUser;
-//                    fireStoreCurrentUser.setListOfMedications(medicines);
-//                }
-//            }
-//            repoClass.updateUserFromFireStore(oldFireStoreUser, fireStoreCurrentUser);
+            repoClass.getUsersFromFireStore(this , OnRespondToMethod.addMed);
             //////////////////// change to working method ////////////////////
-
+        }
 
             // al rabta fal room
             List<Medicine> listOfMedications = currentUser.getListOfMedications();
@@ -94,16 +75,40 @@ public class AddMedicinePresenter implements AddMedicinePresenterInterface {
             currentUser.setListOfMedications(listOfMedications);
             repoClass.updateUser(currentUser);
             addMedicineViewInterface.viewThatTheMedIsAddedSuccessfully();
-        }
+
     }
 
-    public void addMedicineToFireStore(Medicine medicine) {
-        //add to fireStore too if there is internet
-        //hereeeeeeeeeeeeeeeeeeeeeeeeeeee
-        if (NetworkChangeReceiver.isThereInternetConnection == true) {
-            repoClass.addMedicineToFireStore(medicine);
+
+    @Override
+    public void onResponse(List<User> userList , OnRespondToMethod method) {
+        User fireStoreCurrentUser = new User();
+        User oldFireStoreUser = new User();
+        Log.e("TAG", "onResponse: " +userEmail+ userList.size());
+        for (User fireStoreUser : userList){
+            if(fireStoreUser.getEmail() == null){
+
+            }else {
+                if(fireStoreUser.getEmail().equals(userEmail)){
+                    oldFireStoreUser = fireStoreUser;
+                    oldFireStoreUser.setUuid(fireStoreUser.getUuid());
+                    List<Medicine> listOfMedications = oldFireStoreUser.getListOfMedications();
+                    listOfMedications.add(medicine);
+                    medicines = listOfMedications;
+                    fireStoreCurrentUser = fireStoreUser;
+                    fireStoreCurrentUser.setUuid(fireStoreUser.getUuid());
+                    fireStoreCurrentUser.setListOfMedications(medicines);
+                }
+            }
+
         }
+
+        repoClass.updateUserFromFireStore(oldFireStoreUser , fireStoreCurrentUser);
+        //viewInterface.setUsers(userList);
         addMedicineViewInterface.viewThatTheMedIsAddedSuccessfully();
     }
 
+    @Override
+    public void onFailure(String error) {
+        //viewInterface.responseError(error);
+    }
 }

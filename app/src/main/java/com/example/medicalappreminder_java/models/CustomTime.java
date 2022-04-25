@@ -3,9 +3,10 @@ package com.example.medicalappreminder_java.models;
 import com.example.medicalappreminder_java.Constants.Status;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class CustomTime implements Serializable {
+public class CustomTime implements Serializable,Comparable<CustomTime> {
     int hour;
     int minute;
     Status status;
@@ -55,5 +56,19 @@ public class CustomTime implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(hour, minute);
+    }
+
+    @Override
+    public int compareTo(CustomTime customTime) {
+        if((this.hour == customTime.hour)&&(this.minute == customTime.getMinute())){
+            return 0;
+        }
+        else if(((this.hour == customTime.hour)&&(this.minute < customTime.getMinute())) ||
+                (this.hour < customTime.hour)){
+            return -1;
+        }
+        else{
+            return 1;
+        }
     }
 }

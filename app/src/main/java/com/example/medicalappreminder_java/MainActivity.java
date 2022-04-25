@@ -1,10 +1,6 @@
 package com.example.medicalappreminder_java;
 
-import static com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel.preferenceFile;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 
 import android.content.BroadcastReceiver;
@@ -15,26 +11,26 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.MenuItem;
 
-import android.widget.Button;
-import android.widget.ImageView;
 
-import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderActivity;
 import com.example.medicalappreminder_java.Login.LoginView.LoginActivity;
-import com.example.medicalappreminder_java.NotificationDialog.NotificationDialogActivity;
+
 
 import android.view.View;
 
 import com.example.medicalappreminder_java.AddMedicine.View.AddMedicine;
-import com.example.medicalappreminder_java.HomeScreen.View.HomeScreen;
+
 import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.example.medicalappreminder_java.HomeScreen.View.HomeScreenActivity.HomeScreen;
 
 public class MainActivity extends AppCompatActivity {
 

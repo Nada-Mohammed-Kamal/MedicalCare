@@ -180,6 +180,7 @@ public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterf
                         data.getHowManyTimes(),moreInstraction,"Active", data.getCustomTimes(),
                         hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
+                // hereeee
                 addMedicinePresenterInterface = new AddMedicinePresenter(getContext(),ThirdAddMedScreen.this , ThirdAddMedScreen.this);
                 addMedicinePresenterInterface.addMedTOCurrentUser(medicine);
 
@@ -209,7 +210,8 @@ public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterf
 
     @Override
     public void viewThatTheMedIsAddedSuccessfully() {
-        Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
-        getActivity().finish();
+        //Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+        //getActivity().finish();
+        //a5rog mn add med hena
     }
 }

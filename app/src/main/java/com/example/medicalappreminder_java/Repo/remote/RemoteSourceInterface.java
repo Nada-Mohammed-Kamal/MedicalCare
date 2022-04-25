@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.Repo.NetworkDelegate;
 import com.example.medicalappreminder_java.models.Medicine;
@@ -26,7 +27,7 @@ public interface RemoteSourceInterface {
 
     public void addMedicineToFireStore(Medicine medicine) ;
 
-    public void getUsersFromFireStore(OnlineUsers onlineUsers) ;
+    public void getUsersFromFireStore(OnlineUsers onlineUsers , OnRespondToMethod method) ;
 
     public void getMedicinesFromFireStore() ;
 

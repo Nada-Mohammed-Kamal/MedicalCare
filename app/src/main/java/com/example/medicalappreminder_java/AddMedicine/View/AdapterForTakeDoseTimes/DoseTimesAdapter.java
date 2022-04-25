@@ -18,6 +18,7 @@ import com.example.medicalappreminder_java.models.CustomTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.ViewHolder> {
 
@@ -68,6 +69,7 @@ public class DoseTimesAdapter extends RecyclerView.Adapter<DoseTimesAdapter.View
     {
         if(count != timeSetsCorrectly)
             return  new ArrayList<CustomTime>();
+        Collections.sort(customTimes);
         return customTimes;
     }
     @Override
