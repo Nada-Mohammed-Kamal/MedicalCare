@@ -83,6 +83,9 @@
     <string name="suspend">Suspend</string>
     <string name="startDate">Start Date</string>
     <string name="endDate">End Date</string>
+    <string name="currentlyHave" >Currently Have</string>
+    <string name="remindMe">Remind Me</string>
+    <string name="pillReminder">Pill Reminders</string>
 
     <string-array name="ChooseDayesOfDose">
         <item>Every day</item>

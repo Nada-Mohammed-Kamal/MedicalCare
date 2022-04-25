@@ -8,6 +8,7 @@ import androidx.work.WorkManager;
 
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
+import com.example.medicalappreminder_java.models.MedicineSnoozeWorker;
 import com.example.medicalappreminder_java.models.MedicineWorker;
 
 import java.text.ParseException;
@@ -134,5 +135,64 @@ public class WorkerUtils {
             WorkerUtils.pushNewRequestID(request.getId(), med.getUuid(), time);
             WorkManager.getInstance().enqueue(request);
         }
+    }
+
+    public static void addRequestAfterSnooze(Medicine med, CustomTime currentTime) {
+
+        Data data = new Data.Builder()
+            .putInt(WorkerUtils.MED_IMG, med.getImage())
+            .putString(WorkerUtils.MED_NAME, med.getName())
+            .build();
+
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MedicineSnoozeWorker.class)
+                .setInitialDelay(10, TimeUnit.SECONDS)
+                .setInputData(data)
+                .build();
+
+        WorkerUtils.pushNewRequestID(request.getId(), med.getUuid(), convertCustomTimeIntoTimeString(currentTime));
+        WorkManager.getInstance().enqueue(request);
+    }
+
+    public static void deleteAllRequestsFromWorkManagerByMed(UUID medID) {
+        Log.i(TAG, "deleteRequestFromWorkManagerByReq: Size before: " + wmRequestIds.size());
+        ArrayList<String> toBeDeleted = new ArrayList<>();
+        for (String str : wmRequestIds)
+        {
+            String[] splitted = str.split("_");
+            if (UUID.fromString(splitted[1]).equals(medID))
+            {
+                toBeDeleted.add(str);
+            }
+        }
+        if (!toBeDeleted.isEmpty())
+        {
+            for(String str : toBeDeleted) {
+                String[] splitted = str.split("_");
+                wmRequestIds.remove(str);
+                WorkManager.getInstance().cancelWorkById(UUID.fromString(splitted[0]));
+            }
+        }
+        Log.i(TAG, "deleteRequestFromWorkManagerByReq: Size after: " + wmRequestIds.size());
+    }
+
+    public static void deleteRequestFromWorkManagerByReq(UUID reqID) {
+        Log.i(TAG, "deleteRequestFromWorkManagerByReq: Size before: " + wmRequestIds.size());
+        String toBeDeleted = null;
+        for (String str : wmRequestIds)
+        {
+            String[] splitted = str.split("_");
+            if (UUID.fromString(splitted[0]).equals(reqID))
+            {
+                toBeDeleted = str;
+                break;
+            }
+        }
+        if (toBeDeleted != null)
+        {
+            Log.i(TAG, "deleteRequestFromWorkManagerByReq: Not Null Condition");
+            wmRequestIds.remove(toBeDeleted);
+        }
+        Log.i(TAG, "deleteRequestFromWorkManagerByReq: Size after: " + wmRequestIds.size());
+
     }
 }

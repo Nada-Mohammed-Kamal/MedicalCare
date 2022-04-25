@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,12 +18,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.medicalappreminder_java.Constants.EveryHowManyDaysWilltheMedBeTaken;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Keys;
 import com.example.medicalappreminder_java.Constants.Strength;
+import com.example.medicalappreminder_java.MedModification.Presenter.MedModifyPresenter;
+import com.example.medicalappreminder_java.MedModification.Presenter.MedModifyPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -34,74 +38,71 @@ import com.example.medicalappreminder_java.models.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class MedModifyActivity extends AppCompatActivity {
-    ImageView medImg;
+public class MedModifyActivity extends AppCompatActivity implements MedModifyActivityInterface {
+
     EditText txtMedName;
-    RecyclerView doseTimesRV;
-
     EditText txtNoOfDoses;
-
     EditText txtStartDate;
     EditText txtEndDate;
-    Spinner howOftenSpinner;
-
-    DosesAdapter adapter;
-
-
     EditText txtCondition;
-    EditText txtPrescription;
+    EditText txtCurrentlyHave;
+    EditText txtRemindMe;
     EditText txtInstructions;
     EditText txtStrength;
+
+    RecyclerView doseTimesRV;
+    DosesAdapter adapter;
+
+    ImageView medImg;
+
+    Spinner howOftenSpinner;
     Spinner medStrengthSpinner;
+    Spinner medTypeSpinner;
+
+    Switch pillReminderSwitch;
 
     Button btnDone;
 
-    Spinner medTypeSpinner;
-
     Medicine medicine;
+
+    MedModifyPresenterInterface presenter;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication_modification);
+
         Intent intent = getIntent();
         medicine = (Medicine) intent.getSerializableExtra(Keys.USER_MED);
 
+        presenter = new MedModifyPresenter(this, this, medicine);
+
+        Log.i("M3lsh", "onCreate: DosesSize: " + medicine.getDoseTimes().size());
         initUI();
         configureUI();
 
 
-        doseTimesRV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        adapter = new DosesAdapter(this, Integer.valueOf(txtNoOfDoses.getText().toString()), medicine);
-        doseTimesRV.setAdapter(adapter);
-
     }
 
-    private void initUI() {
-        medImg = findViewById(R.id.medImg);
-        txtMedName = findViewById(R.id.txtMedName);
-        doseTimesRV = findViewById(R.id.doseTimesRV);
-        txtNoOfDoses = findViewById(R.id.txtNoOfDoses);
+    private void initTextViews(){
+        txtMedName         = findViewById(R.id.txtMedName);
+        txtStartDate       = findViewById(R.id.txtStartDate);
+        txtEndDate         = findViewById(R.id.txtEndDate);
+        txtNoOfDoses       = findViewById(R.id.txtNoOfDoses);
+        txtCondition       = findViewById(R.id.txtCondition);
+        txtCurrentlyHave   = findViewById(R.id.txtCurrentlyHave);
+        txtRemindMe        = findViewById(R.id.txtRemindMe);
+        txtInstructions    = findViewById(R.id.txtInstructions);
+        txtStrength        = findViewById(R.id.txtEditStrength);
+    }
 
-        txtStartDate = findViewById(R.id.txtStartDate);
-        txtEndDate = findViewById(R.id.txtEndDate);
-        howOftenSpinner = findViewById(R.id.howOftenSpinner);
+    private void initSpinners() {
 
-        txtCondition = findViewById(R.id.txtCondition);
-        txtPrescription = findViewById(R.id.txtPrescription);
-        txtInstructions = findViewById(R.id.txtInstructions);
-
-        txtStrength = findViewById(R.id.txtEditStrength);
+        howOftenSpinner    = findViewById(R.id.howOftenSpinner);
         medStrengthSpinner = findViewById(R.id.medStrengthSpinner);
-
-        btnDone = findViewById(R.id.btnDone);
-        medTypeSpinner = findViewById(R.id.medTypeSpinner);
-
-        doseTimesRV.setVisibility(View.GONE);
+        medTypeSpinner     = findViewById(R.id.medTypeSpinner);
 
         ArrayAdapter<CharSequence> medTypeSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.MedTypes, android.R.layout.simple_spinner_item);
         medTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -114,7 +115,9 @@ public class MedModifyActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> howOftenSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.ChooseDayesOfDose, android.R.layout.simple_spinner_item);
         howOftenSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         howOftenSpinner.setAdapter(howOftenSpinnerAdapter);
+    }
 
+    private void initListeners(){
         txtNoOfDoses.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -150,28 +153,8 @@ public class MedModifyActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(MedModifyActivity.this);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,MedModifyActivity.this);
-                repoClass.updateMedicine(medicine);
-                SharedPreferences preferences = MedModifyActivity.this.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                for (Medicine oldMed:listOfMedications) {
-                    if(oldMed.getUuid().equals(medicine.getUuid())){
-                        listOfMedications.remove(oldMed);
-                        break;
-                    }
-                }
-                fillMedicineWithFormData();
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
-
-                Toast.makeText(MedModifyActivity.this, "Successfully Added !!", Toast.LENGTH_LONG).show();
-
+                presenter.editMedicineInDB();
+                Toast.makeText(MedModifyActivity.this, "Successfully Edited !!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -190,8 +173,34 @@ public class MedModifyActivity extends AppCompatActivity {
         });
     }
 
-    private void configureUI(){
-        medImg.setImageResource(medicine.getImage());
+    private void initRecyclerViews() {
+        doseTimesRV = findViewById(R.id.doseTimesRV);
+        doseTimesRV.setVisibility(View.GONE);
+    }
+
+    private void initImages() {
+        medImg = findViewById(R.id.medImg);
+    }
+
+    private void initButtons(){
+        btnDone = findViewById(R.id.btnDone);
+    }
+
+    private void initSwithces() {
+        pillReminderSwitch = findViewById(R.id.pillReminderSwitch);
+    }
+
+    private void initUI() {
+        initTextViews();
+        initSpinners();
+        initRecyclerViews();
+        initImages();
+        initButtons();
+        initSwithces();
+        initListeners();
+    }
+
+    private void configureTextViews(){
         txtMedName.setText(medicine.getName());
         txtNoOfDoses.setText(String.valueOf(medicine.getDoseTimes().size()));
 
@@ -199,19 +208,42 @@ public class MedModifyActivity extends AppCompatActivity {
         txtStartDate.setText(sdf.format(medicine.getStartDate()));
         txtEndDate.setText(sdf.format(medicine.getEndDate()));
 
-
-        txtPrescription.setText("I currently have " + medicine.getTotalNumOfPills() + " pills, remind me when I have " + medicine.getNumberOfPillsLeft() + " pills remaining.");
-
+        txtCurrentlyHave.setText(String.valueOf(medicine.getNumberOfPillsLeft()));
+        txtRemindMe.setText(String.valueOf(medicine.getRemindMeWhenIHaveHowManyPillsLeft()));
         txtCondition.setText(medicine.getCondition());
         txtInstructions.setText(medicine.getInstructions());
         txtStrength.setText(String.valueOf(medicine.getStrengthAmount()));
+    }
 
+    private void configureSpinners() {
         medStrengthSpinner.setSelection(medicine.getStrength().ordinal());
         medTypeSpinner.setSelection(medicine.getForm().ordinal());
         howOftenSpinner.setSelection(medicine.getDose_howOften().ordinal());
     }
 
-    private void fillMedicineWithFormData() {
+    private void configureImages() {
+        medImg.setImageResource(medicine.getImage());
+    }
+
+    private void configureRecyclerViews() {
+        doseTimesRV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        adapter = new DosesAdapter(this, Integer.valueOf(txtNoOfDoses.getText().toString()), medicine);
+        doseTimesRV.setAdapter(adapter);
+    }
+
+    private void configureSwitches(){
+        //pillReminderSwitch.setChecked(medicine.getHasRefillReminder());
+    }
+
+    private void configureUI(){
+        configureTextViews();
+        configureSpinners();
+        configureImages();
+        configureSwitches();
+        configureRecyclerViews();
+    }
+
+    public Medicine fillMedicineWithFormData(Medicine medicine) {
         medicine.setName(txtMedName.getText().toString());
         medicine.setForm(Form.valueOf(medTypeSpinner.getSelectedItem().toString()));
 
@@ -222,10 +254,18 @@ public class MedModifyActivity extends AppCompatActivity {
         medicine.setCondition(txtCondition.getText().toString());
 
         //Editing Date
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            medicine.setStartDate(sdf.parse(txtStartDate.getText().toString()));
+            medicine.setEndDate(sdf.parse(txtEndDate.getText().toString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+        medicine.setRemindMeWhenIHaveHowManyPillsLeft(Double.valueOf(txtRemindMe.getText().toString()));
+        medicine.setNumberOfPillsLeft(Double.valueOf(txtCurrentlyHave.getText().toString()));
         StringBuilder howOften = new StringBuilder(howOftenSpinner.getSelectedItem().toString());
-        for (int i=0 ; i<howOften.length() ; i++)
-        {
+        for (int i=0 ; i<howOften.length() ; i++) {
             if(howOften.charAt(i) == ' ')
                 howOften.setCharAt(i,'_');
         }
@@ -235,13 +275,14 @@ public class MedModifyActivity extends AppCompatActivity {
         medicine.setInstructions(txtInstructions.getText().toString());
 
         medicine.setDoseTimes(adapter.getDateList());
+
+        return medicine;
     }
 
     private int getMedTypeImage(Form medType) {
 
         int returnedImgID = R.mipmap.ic_launcher;
-        switch(medType.ordinal())
-        {
+        switch(medType.ordinal()) {
             case 0:
                 returnedImgID = R.drawable.pill;
                 break;

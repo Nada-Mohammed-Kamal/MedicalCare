@@ -99,8 +99,38 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 drugReminderPresenter.deleteMedicine();
                 Toast.makeText(getApplicationContext(), "deleteeed", Toast.LENGTH_SHORT).show();
+
+                // RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+                // LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
+                // RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
+
+                // SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+                // String userEmail = preferences.getString("emailKey" , "user email") ;
+                // User currentUser = repoClass.findUserByEmail(userEmail);
+                // List<Medicine> listOfMedications = currentUser.getListOfMedications();
+
+                // //ConcurrentModificationException while remove medicine
+                // for(Iterator<Medicine> med = listOfMedications.iterator();med.hasNext();){
+                //     Medicine removedMed = med.next();
+                //     if(removedMed.getUuid().equals(medicine.getUuid())) {
+                //         listOfMedications.remove(removedMed);
+                //         repoClass.deleteMedicine(medicine);
+
+
+                // Presenter Line ===============================================================================================================================
+                //         WorkerUtils.deleteAllRequestsFromWorkManagerByMed(medicine.getUuid());
+
+
+                //         break;
+                //     }
+                // }
+                // currentUser.setListOfMedications(listOfMedications);
+                // repoClass.updateUser(currentUser);
+                 finish();
+
             }
         });
     }

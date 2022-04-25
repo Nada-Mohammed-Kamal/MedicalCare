@@ -23,6 +23,7 @@ import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.Constants.Status;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 
+import com.example.medicalappreminder_java.Constants.WorkerUtils;
 import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
 
 import com.example.medicalappreminder_java.R;
@@ -285,6 +286,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 for(int i=0;i<doseTimes.size();i++){
                     if(doseTimes.get(i).equals(currentTime)){
                         doseTimes.get(i).setStatus(Status.Snooze);
+                        WorkerUtils.addRequestAfterSnooze(medicine, currentTime);
                         CustomTime newCustomTime = new CustomTime(doseTimes.get(i).getHour(),doseTimes.get(i).getMinute()+10);
                         doseTimes.add(i+1,newCustomTime);
                     }

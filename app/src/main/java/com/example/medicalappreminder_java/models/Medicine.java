@@ -89,6 +89,7 @@ public class Medicine implements Serializable {
 
     @ColumnInfo(name = "doseTimes")
     private List<CustomTime> doseTimes;
+
     @ColumnInfo(name = "hasRefillReminder")
     private boolean hasRefillReminder;
 
@@ -336,6 +337,12 @@ public class Medicine implements Serializable {
     public void setHasRefillReminder(boolean hasRefillReminder) {
         this.hasRefillReminder = hasRefillReminder;
     }
+
+    /*
+    public boolean getHasRefillReminder(){
+        return this.hasRefillReminder;
+    }
+    */
 
     public Date getTimeToShowTheReminderIn() {
         return timeToShowTheReminderIn;
