@@ -40,6 +40,7 @@ import com.example.medicalappreminder_java.HomeScreen.View.HomeScreenActivity.Ho
 public class MainActivity extends AppCompatActivity {
 
     String emailFromPref , passwordFromPref ;
+    MainActivityPresenter mainActivityPresenter;
     BroadcastReceiver broadcastReceiver;
     String TAG ="TAG";
     @Override
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
             broadcastReceiver = new NetworkChangeReceiver();
             registerNetworkBroadCastReceiver();
+
 
             //startActivity(new Intent(MainActivity.this  , LoginActivity.class));
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }else {
                 startActivity(new Intent(MainActivity.this, HomeScreen.class));
+                mainActivityPresenter = new MainActivityPresenter(MainActivity.this);
 //                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler(context);
 //                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
 //                repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
@@ -109,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     protected void registerNetworkBroadCastReceiver(){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
