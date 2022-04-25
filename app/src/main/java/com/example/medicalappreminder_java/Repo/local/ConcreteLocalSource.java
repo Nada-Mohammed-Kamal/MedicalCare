@@ -12,6 +12,9 @@ import com.example.medicalappreminder_java.roomdb.UserDao;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
+
 public class ConcreteLocalSource implements LocalSourceInterface {
     private UserDao userDao;
     private MedicineDao medicineDao;
@@ -20,10 +23,10 @@ public class ConcreteLocalSource implements LocalSourceInterface {
     List<User> allUsers;
     List<Medicine> activeMedicines;
     List<Medicine> inActiveMedicines;
+    Single<List<User>> singleUserList ;
 
     private static  ConcreteLocalSource localSource = null;
     //private LiveData<List<Movie>> storedMovies;
-
 
     public ConcreteLocalSource() {
     }
@@ -32,6 +35,7 @@ public class ConcreteLocalSource implements LocalSourceInterface {
         AppDatabase dataBase = AppDatabase.getDBInstance(context.getApplicationContext());
         userDao = dataBase.userDao();
         medicineDao = dataBase.medicineDao();
+        singleUserList = userDao.getAllUserSingleList() ;
         //storedMovies = dao.getAllUsers();
     }
 
@@ -119,6 +123,11 @@ public class ConcreteLocalSource implements LocalSourceInterface {
             }
         }).start();
         return allUsers;
+    }
+
+    @Override
+    public Single<List<User>> getAllUserSingleList() {
+        return singleUserList ;
     }
 
     //not implemented yet

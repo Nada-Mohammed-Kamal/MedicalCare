@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenter;
 import com.example.medicalappreminder_java.Login.LoginPresenter.LogInPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.SignUp.View.SignUpActivity;
+import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeReceiver;
 
 public class LoginActivity extends AppCompatActivity implements LogInViewInterface {
 
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
         setContentView(R.layout.activity_login);
 
         gettingIds();
+        initConnectionListener();
         getIncomingIntent() ;
 
         Toast.makeText(LoginActivity.this, "username : " + userName, Toast.LENGTH_SHORT).show();
@@ -71,6 +75,12 @@ public class LoginActivity extends AppCompatActivity implements LogInViewInterfa
                 startActivity(new Intent(LoginActivity.this , SignUpActivity.class));
             }
         });
+    }
+
+    private void initConnectionListener(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(new NetworkChangeReceiver(LoginActivity.this), intentFilter);
     }
 
     public String getIncomingIntent(){

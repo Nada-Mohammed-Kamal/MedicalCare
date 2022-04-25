@@ -15,6 +15,9 @@ import com.example.medicalappreminder_java.models.User;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
+
 public class RepoClass implements RepoInterface {
     Context context;
     RemoteSourceInterface remoteSourceInterface;
@@ -103,6 +106,11 @@ public class RepoClass implements RepoInterface {
     @Override
     public void updateUser(User user) {
         localSourceInterface.updateUser(user);
+    }
+
+    @Override
+    public Single<List<User>> getAllUserSingleList() {
+        return localSourceInterface.getAllUserSingleList();
     }
 
     @Override

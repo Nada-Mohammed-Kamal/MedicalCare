@@ -10,12 +10,18 @@ import com.example.medicalappreminder_java.models.User;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
+
 @Dao
 public interface UserDao {
 
     //User
     @Query("SELECT * FROM User")
     List<User> getAllUsers();
+
+    @Query("SELECT * FROM User")
+    Single<List<User>> getAllUserSingleList();
 
 /*
     @Query("SELECT * FROM User WHERE email IN (:userIds)")
