@@ -10,6 +10,8 @@ import com.example.medicalappreminder_java.models.User;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public interface RepoInterface {
 //    LiveData<List<Movie>> getAllMoviesFromDB();
 //
@@ -36,6 +38,7 @@ public interface RepoInterface {
     void insertUser(User user);
     void deleteUser(User user);
     void updateUser(User user);
+    public Single<List<User>> getAllUserSingleList() ;
 
 
     //remote
@@ -48,7 +51,7 @@ public interface RepoInterface {
     public void updateMedicineFromFireStore(Medicine oldMedicine , Medicine newMedicine) ;
     public void deleteUserFromFireStore(User user) ;
     public void deleteMedicineFromFireStore(Medicine medicine) ;
-//    public List<User> getUsersList() ;
+//  public List<User> getUsersList() ;
     public List<Medicine> getMedicinesList();
     public LiveData<List<Medicine>> getMedicineLiveData();
     public void setMedicineLiveData(LiveData<List<Medicine>> medicineLiveData);
