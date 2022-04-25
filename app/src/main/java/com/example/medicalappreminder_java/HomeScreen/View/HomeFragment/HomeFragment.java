@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenter;
-import com.example.medicalappreminder_java.HomeScreen.Presenter.AllMedPresenterInterface;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenter;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
@@ -28,6 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class HomeFragment extends Fragment implements OnMoviesClickListener,AllMedViewInterface{
 
@@ -69,44 +72,45 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-//        View calView = view.findViewById(R.id.calendarView);
-//        // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
-//        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
-//                // on below line we are adding a range
-//                // as start date and end date to our calendar.
-//                .range(startDate, endDate)
-//                // on below line we are providing a number of dates
-//                // which will be visible on the screen at a time.
-//                .datesNumberOnScreen(7)
-//
-//                // at last we are calling a build method
-//                // to build our horizontal recycler view.
-//                .build();
-//        // on below line we are setting calendar listener to our calendar view.
-//        horizontalCalendar.selectDate(selectedDate,true);
-//        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
-//
-//            @Override
-//            public void onDateSelected(java.util.Calendar d, int position) {
-//                horizontalCalendar.refresh();
-//                dateSelected = changeDateFormat(d.getTime());
-//                Log.e("date", "onDateSelected: "+dateSelected.toString());
-//
-//
-//            };
-//
+        View calView = view.findViewById(R.id.calendarView);
+        // on below line we are setting up our horizontal calendar view and passing id our calendar view to it.
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, calView.getId())
+                // on below line we are adding a range
+                // as start date and end date to our calendar.
+                .range(startDate, endDate)
+                // on below line we are providing a number of dates
+                // which will be visible on the screen at a time.
+                .datesNumberOnScreen(7)
+
+                // at last we are calling a build method
+                // to build our horizontal recycler view.
+                .build();
+        // on below line we are setting calendar listener to our calendar view.
+        horizontalCalendar.selectDate(selectedDate,true);
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+
+            @Override
+            public void onDateSelected(java.util.Calendar d, int position) {
+
+                d.add(Calendar.DATE, 1);
+                dateSelected = changeDateFormat(d.getTime());
+
+                Log.e("date", "onDateSelected: "+dateSelected.toString());
+                allPresenter.getMeds(dateSelected);
+
+            };
+
 //            @Override
 //            public boolean onDateLongClicked(Calendar date, int position) {
-//                horizontalCalendar.selectDate(date,true);
 //                dateSelected = changeDateFormat(selectedDate.getTime());
 //                Log.e("date", "onDateSelecte22d: "+dateSelected.toString());
 //                return super.onDateLongClicked(date, position);
 //            }
-//        });
+        });
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
-        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),new ArrayList<>(),this);
+        myAdapter = new AllMedAdapter(getContext(),new ArrayList<>(),new ArrayList<>(),this,allPresenter);
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -123,8 +127,6 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     @Override
     public void onStart() {
         super.onStart();
-
-
 
        dateSelected =  changeDateFormat(selectedDate.getTime());
 

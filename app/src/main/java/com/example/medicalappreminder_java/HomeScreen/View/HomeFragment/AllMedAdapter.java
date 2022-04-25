@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.HomeScreen.Presenter.HomeFragment.AllMedPresenterInterface;
 import com.example.medicalappreminder_java.R;
 import com.example.medicalappreminder_java.Repo.RepoClass;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
@@ -45,9 +47,10 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
     List<CustomTime> todayesTimesOfDoses;
     private List<Medicine> sectionMedicines;
     private List<List<Medicine>> allSectionsMedicines;
+    AllMedPresenterInterface allMedViewPresenter;
     Dialog dialog ;
     int count = 0;
-    public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener) {
+    public AllMedAdapter(Context context, ArrayList<Medicine> values, List<CustomTime>  todayesTimesOfDoses , OnMoviesClickListener onMoviesClickListener, AllMedPresenterInterface allMedViewPresenter) {
         this.context = context;
         this.medList = values;
         this.onMoviesClickListener = onMoviesClickListener;
@@ -55,6 +58,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
         this.todayesTimesOfDoses =  todayesTimesOfDoses;
         sectionMedicines = new ArrayList<>();
         allSectionsMedicines = new ArrayList<>();
+        this.allMedViewPresenter = allMedViewPresenter;
     }
 
     @Override
@@ -136,9 +140,9 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
         dialog.setContentView(R.layout.drug_notification_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button skipButton , takeButton , snoozeButton ;
+        ImageButton skipButton , takeButton , snoozeButton ;
         TextView timeTextView , drugNameTextView  ,drugDescrTextView ;
-        ImageView drugIconImageView ;
+        CircleImageView drugIconImageView ;
 
         skipButton = dialog.findViewById(R.id.dialogSkipButton) ;
         takeButton = dialog.findViewById(R.id.dialogTakeButton);
@@ -150,7 +154,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
 
         timeTextView.setText(currentTime.getHour()+":"+currentTime.getMinute());
         drugIconImageView.setImageResource(medicine.getImage());
-        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + ",take " +medicine.getForm();
+        String decMed = ""+ medicine.getStrengthAmount() + medicine.getStrength() + "\n\n " +medicine.getForm();
         drugNameTextView.setText(medicine.getName());
         drugDescrTextView.setText(decMed);
         skipButton.setOnClickListener(new View.OnClickListener() {
@@ -164,23 +168,8 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 }
                 medicine.setDoseTimes(doseTimes);
                 //presenter code
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-                repoClass.updateMedicine(medicine);
-                SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                for (Medicine oldMed:listOfMedications) {
-                    if(oldMed.getUuid().equals(medicine.getUuid())){
-                        listOfMedications.remove(oldMed);
-                        break;
-                    }
-                }
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+                allMedViewPresenter.updateMedicine(medicine);
+                allMedViewPresenter.updateUserWithNewMedData(medicine);
                 dialog.dismiss();
             }
         });
@@ -195,23 +184,8 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 }
                 medicine.setDoseTimes(doseTimes);
                 //presenter code
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-                repoClass.updateMedicine(medicine);
-                SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                for (Medicine oldMed:listOfMedications) {
-                    if(oldMed.getUuid().equals(medicine.getUuid())){
-                        listOfMedications.remove(oldMed);
-                        break;
-                    }
-                }
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+                allMedViewPresenter.updateMedicine(medicine);
+                allMedViewPresenter.updateUserWithNewMedData(medicine);
                 dialog.dismiss();
             }
         });
@@ -229,23 +203,8 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 //remove it when status snooze from work manager
                 medicine.setDoseTimes(doseTimes);
                 //presenter code
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
-                repoClass.updateMedicine(medicine);
-                SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                for (Medicine oldMed:listOfMedications) {
-                    if(oldMed.getUuid().equals(medicine.getUuid())){
-                        listOfMedications.remove(oldMed);
-                        break;
-                    }
-                }
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+                allMedViewPresenter.updateMedicine(medicine);
+                allMedViewPresenter.updateUserWithNewMedData(medicine);
                 dialog.dismiss();
             }
 

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myConstraintLayout"
         android:layout_width="match_parent"
@@ -15,55 +16,41 @@
             android:id="@+id/upperView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/teal_700"
+            android:background="#2196F3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/editDrugButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="52dp"
-            android:layout_height="49dp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/ic_baseline_edit_24"
-            android:backgroundTint="@color/teal_700"
-            android:textColor="#F8F4F4"
-            android:textSize="12sp"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_baseline_edit_24"
-            app:iconTint="@color/white"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="@+id/upperView"
             app:layout_constraintTop_toTopOf="@id/upperView"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:srcCompat="@drawable/ic_baseline_edit_24" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/deleteDrugButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:backgroundTint="@color/teal_700"
-            android:textColor="#F8F4F4"
-            android:textSize="12sp"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_baseline_delete_24"
-            app:iconTint="@color/white"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toStartOf="@+id/editDrugButton"
             app:layout_constraintTop_toTopOf="@id/upperView"
+            app:srcCompat="@drawable/ic_baseline_delete_24"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/reminderDrugIconImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="70dp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/pill"
             app:layout_constraintStart_toStartOf="@+id/upperView"
-            app:layout_constraintTop_toTopOf="@+id/upperView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/drugNameTextV"
@@ -73,6 +60,8 @@
             android:layout_marginTop="55dp"
             android:text="Panadol"
             android:textColor="#FFFFFF"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/reminderDrugIconImageView"
             app:layout_constraintTop_toTopOf="@+id/upperView" />
 
@@ -80,11 +69,11 @@
             android:id="@+id/drugStrenghtTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="1 mg"
             android:textColor="#FDFDFD"
-            app:layout_constraintStart_toEndOf="@+id/reminderDrugIconImageView"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="@+id/drugNameTextV"
             app:layout_constraintTop_toBottomOf="@+id/drugNameTextV" />
 
         <TextView
@@ -94,35 +83,31 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Reminders"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upperView" />
+
 
         <TextView
             android:id="@+id/howOftenTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:text="EveryDay,take for 7 days"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintStart_toStartOf="@+id/ReminderstextView"
             app:layout_constraintTop_toBottomOf="@+id/ReminderstextView" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/drugReminderRecycylerView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="230dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.02" />
+            app:layout_constraintStart_toStartOf="@+id/howOftenTextView"
+            app:layout_constraintTop_toBottomOf="@+id/howOftenTextView" />
 
         <TextView
             android:id="@+id/conditionJustTitle"
@@ -131,6 +116,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="Condition"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/drugReminderRecycylerView" />
@@ -142,6 +128,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Headache"
+            android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/conditionJustTitle" />
 
@@ -152,6 +139,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="Prescription Refill"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/conditionTextView" />
@@ -163,20 +151,24 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="No Refill Reminder"
+            android:textSize="@dimen/_13sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/PrescriptionRefillJustTitle" />
 
         <Button
             android:id="@+id/suspendButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:backgroundTint="@color/teal_700"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/radio_flat_selector"
             android:text="@string/suspend"
-            android:layout_margin="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/drugRefillTextView" />
 
