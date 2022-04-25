@@ -12,6 +12,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -97,4 +98,20 @@ public class Converters {
     public static String mapToString(List<CustomTime> value) {
         return value == null ? "" : new Gson().toJson(value);
     }
+
+//    @TypeConverter
+//    public String stringFromObject(List<User> list){
+//
+//        Gson gson = new Gson();
+//        String jsonString = gson.toJson(list);
+//        return jsonString;
+//
+//    }
+
+//    @TypeConverter
+//    public List<User> getObjectFromString(String jsonString){
+//        Type listType = new TypeToken<ArrayList<User>>(){}.getType();
+//        List<User> list = new Gson().fromJson(jsonString, listType);
+//        return list;
+//    }
 }

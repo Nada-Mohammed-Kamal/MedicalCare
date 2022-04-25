@@ -6,4 +6,7 @@ public interface AuthenticationHandlerInterface {
     public void signInWithEmailAndPassword(String email , String password) ;
     public void signOut() ;
     public void signInWithGoogle() ;
+
+
+
 }

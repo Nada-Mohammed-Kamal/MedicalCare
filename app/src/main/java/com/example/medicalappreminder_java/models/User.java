@@ -38,12 +38,34 @@ public class User {
     //String stringWIthListOfDependantEmails;
     List<User> listOfDependant;
     @ColumnInfo(name = "ListOfMedications")
+    List<User> listOfInvitations;
+
+    public List<User> getListOfInvitations() {
+        return listOfInvitations;
+    }
+
+    public void setListOfInvitations(List<User> listOfInvitations) {
+        this.listOfInvitations = listOfInvitations;
+    }
+
+    @ColumnInfo(name = "ListOfInvitations")
     //String stringWithListOfMedicationIds;
 
     List<Medicine> ListOfMedications;
     @ColumnInfo(name = "fireStoreId")
     private String fireStoreId;
 
+    public List<User> getMedFriend() {
+        return medFriend;
+    }
+
+    public void setMedFriend(List<User> medFriend) {
+        this.medFriend = medFriend;
+    }
+
+    @ColumnInfo(name = "medFriendId")
+    List<User> medFriend;
+    //String medFriendId;
 
     public String getFireStoreId() {
         return fireStoreId;

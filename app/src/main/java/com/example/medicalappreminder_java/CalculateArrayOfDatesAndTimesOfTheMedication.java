@@ -74,20 +74,25 @@ public class CalculateArrayOfDatesAndTimesOfTheMedication {
         return doseTimes;
     }
 
-    public List<Date> getDaysBetweenDates (Date startdate, Date enddate)
-        {
-            List<Date> dates = new ArrayList<>();
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(startdate);
+        public List<Date> getDaysBetweenDates (Date startDate, Date endDate) {
 
-            while (calendar.getTime().before(enddate)) {
-                Date result = calendar.getTime();
-                dates.add(result);
-                calendar.add(Calendar.DATE, 1);
-            }
-            return dates;
+
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.setTime(endDate);
+        myCalendar.add(Calendar.DATE, 1);
+        endDate = myCalendar.getTime();
+
+        List<Date> dates = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+
+        while (calendar.getTime().before(endDate)) {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
         }
-
+        return dates;
+    }
 
     public List<Date> getOnlyTheDaysToTakeTheMedInFromTheInterval(List<Date> list, EveryHowManyDaysWilltheMedBeTaken everyHowManyDaysWillTheMedBeTaken){
         List<Date> datesFiltered = new ArrayList<>();

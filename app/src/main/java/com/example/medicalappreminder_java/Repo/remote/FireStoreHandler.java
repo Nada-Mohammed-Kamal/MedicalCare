@@ -1,6 +1,7 @@
 package com.example.medicalappreminder_java.Repo.remote;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -37,48 +39,49 @@ public class FireStoreHandler implements RemoteSourceInterface {
 
     Context context;
     private FirebaseFirestore fireStoreDb;
-    private CollectionReference usersFirestoreDb, medicineFirestoreDb , userRef;
+    private CollectionReference usersFirestoreDb, medicineFirestoreDb, userRef;
     private String userCollectionName = "usersFirestoreDb", medicineCollectionName = "medicineFirestoreDb";
-    List<User> convertedUserList ;
+    List<User> convertedUserList;
     List<Medicine> convertedMedicineList;
     LiveData<List<User>> userLiveData;
     MutableLiveData<List<User>> user_mutable_live_data;
-    LiveData<List<Medicine>> medicineLiveData ;
-    MutableLiveData<List<Medicine>> medicine_mutable_live_data ;
-    PresenterInterface presenterInterface ;
+    LiveData<List<Medicine>> medicineLiveData;
+    MutableLiveData<List<Medicine>> medicine_mutable_live_data;
+    PresenterInterface presenterInterface;
     private FirebaseFirestore firebaseFirestore;
-    OnlineUsers onlineUsers ;
+    OnlineUsers onlineUsers;
+    String userEmail;
 
-    public FireStoreHandler(){
+    public FireStoreHandler() {
         fireStoreDb = FirebaseFirestore.getInstance();
 
-        convertedUserList = new ArrayList<>() ;
-        convertedMedicineList = new ArrayList<>() ;
+        convertedUserList = new ArrayList<>();
+        convertedMedicineList = new ArrayList<>();
 
-        user_mutable_live_data = new MutableLiveData<>() ;
-        userLiveData  = user_mutable_live_data;
+        user_mutable_live_data = new MutableLiveData<>();
+        userLiveData = user_mutable_live_data;
 
-        medicine_mutable_live_data = new MutableLiveData<>() ;
-        medicineLiveData = medicine_mutable_live_data ;
+        medicine_mutable_live_data = new MutableLiveData<>();
+        medicineLiveData = medicine_mutable_live_data;
     }
 
-    public FireStoreHandler(Context context ) {
+    public FireStoreHandler(Context context) {
 
-        this.context = context ;
+        this.context = context;
         fireStoreDb = FirebaseFirestore.getInstance();
 
-        convertedUserList = new ArrayList<>() ;
-        convertedMedicineList = new ArrayList<>() ;
+        convertedUserList = new ArrayList<>();
+        convertedMedicineList = new ArrayList<>();
 
-        user_mutable_live_data = new MutableLiveData<>() ;
-        userLiveData  = user_mutable_live_data;
+        user_mutable_live_data = new MutableLiveData<>();
+        userLiveData = user_mutable_live_data;
 
-        medicine_mutable_live_data = new MutableLiveData<>() ;
-        medicineLiveData = medicine_mutable_live_data ;
+        medicine_mutable_live_data = new MutableLiveData<>();
+        medicineLiveData = medicine_mutable_live_data;
     }
 
     @Override
-    public void addUserToFireStore(User user ) {
+    public void addUserToFireStore(User user) {
 
         // ***** add validation to presenter *****
         /*
@@ -149,7 +152,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void getUsersFromFireStore(OnlineUsers onlineUsers , OnRespondToMethod method) {
+    public void getUsersFromFireStore(OnlineUsers onlineUsers, OnRespondToMethod method) {
         fireStoreDb.collection(userCollectionName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -158,7 +161,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
                     for (DocumentSnapshot documentSnapshot : userDocumentSnapshotList) {
                         User user = documentSnapshot.toObject(User.class);
                         user.setFireStoreId(documentSnapshot.getId());
-                        convertedUserList.add(user) ;
+                        convertedUserList.add(user);
                         Log.e("TAG", "onSuccess: " + user.getFireStoreId());
 //                       RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
 //                        LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
@@ -173,7 +176,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 //                        onlineUsers.setOnlineUserList(convertedUserList);
 //                        user_mutable_live_data.setValue(convertedUserList);
                     }
-                    onlineUsers.onResponse(convertedUserList , method);
+                    onlineUsers.onResponse(convertedUserList, method);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -212,7 +215,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void updateUserFromFireStore(User oldUser , User newUser){
+    public void updateUserFromFireStore(User oldUser, User newUser) {
         fireStoreDb.collection(userCollectionName).document(oldUser.getUuid()).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -222,7 +225,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void updateMedicineFromFireStore(Medicine oldMedicine , Medicine newMedicine){
+    public void updateMedicineFromFireStore(Medicine oldMedicine, Medicine newMedicine) {
         fireStoreDb.collection(medicineCollectionName).document(oldMedicine.getUuid()).set(newMedicine).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -232,11 +235,11 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void deleteUserFromFireStore(User user){
+    public void deleteUserFromFireStore(User user) {
         fireStoreDb.collection(userCollectionName).document(user.getUuid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     //Toast.makeText(context, "user deleted", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -244,11 +247,11 @@ public class FireStoreHandler implements RemoteSourceInterface {
     }
 
     @Override
-    public void deleteMedicineFromFireStore(Medicine medicine){
+    public void deleteMedicineFromFireStore(Medicine medicine) {
         fireStoreDb.collection(medicineCollectionName).document(medicine.getUuid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     //Toast.makeText(context, "medicine deleted", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -261,7 +264,7 @@ public class FireStoreHandler implements RemoteSourceInterface {
 //    }
 
     @Override
-    public List<Medicine> getMedicinesList(){
+    public List<Medicine> getMedicinesList() {
         return convertedMedicineList;
     }
 
@@ -283,6 +286,48 @@ public class FireStoreHandler implements RemoteSourceInterface {
     @Override
     public void setUserLiveData(LiveData<List<User>> userLiveData) {
         this.userLiveData = userLiveData;
+    }
+
+    @Override
+    public void listenToInvitation(User user) {
+        int x = 10;
+        // TODO : use the constructor with the context instead of the empty one;;;
+
+
+//        SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+//        userEmail = preferences.getString("emailKey" , "user email") ;
+
+        fireStoreDb.collection(userCollectionName)/*.document(user.getUuid())*/
+                .whereEqualTo("uuid", user.getUuid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+
+                        Log.e("TAG", "onEvent: " );
+//                        if (e != null) {
+//                            Log.w("TAG", "listen:error", e);
+//                            return;
+//                        }
+//
+//                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+//                            switch (dc.getType()) {
+//                                case ADDED:
+//                                    Log.d("TAG", "New city: " + dc.getDocument().getData());
+//                                    break;
+//                                case MODIFIED:
+//                                    Log.d("TAG", "Modified city: " + dc.getDocument().getData());
+//                                    break;
+//                                case REMOVED:
+//                                    Log.d("TAG", "Removed city: " + dc.getDocument().getData());
+//                                    break;
+//                            }
+//                        }
+
+                        Log.e("TAGNadaMohammedKamal", "onEvent: " + snapshots );
+                    }
+                });
+
     }
 }
 

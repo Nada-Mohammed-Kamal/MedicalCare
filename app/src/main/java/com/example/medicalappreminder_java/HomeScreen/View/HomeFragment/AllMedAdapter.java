@@ -231,6 +231,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                     }
                 }
                 medicine.setDoseTimes(doseTimes);
+                medicine.setTotalNumOfPills(medicine.getTotalNumOfPills()- 1);
                 //presenter code
 
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
@@ -243,6 +244,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 List<Medicine> listOfMedications = currentUser.getListOfMedications();
                 for (Medicine oldMed:listOfMedications) {
                     if(oldMed.getUuid().equals(medicine.getUuid())){
+                        medicine.setTotalNumOfPills(medicine.getTotalNumOfPills()- 1);
                         listOfMedications.remove(oldMed);
                         break;
                     }
