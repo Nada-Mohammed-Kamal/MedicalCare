@@ -44,6 +44,7 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
     String userName;
     PresenterInterface presenterInterface;
     boolean dataOfDependentChanged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +80,10 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
         BottomNavigationView navView = findViewById(R.id.bottomnavigation);
         NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(navView, navController2);
-
         findViewById(R.id.ExtendedFloatingActionButtonAddMed).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeScreen.this , AddMedicine.class));
-
             }
         });
         Menu mMenu = navigationView.getMenu();
@@ -189,4 +188,3 @@ public class HomeScreen extends AppCompatActivity implements HomeScreenInterface
 
     }
 }
-

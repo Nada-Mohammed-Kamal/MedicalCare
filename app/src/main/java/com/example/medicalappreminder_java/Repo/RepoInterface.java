@@ -2,6 +2,8 @@ package com.example.medicalappreminder_java.Repo;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
+import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 
@@ -40,13 +42,13 @@ public interface RepoInterface {
     //put here the methods that are in the Remote source interface
     public void addUserToFireStore(User user) ;
     public void addMedicineToFireStore(Medicine medicine) ;
-    public void getUsersFromFireStore() ;
+    public void getUsersFromFireStore(OnlineUsers onlineUsers , OnRespondToMethod method) ;
     public void getMedicinesFromFireStore() ;
     public void updateUserFromFireStore(User oldUser , User newUser) ;
     public void updateMedicineFromFireStore(Medicine oldMedicine , Medicine newMedicine) ;
     public void deleteUserFromFireStore(User user) ;
     public void deleteMedicineFromFireStore(Medicine medicine) ;
-    public List<User> getUsersList() ;
+//    public List<User> getUsersList() ;
     public List<Medicine> getMedicinesList();
     public LiveData<List<Medicine>> getMedicineLiveData();
     public void setMedicineLiveData(LiveData<List<Medicine>> medicineLiveData);

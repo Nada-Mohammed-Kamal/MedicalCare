@@ -1,5 +1,7 @@
 package com.example.medicalappreminder_java.AddMedicine.Presenter;
 
-public interface AddMedicinePresenterInterface {
+import com.example.medicalappreminder_java.models.Medicine;
 
+public interface AddMedicinePresenterInterface {
+    void addMedTOCurrentUser(Medicine medicine);
 }

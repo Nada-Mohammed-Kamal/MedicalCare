@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,20 +109,10 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
                 user.setBirthdate( date_selected);
                 String selectedGender = getSelectedGender();
                 user.setGender(selectedGender);
-                user.setUuid(UUID.randomUUID());
-                depInfoPresenter.addDependant(user);
-                //------------------------------------- Presenter imp --------------------------------------
-                List<User> dependents = new ArrayList<>();
-                dependents.add(user);
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<User> listOfDependant = currentUser.getListOfDependant();
-                currentUser.setListOfDependant(dependents);
-                repoClass.updateUser(currentUser);
-                List<User> listOfDependant2 = currentUser.getListOfDependant();
+                user.setUuid(UUID.randomUUID().toString());
 
+                depInfoPresenter.addDependant(user);
+                depInfoPresenter.addDependantToTheCurrentUser(user , context , userEmail);
                 Navigation.findNavController(view).navigate(R.id.actionGoToHome);
             }
         });
@@ -175,5 +166,17 @@ public class DependentInfoFragment extends Fragment implements ViewInterface {
     @Override
     public void viewToastAddedDependantSuccessfully() {
         Toast.makeText(this.getContext(), "Dependant added successfully" , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setUsers(List<User> userList) {
+        // set users
+        Log.e("asdfg:", userList.toString());
+    }
+
+    @Override
+    public void responseError(String error) {
+        // show error msg
+        Log.e("asdfg:", error);
     }
 }

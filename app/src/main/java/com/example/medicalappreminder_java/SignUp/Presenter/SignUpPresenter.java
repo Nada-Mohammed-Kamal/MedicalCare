@@ -1,6 +1,7 @@
 package com.example.medicalappreminder_java.SignUp.Presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
 import com.example.medicalappreminder_java.DataStorage.SharedPrefrencesModel;
@@ -77,11 +78,10 @@ public class SignUpPresenter implements SignUpPresenterInterafce {
 
         //User user = new User(userName, email, new ArrayList<User>());
         User user = new User(userName, email);
+        SharedPreferences preferences = context.getSharedPreferences(SharedPrefrencesModel.preferenceFile , Context.MODE_PRIVATE) ;
+        String UUIDFromPref = preferences.getString("UUID_Key","N/A") ;
+        user.setUuid(UUIDFromPref);
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-
-
-
-
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
         repoClass.insertUser(user);

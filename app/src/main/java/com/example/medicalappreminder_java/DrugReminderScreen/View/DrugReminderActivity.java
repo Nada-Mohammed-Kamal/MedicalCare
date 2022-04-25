@@ -55,6 +55,7 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
     TextView drugNameTextView , drugStrengthTextView , howOftenTextView
             , conditionTextView , refillTextView;
 
+
     RecyclerView drugReminderRecyclerView ;
     DrugReminderAdapter drugReminderAdapter ;
     Medicine medicine;
@@ -67,8 +68,9 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug_reminder);
 
-        Intent intent = getIntent();
-        medicine = (Medicine) intent.getSerializableExtra(Keys.USER_MED);
+
+        // get medecine from get intent
+        getMedicineFromIntent() ;
 
         settingIds();
         drugReminderPresenter = new DrugReminderPresenter(this , this) ;
@@ -76,34 +78,13 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
 
 
         // replace number with remind me when i have
-        refillTextView.setText(medicine.getNumberOfPillsLeft()+" Pills left \nRefill Reminder: when i have " + medicine.getRemindMeWhenIHaveHowManyPillsLeft() + " Pills Left"  );
-        drugIconImageView.setImageResource(medicine.getImage());
-        drugNameTextView.setText(medicine.getName());
-        drugStrengthTextView.setText(medicine.getStrengthAmount()+" "+ medicine.getStrength().toString());
-        howOftenTextView.setText(medicine.getDose_howOften().toString());
-        conditionTextView.setText(medicine.getCondition());
+        setUI();
+
         suspendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //***************************************** presenter code **************************
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
-
-                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                for (Medicine med:listOfMedications) {
-                    if(med.getUuid().equals(medicine.getUuid())) {
-                        listOfMedications.remove(med);
-                        medicine.setState("Inactive");
-                        repoClass.updateMedicine(medicine);
-                    }
-                }
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+                drugReminderPresenter.suspendMedicine();
             }
         });
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -118,26 +99,8 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(DrugReminderActivity.this);
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,DrugReminderActivity.this);
-
-                SharedPreferences preferences = getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-
-                //ConcurrentModificationException while remove medicine
-                for(Iterator<Medicine> med = listOfMedications.iterator();med.hasNext();){
-                    Medicine removedMed = med.next();
-                    if(removedMed.getUuid().equals(medicine.getUuid())) {
-                        listOfMedications.remove(removedMed);
-                        repoClass.deleteMedicine(medicine);
-                        break;
-                    }
-                }
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+                drugReminderPresenter.deleteMedicine();
+                Toast.makeText(getApplicationContext(), "deleteeed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -154,6 +117,15 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
 
     }
 
+    public void setUI(){
+        refillTextView.setText(medicine.getNumberOfPillsLeft()+" Pills left \nRefill Reminder: when i have " + medicine.getRemindMeWhenIHaveHowManyPillsLeft() + " Pills Left"  );
+        drugIconImageView.setImageResource(medicine.getImage());
+        drugNameTextView.setText(medicine.getName());
+        drugStrengthTextView.setText(medicine.getStrengthAmount()+" "+ medicine.getStrength().toString());
+        howOftenTextView.setText(medicine.getDose_howOften().toString());
+        conditionTextView.setText(medicine.getCondition());
+    }
+
     public void settingRecyclerView(){
 
         //Log.e("list11", "settingRecyclerView: " + listOdMedicines.get(2).getName());
@@ -166,6 +138,13 @@ public class DrugReminderActivity extends AppCompatActivity implements DrugRemin
         drugReminderRecyclerView.setAdapter(drugReminderAdapter);
     }
 
+
+    @Override
+    public Medicine getMedicineFromIntent() {
+        Intent intent = getIntent();
+        medicine = (Medicine) intent.getSerializableExtra(Keys.USER_MED);
+        return medicine;
+    }
 
     @Override
     public void setDrugNameTextView() {

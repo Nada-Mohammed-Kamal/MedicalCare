@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 public class SharedPrefrencesModel {
 
-    String emailFromPref , passwordFromPref  , userNameFromPref;
+    String emailFromPref , passwordFromPref  , userNameFromPref , UUIDFromPref;
     public static final String preferenceFile = "preferencesFile";
     Context context ;
     public static  SharedPrefrencesModel sharedPrefrencesModel = null ;
@@ -38,6 +38,13 @@ public class SharedPrefrencesModel {
         editor.commit() ;
     }
 
+    public void writeInSharedPreferences(String UUID){
+        SharedPreferences preferences = context.getSharedPreferences(preferenceFile , Context.MODE_PRIVATE) ;
+        SharedPreferences.Editor editor = preferences.edit() ;
+        editor.putString("UUID_Key" , UUID) ;
+        editor.commit() ;
+    }
+
 
 
     public void readFromSharedPreferences(){
@@ -45,6 +52,12 @@ public class SharedPrefrencesModel {
         emailFromPref = preferences.getString("emailKey","N/A");
         passwordFromPref = preferences.getString("passwordKey" , "N/A");
         userNameFromPref = preferences.getString("userNameKey","N/A") ;
+    }
+
+    public String readUUIDFromSharedPreferences(){
+        SharedPreferences preferences = context.getSharedPreferences(preferenceFile , Context.MODE_PRIVATE) ;
+       UUIDFromPref = preferences.getString("UUID_Key","N/A") ;
+       return UUIDFromPref ;
     }
 
     public String getEmailFromPref() {

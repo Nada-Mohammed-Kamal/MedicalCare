@@ -27,15 +27,17 @@ import com.example.medicalappreminder_java.Constants.Strength;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 
 import com.example.medicalappreminder_java.R;
+import com.example.medicalappreminder_java.models.CustomTime;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
-public class NotificationDialogActivity extends AppCompatActivity implements Serializable {
+public class NotificationDialogActivity extends AppCompatActivity implements Serializable /*, OnlineUsers*/ {
 
     Button openDialogeButton  , notifyButton , storeButton , getButton , updateButton , deleteButton ;
     TextView userName , medName ;
@@ -46,7 +48,7 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     User user ;
     Medicine medicine ;
-    //List<User> usersList ;
+    List<User> usersList ;
     //List<Medicine> medicinesList ;
 
     @Override
@@ -57,7 +59,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         init();
         settingUserDetails();
         settingMedicineDetails();
-        setObservers();
+
+        //setObservers();
+
         
         //fireStoreHandler.getUsersFromFireStore();
 
@@ -74,8 +78,11 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "gettttt", Toast.LENGTH_SHORT).show();
-                fireStoreHandler.getUsersFromFireStore();
-                fireStoreHandler.getMedicinesFromFireStore() ;
+//                fireStoreHandler.getUsersFromFireStore();
+//                fireStoreHandler.getMedicinesFromFireStore() ;
+                if (usersList.size() > 0){
+                    userName.setText(usersList.get(0).getFirstName());
+                }
             }
         });
 
@@ -96,29 +103,29 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     }
 
-    public void setObservers(){
-        // in fragment only : getLifecycleOwner
-        // removeObservers and pass life cycle owner
-        fireStoreHandler.getUserLiveData().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> userList) {
-                // set ui
-                if (userList.size() > 0){
-                    userName.setText(userList.get(0).getFirstName());
-                }
-                //medName.setText(medicinesList.get(0).getName());
-            }
-        });
-
-        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
-            @Override
-            public void onChanged(List<Medicine> medicinesList) {
-                if (medicinesList.size() > 0){
-                    medName.setText(medicinesList.get(0).getName());
-                }
-            }
-        });
-    }
+//    public void setObservers(){
+//        // in fragment only : getLifecycleOwner
+//        // removeObservers and pass life cycle owner
+//        fireStoreHandler.getUserLiveData().observe(this, new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(List<User> userList) {
+//                // set ui
+//                if (userList.size() > 0){
+//                    userName.setText(userList.get(0).getFirstName());
+//                }
+//                //medName.setText(medicinesList.get(0).getName());
+//            }
+//        });
+//
+//        fireStoreHandler.getMedicineLiveData().observe(this, new Observer<List<Medicine>>() {
+//            @Override
+//            public void onChanged(List<Medicine> medicinesList) {
+//                if (medicinesList.size() > 0){
+//                    medName.setText(medicinesList.get(0).getName());
+//                }
+//            }
+//        });
+//    }
 
     public void init(){
         notifyButton = findViewById(R.id.notifyButton) ;
@@ -135,9 +142,10 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
 
     public void settingUserDetails(){
         user = new User();
-        user.setFirstName("ahmeddddd");
+        user.setFirstName("samiiir");
         user.setLastName("mostafa");
         user.setGender("male");
+        user.setEmail("nada@gmail.com");
 
     }
 
@@ -146,10 +154,8 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         //medicine = new Medicine() ;
         //medicine.setDose_howOften("every 2 days ");
 
-        Medicine medicine = new Medicine() ;
-        medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
-
-        medicine.setName("zzzzzzz");
+        medicine = new Medicine();
+        medicine.setName("adol");
         medicine.setHowManyTimesWillItBeTakenInADay(2);
         medicine.setCondition("headacheeeeeee");
         medicine.setInstructions("instructions");
@@ -161,6 +167,14 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         medicine.setHasRefillReminder(true);
         medicine.setTotalNumOfPills(20);
         medicine.setImage(R.drawable.inhaler);
+        List<Date> dates = new ArrayList<>();
+        dates.add(new Date(2-4-2020));
+        dates.add(new Date(5-4-2020));
+        medicine.setDaysThatTheMedWillBeTakenIn(dates);
+        List<CustomTime> customTimes = new ArrayList<>();
+        customTimes.add(new CustomTime(3,30));
+        customTimes.add(new CustomTime(5,30));
+        medicine.setDoseTimes(customTimes);
         medicine.setDose_howOften(EveryHowManyDaysWilltheMedBeTaken.Every_day);
         medicine.setEveryday(true);
     }
@@ -217,5 +231,9 @@ public class NotificationDialogActivity extends AppCompatActivity implements Ser
         }
     }
 
+//    @Override
+//    public void setOnlineUserList(List<User> convertedUserList) {
+//        usersList = convertedUserList ;
+//    }
 }
 

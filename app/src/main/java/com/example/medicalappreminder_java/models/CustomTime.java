@@ -18,12 +18,16 @@ public class CustomTime implements Serializable,Comparable<CustomTime> {
         this.status = Status.notItsTimeYet;
     }
 
+
     public CustomTime(CustomTime ct)
     {
         super();
         this.hour = ct.hour;
         this.minute = ct.minute;
         this.status = ct.status;
+
+    public CustomTime() {
+
     }
 
     public int getHour() {

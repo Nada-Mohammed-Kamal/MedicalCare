@@ -27,6 +27,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.medicalappreminder_java.AddMedicine.Presenter.AddMedicinePresenter;
+import com.example.medicalappreminder_java.AddMedicine.Presenter.AddMedicinePresenterInterface;
+import com.example.medicalappreminder_java.AddMedicine.View.AddMedicineViewInterface;
 import com.example.medicalappreminder_java.CalculateArrayOfDatesAndTimesOfTheMedication;
 import com.example.medicalappreminder_java.Constants.Form;
 import com.example.medicalappreminder_java.Constants.Status;
@@ -54,9 +57,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class ThirdAddMedScreen extends Fragment {
+public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterface {
 
     ThirdAddMedScreenArgs thirdAddMedScreenArgs;
+    AddMedicinePresenterInterface addMedicinePresenterInterface;
 
     CardView cardView;
     CardView cardViewAddInstraction;
@@ -185,6 +189,7 @@ public class ThirdAddMedScreen extends Fragment {
                         data.getHowManyTimes(),moreInstraction,"Active", data.getCustomTimes(),
                         hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
+
                 RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
                 LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
                 RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
@@ -196,7 +201,7 @@ public class ThirdAddMedScreen extends Fragment {
                 listOfMedications.add(medicine);
                 currentUser.setListOfMedications(listOfMedications);
                 repoClass.updateUser(currentUser);
-               
+
                 Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
 
 
@@ -205,6 +210,11 @@ public class ThirdAddMedScreen extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "WorkManager Request Added !!", Toast.LENGTH_LONG).show();
                 getActivity().finish();
 
+
+
+                // hereeee
+              //  addMedicinePresenterInterface = new AddMedicinePresenter(getContext(),ThirdAddMedScreen.this , ThirdAddMedScreen.this);
+              //  addMedicinePresenterInterface.addMedTOCurrentUser(medicine);
 
 
             }
@@ -229,5 +239,12 @@ public class ThirdAddMedScreen extends Fragment {
 
         chooseEatingRadioGroup = view.findViewById(R.id.chooseEatingRadioGroup);
 
+    }
+
+    @Override
+    public void viewThatTheMedIsAddedSuccessfully() {
+        //Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+        //getActivity().finish();
+        //a5rog mn add med hena
     }
 }

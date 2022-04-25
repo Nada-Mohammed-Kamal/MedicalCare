@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.medicalappreminder_java.Repo.RepoClass;
+import com.example.medicalappreminder_java.Repo.RepoInterface;
 import com.example.medicalappreminder_java.Repo.local.ConcreteLocalSource;
 import com.example.medicalappreminder_java.Repo.local.LocalSourceInterface;
 import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
@@ -26,7 +27,7 @@ public class ActiveInactivePresenter implements PresenterInterface {
     public List<Medicine> getCurrentUserMeds() {
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+        RepoInterface repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
         SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
         String userEmail = preferences.getString("emailKey" , "user email") ;
         User currentUser = repoClass.findUserByEmail(userEmail);
