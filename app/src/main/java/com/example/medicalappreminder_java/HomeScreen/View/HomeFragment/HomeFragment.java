@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*
+
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment implements OnMoviesClickListener,AllM
 //            }
         });
 
-*/
+
 
 
         recyclerView = view.findViewById(R.id.recyclerViewAllMed);
