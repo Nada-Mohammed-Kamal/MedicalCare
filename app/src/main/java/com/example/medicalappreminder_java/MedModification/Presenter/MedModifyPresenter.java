@@ -50,7 +50,7 @@ public class MedModifyPresenter implements MedModifyPresenterInterface{
         WorkerUtils.deleteAllRequestsFromWorkManagerByMed(UUID.fromString(medicine.getUuid()));
 
         Medicine newMed = view.fillMedicineWithFormData(medicine);
-
+        repoClass.addMedicineToFireStore(medicine);
         WorkerUtils.addRequestsToWorkManager(newMed);
 
         listOfMedications.add(newMed);
