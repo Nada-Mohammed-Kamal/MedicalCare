@@ -9,10 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
+
 
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -190,33 +187,33 @@ public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterf
                         hasRefillRemind, pillLeftReminderNum, calculate.getDates());
 
 
-                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
-                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
-                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
-                repoClass.insertMedicine(medicine);
-                SharedPreferences preferences = getActivity().getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
-                String userEmail = preferences.getString("emailKey" , "user email") ;
-                User currentUser = repoClass.findUserByEmail(userEmail);
-                List<Medicine> listOfMedications = currentUser.getListOfMedications();
-                listOfMedications.add(medicine);
-                currentUser.setListOfMedications(listOfMedications);
-                repoClass.updateUser(currentUser);
+//                RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
+//                LocalSourceInterface localSourceInterface = new ConcreteLocalSource(getContext());
+//                RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,getContext());
+//                repoClass.insertMedicine(medicine);
+//                SharedPreferences preferences = getActivity().getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
+//                String userEmail = preferences.getString("emailKey" , "user email") ;
+//                User currentUser = repoClass.findUserByEmail(userEmail);
+//                List<Medicine> listOfMedications = currentUser.getListOfMedications();
+//                listOfMedications.add(medicine);
+//                currentUser.setListOfMedications(listOfMedications);
+//                repoClass.updateUser(currentUser);
 
-                Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
 
 
                 WorkerUtils.addRequestsToWorkManager(medicine);
 
-                Toast.makeText(getActivity().getApplicationContext(), "WorkManager Request Added !!", Toast.LENGTH_LONG).show();
-                getActivity().finish();
+                //Toast.makeText(getActivity().getApplicationContext(), "WorkManager Request Added !!", Toast.LENGTH_LONG).show();
+
 
 
 
                 // hereeee
-              //  addMedicinePresenterInterface = new AddMedicinePresenter(getContext(),ThirdAddMedScreen.this , ThirdAddMedScreen.this);
-              //  addMedicinePresenterInterface.addMedTOCurrentUser(medicine);
+              addMedicinePresenterInterface = new AddMedicinePresenter(getContext(),ThirdAddMedScreen.this , ThirdAddMedScreen.this);
+              addMedicinePresenterInterface.addMedTOCurrentUser(medicine);
 
-
+                //getActivity().finish();
             }
         });
 
@@ -244,7 +241,7 @@ public class ThirdAddMedScreen extends Fragment implements AddMedicineViewInterf
     @Override
     public void viewThatTheMedIsAddedSuccessfully() {
         //Toast.makeText(getActivity(),"Med added",Toast.LENGTH_SHORT).show();
-        //getActivity().finish();
+        getActivity().finish();
         //a5rog mn add med hena
     }
 }
