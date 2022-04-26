@@ -274,6 +274,7 @@ public class MedModifyActivity extends AppCompatActivity implements MedModifyAct
         medicine.setHowManyTimesWillItBeTakenInADay(Integer.valueOf(txtNoOfDoses.getText().toString()));
         medicine.setInstructions(txtInstructions.getText().toString());
 
+        medicine.setState("Active");
         medicine.setDoseTimes(adapter.getDateList());
 
         return medicine;

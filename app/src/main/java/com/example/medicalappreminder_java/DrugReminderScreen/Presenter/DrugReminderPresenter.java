@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.work.WorkManager;
+
 import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
+import com.example.medicalappreminder_java.Constants.WorkerUtils;
 import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderActivity;
 import com.example.medicalappreminder_java.DrugReminderScreen.View.DrugReminderViewInterface;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
@@ -19,6 +22,7 @@ import com.example.medicalappreminder_java.networkConnectivity.NetworkChangeRece
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 public class DrugReminderPresenter implements DrugReminderPresenterInterface, OnlineUsers {
 
@@ -52,10 +56,12 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
         Iterator<Medicine> iterator = listOfMedications.iterator();
         while (iterator.hasNext()) {
             Medicine med = iterator.next();
-            if (med.getUuid().equals(medicine.getUuid()))
+            if (med.getUuid().equals(medicine.getUuid())) {
+                WorkerUtils.deleteAllRequestsFromWorkManagerByMed(UUID.fromString(medicine.getUuid()));
                 listOfMedications.remove(med);
                 medicine.setState("Inactive");
                 repoClass.updateMedicine(medicine);
+            }
         }
 
         listOfMedications.add(medicine);
@@ -116,6 +122,7 @@ public class DrugReminderPresenter implements DrugReminderPresenterInterface, On
             if (removedMed.getUuid().equals(medicine.getUuid())) {
                 listOfMedications.remove(removedMed);
                 repoClass.deleteMedicine(medicine);
+                WorkerUtils.deleteAllRequestsFromWorkManagerByMed(UUID.fromString(medicine.getUuid()));
                 break;
             }
         }

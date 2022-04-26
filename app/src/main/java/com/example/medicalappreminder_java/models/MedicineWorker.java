@@ -69,7 +69,7 @@ public class MedicineWorker extends Worker {
 
             Log.i("M3lsh", "doWork: ");
             OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MedicineWorker.class)
-                    .setInitialDelay(howOften, TimeUnit.DAYS)
+                    .setInitialDelay(10, TimeUnit.SECONDS)
                     .setInputData(getInputData())
                     .build();
 
@@ -96,6 +96,7 @@ public class MedicineWorker extends Worker {
                 .setSmallIcon(imgID)
                 .setContentTitle(task)
                 .setContentText(desc)
+
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());

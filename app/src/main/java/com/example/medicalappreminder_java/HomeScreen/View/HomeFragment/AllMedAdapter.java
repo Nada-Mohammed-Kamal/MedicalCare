@@ -1,10 +1,13 @@
 package com.example.medicalappreminder_java.HomeScreen.View.HomeFragment;
 
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -132,6 +137,34 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
         count = 0;
         allSectionsMedicines.clear();
     }
+    private void displayNotification (String id, String task, String  desc, int imgID){
+
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = channelName;
+            NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(imgID)
+                .setContentTitle(task)
+                .setContentText(desc)
+
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(Integer.valueOf(id), builder.build());
+
+        Log.i("M3lsh", "displaying notification" );
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView medIcon;
         TextView medTime;
@@ -200,6 +233,13 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 for (CustomTime customTime:doseTimes) {
                     if(customTime.equals(currentTime)){
                         customTime.setStatus(Status.Take);
+                        Double pillsLeft = medicine.getNumberOfPillsLeft();
+
+                        medicine.setNumberOfPillsLeft(pillsLeft - 1);
+                        if (pillsLeft - 1 <= medicine.getRemindMeWhenIHaveHowManyPillsLeft())
+                        {
+                            displayNotification(String.valueOf(Integer.MAX_VALUE/2), "Refill Reminder", "Don't forget to refill your " + medicine.getName(), medicine.getImage());
+                        }
                     }
                 }
                 medicine.setDoseTimes(doseTimes);
@@ -207,6 +247,7 @@ public class AllMedAdapter extends SectionedRecyclerViewAdapter<AllMedAdapter.Vi
                 allMedViewPresenter.updateMedicine(medicine);
                 allMedViewPresenter.updateUserWithNewMedData(medicine);
                 allMedViewPresenter.changeDoseState(medicine,currentTime,Status.Take);
+
 
                 dialog.dismiss();
             }
