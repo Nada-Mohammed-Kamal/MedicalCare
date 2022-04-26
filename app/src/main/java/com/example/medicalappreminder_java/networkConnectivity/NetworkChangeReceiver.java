@@ -45,7 +45,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
         repo = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
 
-        //repo.getUsersFromFireStore(this , OnRespondToMethod.skip);
+        repo.getUsersFromFireStore(this , OnRespondToMethod.skip);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
                 isThereInternetConnection =false;
             } else {
                 isThereInternetConnection = true;
-                //sync();
+                sync();
                 Log.e("mando", "network back");
             }
         }
@@ -92,10 +92,13 @@ public class NetworkChangeReceiver extends BroadcastReceiver  implements OnlineU
                     }
                 });
                 if(!userList.isEmpty()){
-                    for (User user : userList){
-                       //repo.deleteUserFromFireStore(user);
-                        repo.addUserToFireStore(user);
-                        Log.e("***", "run: " + user.getUuid());
+                    for (int i = 0 ; i < userList.size() ; i++){
+                        //repo.deleteUserFromFireStore(user);
+                        for (Medicine medicine : userList.get(i).getListOfMedications()){
+                            repo.addMedicineToFireStore(medicine);
+                        }
+                        repo.addUserToFireStore(userList.get(i));
+                        Log.e("*", "run: " + userList.get(i).getUuid());
                     }
                 }
             }
