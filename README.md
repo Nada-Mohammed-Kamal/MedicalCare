@@ -19,13 +19,13 @@
 ## The user can:
  * Add Medication
  * Add Health taker
- *Display the drug notification dialog when pressing on an item
+ * Display the drug notification dialog when pressing on an item
 ## Project functionality:
-  *MVP
-  *Room
-  *Firebase
-   minSdk 21
-   targetSdk 32
+  * MVP
+  * Room
+  * Firebase
+  * minSdk 21
+  * targetSdk 32
   ## Screenshots
 <table>
   <tr>
