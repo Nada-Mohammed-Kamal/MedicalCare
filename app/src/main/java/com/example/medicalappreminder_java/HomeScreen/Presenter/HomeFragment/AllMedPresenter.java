@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.medicalappreminder_java.Constants.OnRespondToMethod;
 import com.example.medicalappreminder_java.Constants.Status;
+import com.example.medicalappreminder_java.Constants.WorkerUtils;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedAdapter;
 import com.example.medicalappreminder_java.HomeScreen.View.HomeFragment.AllMedViewInterface;
 import com.example.medicalappreminder_java.NotificationDialog.OnlineUsers;
@@ -98,11 +99,12 @@ public class AllMedPresenter implements AllMedPresenterInterface, OnlineUsers {
                 }
                 break;
             case Snooze:
+                WorkerUtils.addRequestAfterSnooze(medicine, currentTime);
                 if (NetworkChangeReceiver.isThereInternetConnection == true) {
                     repoClass.getUsersFromFireStore(AllMedPresenter.this , OnRespondToMethod.snooze);
                 }
                 break;
-                case Take:
+            case Take:
                 //fireStore
                 if (NetworkChangeReceiver.isThereInternetConnection == true) {
                     repoClass.getUsersFromFireStore(AllMedPresenter.this , OnRespondToMethod.take);
