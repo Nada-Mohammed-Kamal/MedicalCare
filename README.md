@@ -24,6 +24,8 @@
   *MVP
   *Room
   *Firebase
+   minSdk 21
+   targetSdk 32
   ## Screenshots
 <table>
   <tr>
