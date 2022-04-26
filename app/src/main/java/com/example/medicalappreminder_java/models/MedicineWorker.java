@@ -69,7 +69,7 @@ public class MedicineWorker extends Worker {
 
             Log.i("M3lsh", "doWork: ");
             OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MedicineWorker.class)
-                    .setInitialDelay(10, TimeUnit.SECONDS)
+                    .setInitialDelay(howOften, TimeUnit.DAYS)
                     .setInputData(getInputData())
                     .build();
 
