@@ -13,8 +13,8 @@ import com.example.medicalappreminder_java.Repo.remote.FireStoreHandler;
 import com.example.medicalappreminder_java.Repo.remote.RemoteSourceInterface;
 import com.example.medicalappreminder_java.models.Medicine;
 import com.example.medicalappreminder_java.models.User;
-
 import java.util.List;
+import java.util.UUID;
 
 public class MedModifyPresenter implements MedModifyPresenterInterface{
     public Context context;
@@ -47,7 +47,7 @@ public class MedModifyPresenter implements MedModifyPresenterInterface{
             }
         }
 
-        WorkerUtils.deleteAllRequestsFromWorkManagerByMed(medicine.getUuid());
+        WorkerUtils.deleteAllRequestsFromWorkManagerByMed(UUID.fromString(medicine.getUuid()));
 
         Medicine newMed = view.fillMedicineWithFormData(medicine);
 
