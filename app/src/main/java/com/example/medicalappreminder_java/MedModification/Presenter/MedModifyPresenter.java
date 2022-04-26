@@ -20,6 +20,7 @@ public class MedModifyPresenter implements MedModifyPresenterInterface{
     public Context context;
     public MedModifyActivityInterface view;
     public Medicine medicine;
+    RepoClass repoClass;
 
     public MedModifyPresenter(Context context, MedModifyActivityInterface view, Medicine medicine) {
         this.context = context;
@@ -31,7 +32,7 @@ public class MedModifyPresenter implements MedModifyPresenterInterface{
     public void editMedicineInDB() {
         RemoteSourceInterface remoteSourceInterface = new FireStoreHandler();
         LocalSourceInterface localSourceInterface = new ConcreteLocalSource(context);
-        RepoClass repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
+        repoClass = RepoClass.getInstance(remoteSourceInterface,localSourceInterface,context);
         SharedPreferences preferences = context.getSharedPreferences("preferencesFile" , Context.MODE_PRIVATE) ;
 
         repoClass.updateMedicine(medicine);
